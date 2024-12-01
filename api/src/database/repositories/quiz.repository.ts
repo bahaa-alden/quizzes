@@ -7,6 +7,7 @@ import { type PaginatedList } from '../../utils/pagination';
 import { OrderDirection, type OrderOptions } from '../../utils/order';
 import { BaseRepository, type FindOptions } from './base.repository';
 import Quiz, { type IQuiz } from '../models/quiz.model';
+import { selectedFields } from '../../utils/projection';
 
 export interface QuizFilterOptions {
   //filters
@@ -37,7 +38,7 @@ export class QuizRepository extends BaseRepository<IQuiz> {
   }
 
   async findForAdmin(options: QuizFindOptions): Promise<PaginatedList<IQuiz>> {
-    const { order, pagination, search, filter } = options;
+    const { order, pagination, search, filter, fields } = options;
 
     const query: FilterQuery<IQuiz> = { deletedAt: null };
     if (filter?.status) {
@@ -59,7 +60,7 @@ export class QuizRepository extends BaseRepository<IQuiz> {
     }
 
     const total = await this.model.where(query).countDocuments();
-    const results = await this.model
+    const queryResult = this.model
       .find(query)
       .sort({
         [order.column]: order.direction === OrderDirection.asc ? 1 : -1,
@@ -67,7 +68,10 @@ export class QuizRepository extends BaseRepository<IQuiz> {
       .limit(pagination.pageSize)
       .skip((pagination.page - 1) * pagination.pageSize)
       .populate(['questionIds']);
-
+    if (fields) {
+      queryResult.select(selectedFields(fields));
+    }
+    const results = await queryResult;
     return { results, total };
   }
 }

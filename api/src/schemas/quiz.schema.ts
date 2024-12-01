@@ -25,7 +25,7 @@ const quizAllSchema = object({
   orderDirection,
   search: string().optional(),
   status: z.nativeEnum(QuizStatus).optional(),
-
+  fields: string().optional(),
   dateFrom: stringToDate.optional(),
   dateTo: stringToDate.optional(),
 });

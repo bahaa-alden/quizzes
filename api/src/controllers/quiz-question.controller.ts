@@ -33,6 +33,7 @@ export class QuizQuestionController {
           dateFrom: req.valid.query.dateFrom,
           dateTo: req.valid.query.dateTo,
         },
+        fields: req.valid.query.fields,
         search: req.valid.query.search,
         order: defaultOrderParams(
           req.valid.query.orderColumn,

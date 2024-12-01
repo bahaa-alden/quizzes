@@ -36,7 +36,7 @@ const questionAnswerSchema: Schema = new Schema<IAnswer>(
   {
     toJSON: {
       virtuals: true,
-      transform: (_, ret) => omit(['__v', '_id'], ret),
+      transform: (_, ret) => omit(ret, ['__v', '_id']),
     },
   },
 );

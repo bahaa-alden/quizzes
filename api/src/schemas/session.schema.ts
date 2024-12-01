@@ -24,9 +24,17 @@ const sessionAllSchema = z.object({
   quizId: objectId.optional(),
   dateFrom: stringToDate.optional(),
   dateTo: stringToDate.optional(),
+  fields: z.string().optional(),
 });
 
 export type ISessionAllSchema = TypeOf<typeof sessionAllSchema>;
+
+const sessionRecordSchema = z.object({
+  dateFrom: stringToDate.optional(),
+  dateTo: stringToDate.optional(),
+});
+
+export type ISessionRecordSchema = TypeOf<typeof sessionRecordSchema>;
 
 const sessionCreateSchema = z
   .object({
@@ -55,4 +63,5 @@ export default {
   sessionAll: sessionAllSchema,
   sessionCreate: sessionCreateSchema,
   sessionUpdate: sessionUpdateSchema,
+  sessionRecord: sessionRecordSchema,
 };

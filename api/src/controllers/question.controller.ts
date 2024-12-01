@@ -14,7 +14,6 @@ import {
 } from '../schemas/question.schema';
 import { defaultOrderParams } from '../utils/order';
 import { defaultPaginationParams } from '../utils/pagination';
-import { RoleCode } from '../utils/enum';
 import { needRecord } from '../utils/record';
 
 export class QuestionController {
@@ -29,6 +28,7 @@ export class QuestionController {
         filter: {
           // filters
         },
+        fields: req.valid.query.fields,
         search: req.valid.query.search,
         order: defaultOrderParams(
           req.valid.query.orderColumn,

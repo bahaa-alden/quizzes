@@ -129,6 +129,53 @@
 
 /**
  * @swagger
+ * /sessions/records:
+ *   get:
+ *     summary: Get all sessions records
+ *     description: USER,ADMIN can retrieve all sessions.
+ *     tags: [sessions]
+ *     security:
+ *       - Bearer: []
+ *     parameters:
+  # filters
+ *       - in: query
+ *         name: studentId
+ *         schema:
+ *           type: string
+ *         description: filter for studentId field
+ *       - in: query
+ *         name: fromDate
+ *         schema:
+ *           type: string
+ *         description: from date
+ *       - in: query
+ *         name: toDate
+ *         schema:
+ *           type: string
+ *         description: to date
+ *     responses:
+ *       "200":
+ *         description: OK
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 message:
+ *                   type: string
+ *                   example: success
+ *                 data:
+ *                   type: array
+ *                   items:
+ *                     $ref: '#/components/schemas/Record'
+ *       "401":
+ *         $ref: '#/components/responses/Unauthorized'
+ *       "403":
+ *         $ref: '#/components/responses/Forbidden'
+ */
+
+/**
+ * @swagger
  * /sessions/{id}:
  *   get:
  *     summary: Get a session
@@ -237,6 +284,54 @@
  *         $ref: '#/components/responses/NotFound'
  */
 
+import { Quiz } from './quiz.swagger';
+
+export interface Result {
+  quizId: string;
+  quiz: object;
+  questionInSession: number;
+  question: number;
+  status: string;
+}
+
+export const Record = {
+  type: 'object',
+  properties: {
+    id: { type: 'string' },
+    // property
+    quizId: { type: 'string' },
+    quiz: Quiz,
+    questionInSession: { type: 'number' },
+    question: { type: 'number' },
+    status: { type: 'string', enum: ['pending', 'started', 'completed'] },
+  },
+  example: {
+    id: '5ebac534954b54139806c112',
+    // property example
+    quizId: '673c40cd59e293827f79e398',
+    quiz: {
+      id: '5ebac534954b54139806c112',
+      // property example
+      duration: 60,
+
+      numberOfAttempts: 3,
+
+      status: 'active',
+
+      name: 'math',
+
+      createdAt: '2024-11-24T16:35:04.438Z',
+      updatedAt: '2024-11-24T16:35:04.438Z',
+    },
+    studentId: '673c40cd59e293827f79e398',
+
+    status: 'pending',
+
+    createdAt: '2024-11-24T16:35:04.438Z',
+    updatedAt: '2024-11-24T16:35:04.438Z',
+  },
+};
+
 export const Session = {
   type: 'object',
   properties: {
@@ -259,6 +354,7 @@ export const Session = {
     updatedAt: '2024-11-24T16:35:04.438Z',
   },
 };
+
 export const createSession = {
   type: 'object',
   properties: {

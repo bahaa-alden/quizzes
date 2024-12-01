@@ -33,6 +33,15 @@ export class SessionRoutes {
       sessionController.getSessions,
     );
 
+    // GET ALL SESSIONS
+    this.router.get(
+      '/records',
+      restrict(USER),
+      authorizationMiddleware.authorization,
+      validator({ query: sessionSchema.sessionRecord }),
+      sessionController.getRecords,
+    );
+
     // GET SESSION BY ID
     this.router.get(
       '/:id',

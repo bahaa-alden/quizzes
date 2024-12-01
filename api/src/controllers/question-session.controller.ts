@@ -28,11 +28,11 @@ export class QuestionSessionController {
       const options: QuestionSessionFindOptions = {
         filter: {
           // filters
-          bookmarked: req.valid.query.bookmarked,
-
-          status: req.valid.query.status,
           sessionId: req.valid.query.sessionId,
+          bookmarked: req.valid.query.bookmarked,
+          status: req.valid.query.status,
         },
+        fields: req.valid.query.fields,
         search: req.valid.query.search,
         order: defaultOrderParams(
           req.valid.query.orderColumn,

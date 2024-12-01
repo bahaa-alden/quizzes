@@ -7,6 +7,7 @@ import { BaseRepository, type FindOptions } from './base.repository';
 import QuizQuestion, {
   type IQuizQuestion,
 } from '../models/quiz-question.model';
+import { selectedFields } from '../../utils/projection';
 
 export interface QuizQuestionFilterOptions {
   //filters
@@ -26,10 +27,17 @@ export class QuizQuestionRepository extends BaseRepository<IQuizQuestion> {
     super(QuizQuestion);
   }
 
+  async getQuestionIds(quizId: string) {
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-return
+    return await this.model
+      .find({ quizId, deletedAt: null })
+      .distinct('questionId');
+  }
+
   async findForAdmin(
     options: QuizQuestionFindOptions,
   ): Promise<PaginatedList<IQuizQuestion>> {
-    const { order, pagination, search, filter } = options;
+    const { order, pagination, search, filter, fields } = options;
 
     const query: FilterQuery<IQuizQuestion> = { deletedAt: null };
     if (filter?.quizId) {
@@ -51,7 +59,7 @@ export class QuizQuestionRepository extends BaseRepository<IQuizQuestion> {
     }
 
     const total = await this.model.where(query).countDocuments();
-    const results = await this.model
+    const queryResult = this.model
       .find(query)
       .sort({
         [order.column]: order.direction === OrderDirection.asc ? 1 : -1,
@@ -59,6 +67,10 @@ export class QuizQuestionRepository extends BaseRepository<IQuizQuestion> {
       .limit(pagination.pageSize)
       .skip((pagination.page - 1) * pagination.pageSize)
       .populate(['question']);
+    if (fields) {
+      queryResult.select(selectedFields(fields));
+    }
+    const results = await queryResult;
     return { results, total };
   }
 }

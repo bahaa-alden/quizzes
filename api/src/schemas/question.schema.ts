@@ -37,6 +37,7 @@ const questionAllSchema = object({
   orderColumn,
   orderDirection,
   search: string().optional(),
+  fields: string().optional(),
 });
 
 export type IQuestionAllSchema = TypeOf<typeof questionAllSchema>;

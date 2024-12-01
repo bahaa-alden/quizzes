@@ -5,6 +5,7 @@ import {
   updateQuestionSession,
 } from './routes/question-session.swagger';
 import {
+  Record,
   Session,
   createSession,
   updateSession,
@@ -57,6 +58,7 @@ const options = {
     ],
     components: {
       schemas: {
+        Record,
         addQuestions,
         QuestionSession,
         createQuestionSession,

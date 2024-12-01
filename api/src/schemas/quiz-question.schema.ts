@@ -18,7 +18,7 @@ const quizQuestionAllSchema = object({
   orderDirection,
   search: string().optional(),
   quizId: objectId.optional(),
-
+  fields: string().optional(),
   dateFrom: stringToDate.optional(),
   dateTo: stringToDate.optional(),
 });

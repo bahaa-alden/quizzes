@@ -49,6 +49,12 @@
  *     parameters:
   # filters
  *       - in: query
+ *         name: sessionId
+ *         schema:
+ *           type: string
+ *         description: filter for sessionId field
+
+ *       - in: query
  *         name: bookmarked
  *         schema:
  *           type: boolean

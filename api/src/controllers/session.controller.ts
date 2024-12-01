@@ -11,11 +11,12 @@ import {
   ISessionIdSchema,
   ISessionCreateSchema,
   ISessionUpdateSchema,
+  ISessionRecordSchema,
 } from '../schemas/session.schema';
 import { defaultOrderParams } from '../utils/order';
 import { defaultPaginationParams } from '../utils/pagination';
-import { RoleCode } from '../utils/enum';
 import { needRecord } from '../utils/record';
+import { getSessionRecords } from '../services/internal/sessions/records';
 
 export class SessionController {
   // Get all Sessions by author
@@ -37,6 +38,7 @@ export class SessionController {
           dateFrom: req.valid.query.dateFrom,
           dateTo: req.valid.query.dateTo,
         },
+        fields: req.valid.query.fields,
         search: req.valid.query.search,
         order: defaultOrderParams(
           req.valid.query.orderColumn,
@@ -50,6 +52,17 @@ export class SessionController {
       const sessions = await sessionRepository.findForAdmin(options);
 
       res.ok({ message: 'success', data: sessions });
+    },
+  );
+
+  public getRecords = asyncHandler(
+    async (
+      req: ParsedRequest<void, ISessionRecordSchema>,
+      res: Response,
+      next: NextFunction,
+    ): Promise<void> => {
+      const records = await getSessionRecords({ studentId: req.user.id });
+      res.ok({ message: 'success', data: records });
     },
   );
 

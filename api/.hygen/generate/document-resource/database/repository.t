@@ -30,13 +30,20 @@ export class <%= Name %>Repository extends BaseRepository<I<%= Name %>> {
     }
 
     const total = await this.model.where(query).countDocuments()
-    const results = await this.model.find(query).sort({
-      [order.column]: order.direction === OrderDirection.asc ? 1 : -1,
-    })
-      .select(selectedFields(fields))
-      .limit(pagination.pageSize)
-      .skip((pagination.page - 1) * pagination.pageSize)
 
+    const queryResult = this.model
+      .find(query)
+      .sort({
+        [order.column]: order.direction === OrderDirection.asc ? 1 : -1,
+      })
+      .limit(pagination.pageSize)
+      .skip((pagination.page - 1) * pagination.pageSize);
+
+    if (fields) {
+      queryResult.select(selectedFields(fields));
+    }
+    
+    const results = await queryResult;
     return { results, total }
   }
 }

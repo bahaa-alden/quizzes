@@ -7,6 +7,7 @@ import { type PaginatedList } from '../../utils/pagination';
 import { OrderDirection, type OrderOptions } from '../../utils/order';
 import { BaseRepository, type FindOptions } from './base.repository';
 import Session, { type ISession } from '../models/session.model';
+import { selectedFields } from '../../utils/projection';
 
 export interface SessionFilterOptions {
   //filters
@@ -34,7 +35,7 @@ export class SessionRepository extends BaseRepository<ISession> {
   async findForAdmin(
     options: SessionFindOptions,
   ): Promise<PaginatedList<ISession>> {
-    const { order, pagination, search, filter } = options;
+    const { order, pagination, search, filter, fields } = options;
 
     const query: FilterQuery<ISession> = { deletedAt: null };
     if (filter?.status) {
@@ -64,7 +65,7 @@ export class SessionRepository extends BaseRepository<ISession> {
     }
 
     const total = await this.model.where(query).countDocuments();
-    const results = await this.model
+    const queryResult = this.model
       .find(query)
       .sort({
         [order.column]: order.direction === OrderDirection.asc ? 1 : -1,
@@ -72,6 +73,10 @@ export class SessionRepository extends BaseRepository<ISession> {
       .limit(pagination.pageSize)
       .skip((pagination.page - 1) * pagination.pageSize)
       .populate(['questionSessions', 'quiz', 'student']);
+    if (fields) {
+      queryResult.select(selectedFields(fields));
+    }
+    const results = await queryResult;
 
     return { results, total };
   }

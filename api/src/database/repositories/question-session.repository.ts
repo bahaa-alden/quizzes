@@ -26,12 +26,20 @@ export class QuestionSessionRepository extends BaseRepository<IQuestionSession> 
     super(QuestionSession);
   }
 
+  async getQuestionIds(sessionId: string) {
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-return
+    return await this.model
+      .find({ sessionId, deletedAt: null })
+      .distinct('questionId');
+  }
+
   async findForAdmin(
     options: QuestionSessionFindOptions,
   ): Promise<PaginatedList<IQuestionSession>> {
     const { order, pagination, search, filter, fields } = options;
 
     const query: FilterQuery<IQuestionSession> = { deletedAt: null };
+
     if (typeof filter?.bookmarked === 'boolean') {
       query.bookmarked = filter.bookmarked;
     }
@@ -49,15 +57,18 @@ export class QuestionSessionRepository extends BaseRepository<IQuestionSession> 
     }
 
     const total = await this.model.where(query).countDocuments();
-    const results = await this.model
+    const queryResult = this.model
       .find(query)
       .sort({
         [order.column]: order.direction === OrderDirection.asc ? 1 : -1,
       })
-      .select(selectedFields(fields))
       .limit(pagination.pageSize)
       .skip((pagination.page - 1) * pagination.pageSize)
       .populate(['question']);
+    if (fields) {
+      queryResult.select(selectedFields(fields));
+    }
+    const results = await queryResult;
 
     return { results, total };
   }

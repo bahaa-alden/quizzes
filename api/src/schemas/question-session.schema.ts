@@ -1,5 +1,6 @@
+import { objectId } from './common';
+
 import {
-  objectId,
   booleanString,
   orderColumn,
   orderDirection,
@@ -21,9 +22,10 @@ const questionSessionAllSchema = object({
   orderColumn,
   orderDirection,
   search: string().optional(),
-  bookmarked: booleanString.optional(),
-  status: z.nativeEnum(QuestionSessionStatus).optional(),
   sessionId: objectId.optional(),
+  bookmarked: booleanString.optional(),
+  fields: string().optional(),
+  status: z.nativeEnum(QuestionSessionStatus).optional(),
 });
 
 export type IQuestionSessionAllSchema = TypeOf<typeof questionSessionAllSchema>;

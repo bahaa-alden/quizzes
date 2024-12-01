@@ -45,7 +45,7 @@ import {
   Unauthorized,
   Error,
 } from './components';
-import { createUser, updateMe, updateUser, User } from './routes/users.swagger';
+import { createUser, updateMe, updateUser, User } from './routes/user.swagger';
 const options = {
   url: '',
   definition: {

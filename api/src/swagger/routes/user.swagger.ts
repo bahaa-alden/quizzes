@@ -49,15 +49,15 @@
  *     parameters:
   # filters
  *       - in: query
+ *         name: role
+ *         schema:
+ *           type: string
+ *         description: filter for  role field
+ *       - in: query
  *         name: name
  *         schema:
  *           type: string
  *         description: User name
- *       - in: query
- *         name: role
- *         schema:
- *           type: string
- *         description: User role
  *       - in: query
  *         name: sort
  *         schema:

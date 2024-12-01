@@ -1,8 +1,8 @@
+import { RoleCode } from './../../utils/enum';
 import { BaseRepository, FindOptions } from './base.repository';
 import { OrderDirection, OrderOptions } from '../../utils/order';
 import { FilterQuery } from 'mongoose';
 import User, { IUser } from '../models/user.model';
-import { RoleCode } from '../../utils/enum';
 import { startOfDay, endOfDay } from 'date-fns';
 
 export interface UserOrderOptions extends OrderOptions {
@@ -11,6 +11,7 @@ export interface UserOrderOptions extends OrderOptions {
 
 // eslint-disable-next-line @typescript-eslint/no-empty-interface
 export interface UserFilterOptions {
+  //filters
   dateFrom?: Date;
   dateTo?: Date;
   role?: RoleCode;
@@ -28,6 +29,11 @@ export class UserRepository extends BaseRepository<IUser> {
   async findForUser(options: FindUserOptions): Promise<IUser[]> {
     const { pagination, order, search, filter } = options;
     const query: FilterQuery<IUser> = { deletedAt: null };
+
+    if (filter?.role) {
+      query.role = filter.role;
+    }
+
     if (filter?.dateFrom ?? filter?.dateTo) {
       query.createdAt = {};
       if (filter.dateFrom) {
@@ -36,10 +42,6 @@ export class UserRepository extends BaseRepository<IUser> {
       if (filter.dateTo) {
         query.createdAt.$lte = endOfDay(filter.dateTo);
       }
-    }
-
-    if (filter?.role === RoleCode.USER) {
-      query.role = RoleCode.USER;
     }
 
     if (search) {

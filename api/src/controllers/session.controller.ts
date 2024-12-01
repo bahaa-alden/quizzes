@@ -28,14 +28,14 @@ export class SessionController {
       const options: SessionFindOptions = {
         filter: {
           // filters
-          dateFrom: req.valid.query.dateFrom,
-          dateTo: req.valid.query.dateTo,
-
-          quizId: req.valid.query.quizId,
-
           status: req.valid.query.status,
 
           studentId: req.valid.query.studentId,
+
+          quizId: req.valid.query.quizId,
+
+          dateFrom: req.valid.query.dateFrom,
+          dateTo: req.valid.query.dateTo,
         },
         search: req.valid.query.search,
         order: defaultOrderParams(

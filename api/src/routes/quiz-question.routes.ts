@@ -3,11 +3,10 @@ import validator from '../middlewares/validator';
 import quizQuestionSchema from '../schemas/quiz-question.schema';
 import restrict from '../middlewares/restrict';
 import { RoleCode } from '../utils/enum';
-import { authorizationMiddleware } from '../auth/authorization';
+import { authorizationMiddleware } from '../middlewares/authorization';
 import { quizQuestionController } from '../controllers/quiz-question.controller';
 import authSchema from '../schemas/auth.schema';
 import { authMiddleware } from '../middlewares/authJwt';
-import { authController } from '../controllers/auth.controller';
 const { USER, ADMIN } = RoleCode;
 
 export class QuizQuestionRoutes {
@@ -25,7 +24,7 @@ export class QuizQuestionRoutes {
       authMiddleware.authenticateJWT,
     );
 
-    // GET ALL QUIZQUESTIONS
+    // GET ALL QUIZ_QUESTIONS
     this.router.get(
       '/',
       restrict(USER, ADMIN),
@@ -34,7 +33,7 @@ export class QuizQuestionRoutes {
       quizQuestionController.getQuizQuestions,
     );
 
-    // GET QUIZQUESTION BY ID
+    // GET QUIZ_QUESTION BY ID
     this.router.get(
       '/:id',
       restrict(USER, ADMIN),
@@ -43,7 +42,7 @@ export class QuizQuestionRoutes {
       quizQuestionController.getQuizQuestion,
     );
 
-    // CREATE QUIZQUESTION
+    // CREATE QUIZ_QUESTION
     this.router.post(
       '/',
       restrict(ADMIN),
@@ -52,7 +51,7 @@ export class QuizQuestionRoutes {
       quizQuestionController.createQuizQuestion,
     );
 
-    // UPDATE QUIZQUESTION BY ID
+    // UPDATE QUIZ_QUESTION BY ID
     this.router.patch(
       '/:id',
       restrict(ADMIN),
@@ -64,7 +63,7 @@ export class QuizQuestionRoutes {
       quizQuestionController.updateQuizQuestion,
     );
 
-    // DELETE QUIZQUESTION BY ID
+    // DELETE QUIZ_QUESTION BY ID
     this.router.delete(
       '/:id',
       restrict(ADMIN),

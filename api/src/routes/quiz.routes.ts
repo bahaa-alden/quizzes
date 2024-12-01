@@ -3,7 +3,7 @@ import validator from '../middlewares/validator';
 import quizSchema from '../schemas/quiz.schema';
 import restrict from '../middlewares/restrict';
 import { RoleCode } from '../utils/enum';
-import { authorizationMiddleware } from '../auth/authorization';
+import { authorizationMiddleware } from '../middlewares/authorization';
 import { quizController } from '../controllers/quiz.controller';
 import authSchema from '../schemas/auth.schema';
 import { authMiddleware } from '../middlewares/authJwt';

@@ -1,6 +1,6 @@
 import { stringToDate } from './common';
 
-import { UserStatus } from './../utils/enum';
+import { RoleCode, UserStatus } from './../utils/enum';
 import { z, TypeOf } from 'zod';
 import {
   objectId,
@@ -36,6 +36,15 @@ const userUpdateMeSchema = z
 
 export type IUserUpdateMeSchema = TypeOf<typeof userUpdateMeSchema>;
 
+const createUserSchema = z.object({
+  name: z.string().min(3),
+  email: z.string().email(),
+  password: z.string().min(6),
+  role: z.nativeEnum(RoleCode).optional(),
+});
+
+export type ICreateUserSchema = TypeOf<typeof createUserSchema>;
+
 const userAllSchema = z.object({
   page,
   pageSize,
@@ -53,4 +62,5 @@ export default {
   updateUser: userUpdateSchema,
   updateMeSchema: userUpdateMeSchema,
   userAll: userAllSchema,
+  createUser: createUserSchema,
 };

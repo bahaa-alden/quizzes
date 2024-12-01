@@ -18,6 +18,10 @@ after:  const query
         query.createdAt.$lte = endOfDay(filter.dateTo);
       }
     }
+<% } else if (kind === 'primitive' && type === 'boolean') { -%>
+  if (typeof filter?.<%= h.inflection.camelize(h.inflection.singularize(property), true) %> === 'boolean') {
+    query.<%= h.inflection.camelize(h.inflection.singularize(property), true) %> = filter.<%= h.inflection.camelize(h.inflection.singularize(property), true) %>
+  }
 <% } else { -%>
   if (filter?.<%= h.inflection.camelize(h.inflection.singularize(property), true) %>) {
     query.<%= h.inflection.camelize(h.inflection.singularize(property), true) %> = filter.<%= h.inflection.camelize(h.inflection.singularize(property), true) %>

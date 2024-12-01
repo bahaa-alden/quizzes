@@ -47,6 +47,12 @@
  *     security:
  *       - Bearer: []
  *     parameters:
+  # filters
+ *       - in: query
+ *         name: bookmarked
+ *         schema:
+ *           type: boolean
+ *         description: filter for  bookmarked field
  *       - in: query
  *         name: fields
  *         schema:

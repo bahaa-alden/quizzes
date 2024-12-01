@@ -6,6 +6,7 @@ import { type PaginatedList } from '../../utils/pagination'
 import { OrderDirection, type OrderOptions } from '../../utils/order'
 import { BaseRepository, type FindOptions } from './base.repository'
 import <%= Name %>, { type I<%= Name %> } from '../models/<%= nameDash %>.model'
+import { selectedFields } from '../../utils/projection';
 
 export interface <%= Name %>FilterOptions {
   //filters
@@ -21,7 +22,7 @@ export class <%= Name %>Repository extends BaseRepository<I<%= Name %>> {
   }
 
   async findForAdmin(options: <%= Name %>FindOptions): Promise<PaginatedList<I<%= Name %>>> {
-    const { order, pagination, search } = options
+    const { order, pagination, search, fields } = options
 
     const query: FilterQuery<I<%= Name %>> = { deletedAt: null }
     if (search) {
@@ -32,6 +33,7 @@ export class <%= Name %>Repository extends BaseRepository<I<%= Name %>> {
     const results = await this.model.find(query).sort({
       [order.column]: order.direction === OrderDirection.asc ? 1 : -1,
     })
+      .select(selectedFields(fields))
       .limit(pagination.pageSize)
       .skip((pagination.page - 1) * pagination.pageSize)
 

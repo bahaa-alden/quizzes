@@ -1,11 +1,9 @@
-import { object, z, string, type TypeOf } from 'zod';
-import {
-  objectId,
-  orderColumn,
-  orderDirection,
-  page,
-  pageSize,
-} from './common';
+import { objectId } from './common';
+
+import { stringToDate } from './common';
+
+import { object, string, type TypeOf } from 'zod';
+import { orderColumn, orderDirection, page, pageSize } from './common';
 
 const quizQuestionIdSchema = object({
   id: objectId,
@@ -19,6 +17,10 @@ const quizQuestionAllSchema = object({
   orderColumn,
   orderDirection,
   search: string().optional(),
+  quizId: objectId.optional(),
+
+  dateFrom: stringToDate.optional(),
+  dateTo: stringToDate.optional(),
 });
 
 export type IQuizQuestionAllSchema = TypeOf<typeof quizQuestionAllSchema>;

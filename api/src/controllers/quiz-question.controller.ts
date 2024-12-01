@@ -28,6 +28,10 @@ export class QuizQuestionController {
       const options: QuizQuestionFindOptions = {
         filter: {
           // filters
+          quizId: req.valid.query.quizId,
+
+          dateFrom: req.valid.query.dateFrom,
+          dateTo: req.valid.query.dateTo,
         },
         search: req.valid.query.search,
         order: defaultOrderParams(

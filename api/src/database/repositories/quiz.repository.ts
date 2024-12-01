@@ -11,7 +11,6 @@ import Quiz, { type IQuiz } from '../models/quiz.model';
 export interface QuizFilterOptions {
   //filters
   status?: QuizStatus;
-
   dateFrom?: Date;
   dateTo?: Date;
 }

@@ -47,6 +47,24 @@
  *     security:
  *       - Bearer: []
  *     parameters:
+  # filters
+ *       - in: query
+ *         name: quizId
+ *         schema:
+ *           type: string
+ *         description: filter for quizId field
+
+ *       - in: query
+ *         name: fromDate
+ *         schema:
+ *           type: string
+ *         description: from date
+ *       - in: query
+ *         name: toDate
+ *         schema:
+ *           type: string
+ *         description: to date
+
  *       - in: query
  *         name: fields
  *         schema:

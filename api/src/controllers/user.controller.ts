@@ -6,6 +6,7 @@ import {
   userRepository,
 } from '../database//repositories/user.repository';
 import {
+  ICreateUserSchema,
   IUserAllSchema,
   IUserIdSchema,
   IUserUpdateMeSchema,
@@ -17,6 +18,37 @@ import { existRecord, needRecord } from '../utils/record';
 
 export class UserController {
   // return authenticated user details
+
+  public registerUser = asyncHandler(
+    async (
+      req: ParsedRequest<ICreateUserSchema>,
+      res: Response,
+      next: NextFunction,
+    ) => {
+      const { email, password, name, role } = req.valid.body;
+      existRecord(
+        await userRepository.exists(email),
+        new ConflictError('User already exist'),
+      );
+      const user = await userRepository.insert({
+        name,
+        email,
+        password,
+        role,
+      });
+      res.created({
+        message: 'user created',
+        data: {
+          user,
+        },
+      });
+      existRecord(
+        await userRepository.findByUsername(name),
+        new ConflictError('User already exist'),
+      );
+    },
+  );
+
   public me(req: Request, res: Response, next: NextFunction) {
     res.ok({ message: 'success', data: req.user });
   }

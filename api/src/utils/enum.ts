@@ -17,6 +17,7 @@ export enum RoleCode {
   USER = 'USER',
   ADMIN = 'ADMIN',
 }
+
 export enum Env {
   production = 'production',
   development = 'development',
@@ -40,4 +41,9 @@ export enum SessionStatus {
 export enum QuizStatus {
   active = 'active',
   disactive = 'disactive',
+}
+
+export enum BooleanString {
+  true = 'true',
+  false = 'false',
 }

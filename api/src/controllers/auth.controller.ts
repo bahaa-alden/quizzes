@@ -38,10 +38,6 @@ export class AuthController {
         await userRepository.exists(email),
         new ConflictError('User already exist'),
       );
-      existRecord(
-        await userRepository.findByUsername(name),
-        new ConflictError('User already exist'),
-      );
       const user = await userRepository.insert({
         name,
         email,

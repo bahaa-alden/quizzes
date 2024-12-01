@@ -1,3 +1,5 @@
+import { endOfDay, startOfDay } from 'date-fns';
+
 import { type FilterQuery } from 'mongoose';
 import { type PaginatedList } from '../../utils/pagination';
 import { OrderDirection, type OrderOptions } from '../../utils/order';
@@ -8,6 +10,10 @@ import QuizQuestion, {
 
 export interface QuizQuestionFilterOptions {
   //filters
+  quizId?: string;
+
+  dateFrom?: Date;
+  dateTo?: Date;
 }
 
 export interface QuizQuestionFindOptions
@@ -23,9 +29,23 @@ export class QuizQuestionRepository extends BaseRepository<IQuizQuestion> {
   async findForAdmin(
     options: QuizQuestionFindOptions,
   ): Promise<PaginatedList<IQuizQuestion>> {
-    const { order, pagination, search } = options;
+    const { order, pagination, search, filter } = options;
 
     const query: FilterQuery<IQuizQuestion> = { deletedAt: null };
+    if (filter?.quizId) {
+      query.quizId = filter.quizId;
+    }
+
+    if (filter?.dateFrom ?? filter?.dateTo) {
+      query.createdAt = {};
+      if (filter.dateFrom) {
+        query.createdAt.$gte = startOfDay(filter.dateFrom);
+      }
+      if (filter.dateTo) {
+        query.createdAt.$lte = endOfDay(filter.dateTo);
+      }
+    }
+
     if (search) {
       query.$or = [];
     }

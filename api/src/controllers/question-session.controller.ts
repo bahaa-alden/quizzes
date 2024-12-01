@@ -28,10 +28,9 @@ export class QuestionSessionController {
       const options: QuestionSessionFindOptions = {
         filter: {
           // filters
-          status: req.valid.query.status,
-
           bookmarked: req.valid.query.bookmarked,
 
+          status: req.valid.query.status,
           sessionId: req.valid.query.sessionId,
         },
         search: req.valid.query.search,

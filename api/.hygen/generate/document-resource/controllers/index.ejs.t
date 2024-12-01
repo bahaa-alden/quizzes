@@ -33,6 +33,7 @@ export class <%= Name %>Controller {
         // filters
         },
         search: req.valid.query.search,
+        fields: req.valid.query.fields,
         order: defaultOrderParams(
           req.valid.query.orderColumn,
           req.valid.query.orderDirection,

@@ -1,5 +1,6 @@
 import { z } from 'zod';
 import { OrderDirection } from '../utils/order';
+import { BooleanString } from '../utils/enum';
 
 const numericIdRegex = /^\d+$/u;
 
@@ -46,3 +47,7 @@ export const localString = z.object({
 });
 
 export const stringToDate = z.string().transform<Date>((el) => new Date(el));
+
+export const booleanString = z
+  .nativeEnum(BooleanString)
+  .transform((value) => value === BooleanString.true);

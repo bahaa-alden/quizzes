@@ -5,7 +5,7 @@ import { userController } from '../controllers/user.controller';
 import userSchema from '../schemas/user.schema';
 import { RoleCode } from '../utils/enum';
 import restrict from '../middlewares/restrict';
-import { authorizationMiddleware } from '../auth/authorization';
+import { authorizationMiddleware } from '../middlewares/authorization';
 import { authMiddleware } from '../middlewares/authJwt';
 import { authController } from '../controllers/auth.controller';
 
@@ -47,6 +47,12 @@ export class UserRoutes {
     this.router.use(
       validator({ headers: authSchema.auth }),
       authMiddleware.authenticateJWT,
+    );
+
+    this.router.post(
+      '/',
+      validator({ body: userSchema.createUser }),
+      userController.registerUser,
     );
 
     this.router.patch(

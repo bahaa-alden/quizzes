@@ -12,6 +12,7 @@ export interface FindOptions<T> {
   pagination: PaginationOptions;
   filter?: T;
   search?: string;
+  fields?: string;
 }
 
 export class BaseRepository<T extends MongooseDocument> {

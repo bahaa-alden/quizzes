@@ -47,6 +47,7 @@
  *     security:
  *       - Bearer: []
  *     parameters:
+  # filters
  *       - in: query
  *         name: fields
  *         schema:

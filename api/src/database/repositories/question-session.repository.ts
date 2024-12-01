@@ -7,13 +7,12 @@ import { BaseRepository, type FindOptions } from './base.repository';
 import QuestionSession, {
   type IQuestionSession,
 } from '../models/question-session.model';
+import { selectedFields } from '../../utils/projection';
 
 export interface QuestionSessionFilterOptions {
   //filters
-  status?: QuestionSessionStatus;
-
   bookmarked?: boolean;
-
+  status?: QuestionSessionStatus;
   sessionId?: string;
 }
 
@@ -30,15 +29,15 @@ export class QuestionSessionRepository extends BaseRepository<IQuestionSession> 
   async findForAdmin(
     options: QuestionSessionFindOptions,
   ): Promise<PaginatedList<IQuestionSession>> {
-    const { order, pagination, search, filter } = options;
+    const { order, pagination, search, filter, fields } = options;
 
     const query: FilterQuery<IQuestionSession> = { deletedAt: null };
-    if (filter?.status) {
-      query.status = filter.status;
-    }
-
     if (typeof filter?.bookmarked === 'boolean') {
       query.bookmarked = filter.bookmarked;
+    }
+
+    if (filter?.status) {
+      query.status = filter.status;
     }
 
     if (filter?.sessionId) {
@@ -55,6 +54,7 @@ export class QuestionSessionRepository extends BaseRepository<IQuestionSession> 
       .sort({
         [order.column]: order.direction === OrderDirection.asc ? 1 : -1,
       })
+      .select(selectedFields(fields))
       .limit(pagination.pageSize)
       .skip((pagination.page - 1) * pagination.pageSize)
       .populate(['question']);

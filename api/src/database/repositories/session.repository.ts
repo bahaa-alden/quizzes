@@ -1,6 +1,6 @@
-import { endOfDay, startOfDay } from 'date-fns';
-
 import { SessionStatus } from './../../utils/enum';
+
+import { endOfDay, startOfDay } from 'date-fns';
 
 import { type FilterQuery } from 'mongoose';
 import { type PaginatedList } from '../../utils/pagination';
@@ -10,14 +10,11 @@ import Session, { type ISession } from '../models/session.model';
 
 export interface SessionFilterOptions {
   //filters
+  status?: SessionStatus;
+  studentId?: string;
+  quizId?: string;
   dateFrom?: Date;
   dateTo?: Date;
-
-  quizId?: string;
-
-  status?: SessionStatus;
-
-  studentId?: string;
 }
 
 export interface SessionFindOptions extends FindOptions<SessionFilterOptions> {
@@ -40,6 +37,18 @@ export class SessionRepository extends BaseRepository<ISession> {
     const { order, pagination, search, filter } = options;
 
     const query: FilterQuery<ISession> = { deletedAt: null };
+    if (filter?.status) {
+      query.status = filter.status;
+    }
+
+    if (filter?.studentId) {
+      query.studentId = filter.studentId;
+    }
+
+    if (filter?.quizId) {
+      query.quizId = filter.quizId;
+    }
+
     if (filter?.dateFrom ?? filter?.dateTo) {
       query.createdAt = {};
       if (filter.dateFrom) {
@@ -48,18 +57,6 @@ export class SessionRepository extends BaseRepository<ISession> {
       if (filter.dateTo) {
         query.createdAt.$lte = endOfDay(filter.dateTo);
       }
-    }
-
-    if (filter?.quizId) {
-      query.quizId = filter.quizId;
-    }
-
-    if (filter?.status) {
-      query.status = filter.status;
-    }
-
-    if (filter?.studentId) {
-      query.studentId = filter.studentId;
     }
 
     if (search) {

@@ -47,6 +47,30 @@
  *     security:
  *       - Bearer: []
  *     parameters:
+  # filters
+ *       - in: query
+ *         name: status
+ *         schema:
+ *           type: string
+ *         description: filter for  status field
+
+ *       - in: query
+ *         name: quizStatus
+ *         schema:
+ *           type: string
+ *         description: filter for  quizStatus field
+
+ *       - in: query
+ *         name: fromDate
+ *         schema:
+ *           type: string
+ *         description: from date
+ *       - in: query
+ *         name: toDate
+ *         schema:
+ *           type: string
+ *         description: to date
+
  *       - in: query
  *         name: fields
  *         schema:

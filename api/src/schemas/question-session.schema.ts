@@ -1,9 +1,13 @@
-import { objectId } from './common';
-
+import {
+  objectId,
+  booleanString,
+  orderColumn,
+  orderDirection,
+  page,
+  pageSize,
+} from './common';
 import { QuestionSessionStatus } from './../utils/enum';
-
 import { object, z, string, type TypeOf } from 'zod';
-import { orderColumn, orderDirection, page, pageSize } from './common';
 
 const questionSessionIdSchema = object({
   id: objectId,
@@ -17,10 +21,8 @@ const questionSessionAllSchema = object({
   orderColumn,
   orderDirection,
   search: string().optional(),
+  bookmarked: booleanString.optional(),
   status: z.nativeEnum(QuestionSessionStatus).optional(),
-
-  bookmarked: z.boolean().optional(),
-
   sessionId: objectId.optional(),
 });
 

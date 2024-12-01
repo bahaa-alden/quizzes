@@ -37,11 +37,11 @@ const userSchema = new Schema<IUser>(
       trim: true,
       maxlength: 200,
       required: true,
-      unique: true,
     },
     email: {
       type: String,
       trim: true,
+      unique: true,
     },
     password: {
       type: String,

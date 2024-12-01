@@ -61,7 +61,7 @@ class UserController {
     });
     updateOne = (0, asyncHandler_1.default)(async (req, res, next) => {
         const updateBody = req.valid.body;
-        const data = (0, record_1.needRecord)(await user_repository_1.userRepository.patchById(req.user.id, updateBody), new ApiError_1.NotFoundError('user not found'));
+        const data = (0, record_1.needRecord)(await user_repository_1.userRepository.patchById(req.valid.params.id, updateBody), new ApiError_1.NotFoundError('user not found'));
         if (updateBody.email) {
             (0, record_1.existRecord)(await user_repository_1.userRepository.exists(updateBody.email), new ApiError_1.ConflictError('User already exist'));
         }

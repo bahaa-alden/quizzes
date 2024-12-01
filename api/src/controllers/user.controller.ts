@@ -135,7 +135,7 @@ export class UserController {
       const updateBody = req.valid.body;
 
       const data = needRecord(
-        await userRepository.patchById(req.user.id, updateBody),
+        await userRepository.patchById(req.valid.params.id, updateBody),
         new NotFoundError('user not found'),
       );
 

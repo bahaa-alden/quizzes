@@ -89,6 +89,9 @@ export class SessionController {
       next: NextFunction,
     ): Promise<void> => {
       const newSession = req.valid.body;
+      if (!req.valid.body.studentId) {
+        req.valid.body.studentId = req.user.id;
+      }
       const session = await sessionRepository.insert(newSession);
       if (session === null) {
         throw new InternalError();

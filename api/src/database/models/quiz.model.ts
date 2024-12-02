@@ -52,7 +52,7 @@ const quizSchema: Schema = new Schema<IQuiz>(
           );
           ret.questionIds = questionIds;
         }
-        return omit(['deletedAt', '__v', '_id'], ret);
+        return omit(ret, ['deletedAt', '__v', '_id']);
       },
     },
   },

@@ -16,8 +16,10 @@ import {
 import { defaultOrderParams } from '../utils/order';
 import { defaultPaginationParams } from '../utils/pagination';
 import { needRecord } from '../utils/record';
-import { createQuestion } from '../services/internal/questions/create';
 import { quizQuestionRepository } from '../database/repositories/quiz-question.repository';
+import { IQuestion } from '../database/models/question.model';
+import { createQuestion } from '../services/internal/questions/create';
+import { questionRepository } from '../database/repositories/question.repository';
 
 export class QuizController {
   // Get all Quizzes by author
@@ -126,16 +128,29 @@ export class QuizController {
       res: Response,
       next: NextFunction,
     ): Promise<void> => {
-      const data = req.valid.body.questions;
+      const { body } = req.valid;
       const quiz = needRecord(
         await quizRepository.findById(req.valid.params.id),
         new NotFoundError('Quiz not found'),
       );
-      const questions = await Promise.all(
-        data.map(async (e) => await createQuestion(e)),
-      );
+
+      const toInsQuestions: IQuestion[] = [];
+
+      if (body.questions) {
+        toInsQuestions.push(
+          ...(await Promise.all(
+            body.questions.map(async (e) => await createQuestion(e)),
+          )),
+        );
+      }
+
+      if (body.questionIds) {
+        const questions = await questionRepository.findByIds(body.questionIds);
+        toInsQuestions.push(...questions);
+      }
+
       await Promise.all(
-        questions.map(
+        toInsQuestions.map(
           async (question) =>
             await quizQuestionRepository.insert({
               quizId: quiz.id,

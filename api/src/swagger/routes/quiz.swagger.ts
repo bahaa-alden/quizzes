@@ -373,6 +373,12 @@ export const addQuestions = {
         },
       },
     },
+    questionIds: {
+      type: 'array',
+      items: {
+        type: 'string',
+      },
+    },
   },
   example: {
     // create property example
@@ -390,6 +396,7 @@ export const addQuestions = {
         text: 'who are you?',
       },
     ],
+    questionIds: ['5ebac534954b54139806c112'],
   },
   required: [
     // required property

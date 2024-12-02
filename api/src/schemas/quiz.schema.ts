@@ -59,7 +59,8 @@ const quizUpdateSchema = object({
 export type IQuizUpdateSchema = TypeOf<typeof quizUpdateSchema>;
 
 const addQuestionsSchema = z.object({
-  questions: questionSchema.questionCreate.array(),
+  questions: questionSchema.questionCreate.array().optional(),
+  questionIds: objectId.array().optional(),
 });
 
 export type IAddQuestionsSchema = TypeOf<typeof addQuestionsSchema>;

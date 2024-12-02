@@ -1,3 +1,4 @@
+import { IQuiz } from '../../../database/models/quiz.model';
 import { questionSessionRepository } from '../../../database/repositories/question-session.repository';
 import { quizQuestionRepository } from '../../../database/repositories/quiz-question.repository';
 import { quizRepository } from '../../../database/repositories/quiz.repository';
@@ -10,47 +11,45 @@ export interface Input {
 
 export interface Result {
   quizId: string;
-  quiz: object;
-  questionInSession: number;
-  question: number;
+  quiz: IQuiz;
+  sessionQuestions: number;
+  questions: number;
   status: string;
 }
 
 export const getSessionRecords = async (
   requestData: Input,
 ): Promise<Result[]> => {
-  const results: Result[] = [];
-
   const sessions = await sessionRepository.findBy({
     studentId: requestData.studentId,
   });
 
   // Get the session questions
-  sessions.forEach(async (session) => {
-    let sessionQuestions = (await questionSessionRepository.getQuestionIds(
-      session.id,
-    )) as string[];
-    sessionQuestions = sessionQuestions.map((id) => id.toString());
+  const results = await Promise.all(
+    sessions.map(async (session) => {
+      let sessionQuestions = (await questionSessionRepository.getQuestionIds(
+        session.id,
+      )) as string[];
+      sessionQuestions = sessionQuestions.map((id) => id.toString());
 
-    const quiz = needRecord(await quizRepository.findById(session.quizId));
+      const quiz = needRecord(await quizRepository.findById(session.quizId));
 
-    const quizQuestions = (await quizQuestionRepository.getQuestionIds(
-      quiz.id,
-    )) as string[];
+      const quizQuestions = (await quizQuestionRepository.getQuestionIds(
+        quiz.id,
+      )) as string[];
 
-    const { questionInSession, status } = getStatusAndCount(
-      sessionQuestions,
-      quizQuestions,
-    );
+      const { status } = getStatusAndCount(sessionQuestions, quizQuestions);
 
-    results.push({
-      quizId: quiz.id,
-      quiz,
-      questionInSession,
-      question: quizQuestions.length,
-      status,
-    });
-  });
+      return {
+        sessionId: session.id,
+        quizId: quiz.id,
+        quiz,
+        sessionQuestions: sessionQuestions.length,
+        questions: quizQuestions.length,
+        status,
+      };
+    }),
+  );
 
   return results;
 };
@@ -58,16 +57,13 @@ export const getSessionRecords = async (
 export function getStatusAndCount(
   sessionQuestions: string[],
   questionIds: string[],
-): { status: string; questionInSession: number } {
-  const questionInSession = questionIds.filter((ques) =>
-    sessionQuestions.includes(ques.toString()),
-  ).length;
+): { status: string } {
   let status = 'completed';
-  if (questionInSession === 0) {
+  if (sessionQuestions.length === 0) {
     status = 'not started';
   }
-  if (questionInSession < questionIds.length) {
+  if (sessionQuestions.length < questionIds.length) {
     status = 'processing';
   }
-  return { status, questionInSession };
+  return { status };
 }

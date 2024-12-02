@@ -299,36 +299,29 @@ export const Record = {
   properties: {
     id: { type: 'string' },
     // property
+    sessionId: { type: 'string' },
     quizId: { type: 'string' },
     quiz: Quiz,
-    questionInSession: { type: 'number' },
-    question: { type: 'number' },
+    sessionQuestions: { type: 'number' },
+    questions: { type: 'number' },
     status: { type: 'string', enum: ['pending', 'started', 'completed'] },
   },
   example: {
-    id: '5ebac534954b54139806c112',
-    // property example
-    quizId: '673c40cd59e293827f79e398',
+    sessionId: '674c6b364604c23e5b873890',
+    quizId: '674c693de953e9b52e4fb6de',
     quiz: {
-      id: '5ebac534954b54139806c112',
-      // property example
       duration: 60,
-
       numberOfAttempts: 3,
-
       status: 'active',
-
       name: 'math',
-
-      createdAt: '2024-11-24T16:35:04.438Z',
-      updatedAt: '2024-11-24T16:35:04.438Z',
+      createdAt: '2024-12-01T13:48:45.293Z',
+      updatedAt: '2024-12-01T13:48:45.293Z',
+      questionIds: ['674c69b47542a606ac68f10d', '674c6a057542a606ac68f117'],
+      id: '674c693de953e9b52e4fb6de',
     },
-    studentId: '673c40cd59e293827f79e398',
-
-    status: 'pending',
-
-    createdAt: '2024-11-24T16:35:04.438Z',
-    updatedAt: '2024-11-24T16:35:04.438Z',
+    sessionQuestions: 3,
+    questions: 5,
+    status: 'processing',
   },
 };
 

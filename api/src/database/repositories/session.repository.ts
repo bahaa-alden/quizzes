@@ -28,9 +28,16 @@ export class SessionRepository extends BaseRepository<ISession> {
   }
 
   async findById(id: string): Promise<ISession | null> {
-    return await this.model
-      .findOne({ _id: id, deletedAt: null })
-      .populate(['questionSessions', 'quiz', 'student']);
+    return await this.model.findOne({ _id: id, deletedAt: null }).populate([
+      'questionSessions',
+      {
+        path: 'quiz',
+        populate: {
+          path: 'questionIds',
+        },
+      },
+      'student',
+    ]);
   }
   async findForAdmin(
     options: SessionFindOptions,

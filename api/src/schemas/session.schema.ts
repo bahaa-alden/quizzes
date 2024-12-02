@@ -40,7 +40,7 @@ const sessionCreateSchema = z
   .object({
     // <creating-property-create-schema />
     quizId: objectId,
-    studentId: objectId,
+    studentId: objectId.optional(),
     status: z.nativeEnum(SessionStatus).optional(),
   })
   .strict();

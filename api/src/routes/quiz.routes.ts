@@ -56,7 +56,7 @@ export class QuizRoutes {
       '/:id/questions',
       restrict(ADMIN),
       authorizationMiddleware.authorization,
-      validator({ body: quizSchema.addQuestions }),
+      validator({ body: quizSchema.addQuestions, params: quizSchema.quizId }),
       quizController.addQuestions,
     );
 

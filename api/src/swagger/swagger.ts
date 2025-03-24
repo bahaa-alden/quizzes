@@ -1,4 +1,30 @@
 import * as swaggerJsdoc from 'swagger-jsdoc';
+import {
+  QuestionSession,
+  createQuestionSession,
+  updateQuestionSession,
+} from './routes/question-session.swagger';
+import {
+  Session,
+  createSession,
+  updateSession,
+} from './routes/session.swagger';
+import {
+  QuizQuestion,
+  createQuizQuestion,
+  updateQuizQuestion,
+} from './routes/quiz-question.swagger';
+import {
+  Question,
+  createQuestion,
+  updateQuestion,
+} from './routes/question.swagger';
+import {
+  Quiz,
+  addQuestions,
+  createQuiz,
+  updateQuiz,
+} from './routes/quiz.swagger';
 import { signUp } from './routes/auth.swagger';
 import { env_vars } from '../config';
 import {
@@ -31,6 +57,22 @@ const options = {
     ],
     components: {
       schemas: {
+        addQuestions,
+        QuestionSession,
+        createQuestionSession,
+        updateQuestionSession,
+        Session,
+        createSession,
+        updateSession,
+        QuizQuestion,
+        createQuizQuestion,
+        updateQuizQuestion,
+        Question,
+        createQuestion,
+        updateQuestion,
+        Quiz,
+        createQuiz,
+        updateQuiz,
         signUp,
         createUser,
         updateMe,

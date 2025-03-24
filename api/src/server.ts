@@ -1,3 +1,8 @@
+import { questionSessionRoutes } from './routes/question-session.routes';
+import { sessionRoutes } from './routes/session.routes';
+import { quizQuestionRoutes } from './routes/quiz-question.routes';
+import { questionRoutes } from './routes/question.routes';
+import { quizRoutes } from './routes/quiz.routes';
 import * as express from 'express';
 import * as mongoose from 'mongoose';
 import * as compression from 'compression';
@@ -26,6 +31,16 @@ class Server {
   }
 
   public routes(): void {
+    this.app.use('/api/v1/question-sessions', questionSessionRoutes.router);
+
+    this.app.use('/api/v1/sessions', sessionRoutes.router);
+
+    this.app.use('/api/v1/quiz-questions', quizQuestionRoutes.router);
+
+    this.app.use('/api/v1/questions', questionRoutes.router);
+
+    this.app.use('/api/v1/quizzes', quizRoutes.router);
+
     this.app.use('/api/v1/users', userRoutes.router);
 
     this.app.use(express.static(join(__dirname, '..', 'public')));

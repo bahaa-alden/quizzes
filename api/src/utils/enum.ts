@@ -25,45 +25,19 @@ export enum Env {
 
 // <creating-enum-type />
 
-export enum SubscriptionOrderStatus {
-  approved = 'approved',
-  refused = 'refused',
-  pending = 'pending',
-}
-
-export enum DessertType {
-  drink = 'drink',
-  meal = 'meal',
-}
-
-export enum PaymentStatus {
+export enum QuestionSessionStatus {
   failed = 'failed',
-  pending = 'pending',
-  success = 'success',
-}
-
-export enum SubscriptionStatus {
-  pending = 'pending',
-  active = 'active',
-  expired = 'expired',
-  cancelled = 'cancelled',
-}
-
-export enum PlanDuration {
-  month = 'month',
-  year = 'year',
-  free = 'free',
+  passed = 'passed',
+  started = 'started',
 }
 
 export enum SessionStatus {
-  all = '',
+  pending = 'pending',
   started = 'started',
-  ended = 'ended',
-  cancelled = 'cancelled',
+  completed = 'completed',
 }
 
-export enum OrgStatus {
-  approved = 'approved',
-  refused = 'refused',
-  pending = 'pending',
+export enum QuizStatus {
+  active = 'active',
+  disactive = 'disactive',
 }

@@ -76,7 +76,6 @@ export class SessionController {
         await sessionRepository.findById(req.valid.params.id),
         new NotFoundError('Session not found'),
       );
-
       res.ok({ message: 'success', data: session });
     },
   );

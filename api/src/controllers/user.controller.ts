@@ -68,13 +68,6 @@ export class UserController {
         );
       }
 
-      if (updateBody.name) {
-        existRecord(
-          await userRepository.existsName(updateBody.name),
-          new ConflictError('User already exist'),
-        );
-      }
-
       const data = await userRepository.patchById(req.user.id, updateBody);
 
       res.ok({ message: 'User has been updated', data });
@@ -145,6 +138,13 @@ export class UserController {
         await userRepository.patchById(req.user.id, updateBody),
         new NotFoundError('user not found'),
       );
+
+      if (updateBody.email) {
+        existRecord(
+          await userRepository.exists(updateBody.email),
+          new ConflictError('User already exist'),
+        );
+      }
 
       res.ok({ message: 'User has been updated', data });
     },

@@ -1,5 +1,5 @@
 import { Response, ParsedRequest } from 'express';
-import { InternalError, NotFoundError } from '../core/ApiError';
+import { NotFoundError } from '../core/ApiError';
 import asyncHandler from '../middlewares/asyncHandler';
 import { NextFunction } from 'express-serve-static-core';
 import {
@@ -15,6 +15,7 @@ import {
 import { defaultOrderParams } from '../utils/order';
 import { defaultPaginationParams } from '../utils/pagination';
 import { needRecord } from '../utils/record';
+import { createQuestion as createQuestionService } from '../services/internal/questions/create';
 
 export class QuestionController {
   // Get all Questions by author
@@ -67,17 +68,7 @@ export class QuestionController {
       res: Response,
       next: NextFunction,
     ): Promise<void> => {
-      const newQuestion = req.valid.body;
-      if (newQuestion.answers) {
-        newQuestion.answers = newQuestion.answers.map((ans, index) => ({
-          ...ans,
-          sorting: index + 1,
-        }));
-      }
-      const question = await questionRepository.insert(newQuestion);
-      if (question === null) {
-        throw new InternalError();
-      }
+      const question = await createQuestionService(req.valid.body);
       res.created({ message: 'Question has been created', data: question });
     },
   );

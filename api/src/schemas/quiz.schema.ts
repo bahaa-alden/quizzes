@@ -34,10 +34,6 @@ export type IQuizAllSchema = TypeOf<typeof quizAllSchema>;
 
 const quizCreateSchema = object({
   // <creating-property-create-schema />
-  duration: z.number(),
-
-  numberOfAttempts: z.number(),
-
   status: z.nativeEnum(QuizStatus).optional(),
 
   name: z.string(),
@@ -47,10 +43,6 @@ export type IQuizCreateSchema = TypeOf<typeof quizCreateSchema>;
 
 const quizUpdateSchema = object({
   // <creating-property-update-schema />
-  duration: z.number().optional(),
-
-  numberOfAttempts: z.number().optional(),
-
   status: z.nativeEnum(QuizStatus).optional(),
 
   name: z.string().optional(),

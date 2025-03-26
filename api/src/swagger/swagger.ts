@@ -1,5 +1,10 @@
 import * as swaggerJsdoc from 'swagger-jsdoc';
 import {
+  Setting,
+  createSetting,
+  updateSetting,
+} from './routes/setting.swagger';
+import {
   QuestionSession,
   createQuestionSession,
   updateQuestionSession,
@@ -35,7 +40,7 @@ import {
   Unauthorized,
   Error,
 } from './components';
-import { createUser, updateMe, User } from './routes/users.swagger';
+import { createUser, updateMe, updateUser, User } from './routes/users.swagger';
 const options = {
   url: '',
   definition: {
@@ -58,6 +63,9 @@ const options = {
     ],
     components: {
       schemas: {
+        Setting,
+        createSetting,
+        updateSetting,
         Record,
         addQuestions,
         QuestionSession,
@@ -78,6 +86,7 @@ const options = {
         signUp,
         createUser,
         updateMe,
+        updateUser,
         User,
         Error,
       },

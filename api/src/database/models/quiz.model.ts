@@ -7,8 +7,6 @@ import { IQuizQuestion } from './quiz-question.model';
 export interface IQuiz extends MongooseDocument {
   id: string;
   // <creating-property-interface />
-  duration: number;
-  numberOfAttempts: number;
   status?: QuizStatus;
   name: string;
   questionIds: IQuizQuestion[];
@@ -20,12 +18,6 @@ export interface IQuiz extends MongooseDocument {
 const quizSchema: Schema = new Schema<IQuiz>(
   {
     // <creating-property-schema />
-    duration: {
-      type: Number,
-    },
-    numberOfAttempts: {
-      type: Number,
-    },
     status: {
       type: String,
       enum: Object.values(QuizStatus),

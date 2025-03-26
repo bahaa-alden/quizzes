@@ -20,6 +20,9 @@ const userUpdateSchema = z
   .object({
     // <creating-property-update-schema />
     status: z.nativeEnum(UserStatus).optional(),
+    name: z.string().optional(),
+    email: z.string().email().optional(),
+    role: z.nativeEnum(RoleCode).optional(),
   })
   .strict();
 

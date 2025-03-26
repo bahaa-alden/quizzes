@@ -8,7 +8,7 @@ import authSchema from '../schemas/auth.schema';
 import { authMiddleware } from '../middlewares/authJwt';
 import { authorizationMiddleware } from '../middlewares/authorization';
 
-const { USER, ADMIN } = RoleCode;
+const { USER, ADMIN, TEACHER } = RoleCode;
 
 export class SettingRoutes {
   public router: Router;
@@ -28,7 +28,7 @@ export class SettingRoutes {
     // GET ALL SETTINGS
     this.router.get(
       '/',
-      restrict(USER, ADMIN),
+      restrict(USER, ADMIN, TEACHER),
       authorizationMiddleware.authorization,
       validator({ query: settingSchema.settingAll }),
       settingController.getSettings,
@@ -37,7 +37,7 @@ export class SettingRoutes {
     // GET SETTING BY ID
     this.router.get(
       '/:id',
-      restrict(USER, ADMIN),
+      restrict(USER, ADMIN, TEACHER),
       authorizationMiddleware.authorization,
       validator({ params: settingSchema.settingId }),
       settingController.getSetting,
@@ -46,7 +46,7 @@ export class SettingRoutes {
     // CREATE SETTING
     this.router.post(
       '/',
-      restrict(ADMIN),
+      restrict(ADMIN, TEACHER),
       authorizationMiddleware.authorization,
       validator({ body: settingSchema.settingCreate }),
       settingController.createSetting,
@@ -55,7 +55,7 @@ export class SettingRoutes {
     // UPDATE SETTING BY ID
     this.router.patch(
       '/:id',
-      restrict(ADMIN),
+      restrict(ADMIN, TEACHER),
       authorizationMiddleware.authorization,
       validator({
         params: settingSchema.settingId,
@@ -67,7 +67,7 @@ export class SettingRoutes {
     // DELETE SETTING BY ID
     this.router.delete(
       '/:id',
-      restrict(ADMIN),
+      restrict(ADMIN, TEACHER),
       authorizationMiddleware.authorization,
       validator({ params: settingSchema.settingId }),
       settingController.deleteSetting,

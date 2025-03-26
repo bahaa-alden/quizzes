@@ -10,7 +10,7 @@
  * /quiz-questions:
  *   post:
  *     summary: Create a quizQuestion
- *     description: ADMIN can create quizQuestion.
+ *     description: ADMIN,TEACHER can create quizQuestion.
  *     tags: [quiz-questions]
  *     security:
  *       - Bearer: []
@@ -42,7 +42,7 @@
  *
  *   get:
  *     summary: Get all quiz-questions
- *     description: USER,ADMIN can retrieve all quiz-questions.
+ *     description: USER,ADMIN,TEACHER can retrieve all quiz-questions.
  *     tags: [quiz-questions]
  *     security:
  *       - Bearer: []
@@ -120,7 +120,7 @@
  * /quiz-questions/{id}:
  *   get:
  *     summary: Get a quizQuestion
- *     description: USER,ADMIN can use this router.
+ *     description: USER,ADMIN,TEACHER can use this router.
  *     tags: [quiz-questions]
  *     security:
  *       - Bearer: []
@@ -153,7 +153,7 @@
  *
  *   patch:
  *     summary: Update a quizQuestion
- *     description: ADMIN can use this router.
+ *     description: ADMIN,TEACHER can use this router.
  *     tags: [quiz-questions]
  *     security:
  *       - Bearer: []
@@ -192,7 +192,7 @@
  *
  *   delete:
  *     summary: Delete a  quizQuestion.
- *     description: ADMIN can use this router.
+ *     description: ADMIN,TEACHER can use this router.
  *     tags: [quiz-questions]
  *     security:
  *       - Bearer: []

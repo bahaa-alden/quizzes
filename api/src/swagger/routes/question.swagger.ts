@@ -10,7 +10,7 @@
  * /questions:
  *   post:
  *     summary: Create a question
- *     description: ADMIN can create question.
+ *     description: ADMIN,TEACHER can create question.
  *     tags: [questions]
  *     security:
  *       - Bearer: []
@@ -42,7 +42,7 @@
  *
  *   get:
  *     summary: Get all questions
- *     description: USER,ADMIN can retrieve all questions.
+ *     description: USER,ADMIN,TEACHER can retrieve all questions.
  *     tags: [questions]
  *     security:
  *       - Bearer: []
@@ -103,7 +103,7 @@
  * /questions/{id}:
  *   get:
  *     summary: Get a question
- *     description: USER,ADMIN can use this router.
+ *     description: USER,ADMIN,TEACHER can use this router.
  *     tags: [questions]
  *     security:
  *       - Bearer: []
@@ -136,7 +136,7 @@
  *
  *   patch:
  *     summary: Update a question
- *     description: ADMIN can use this router.
+ *     description: ADMIN,TEACHER can use this router.
  *     tags: [questions]
  *     security:
  *       - Bearer: []
@@ -175,7 +175,7 @@
  *
  *   delete:
  *     summary: Delete a  question.
- *     description: ADMIN can use this router.
+ *     description: ADMIN,TEACHER can use this router.
  *     tags: [questions]
  *     security:
  *       - Bearer: []

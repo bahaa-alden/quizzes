@@ -10,7 +10,7 @@
  * /settings:
  *   post:
  *     summary: Create a setting
- *     description: ADMIN can create setting.
+ *     description: ADMIN,TEACHER can create setting.
  *     tags: [settings]
  *     security:
  *       - Bearer: []
@@ -42,7 +42,7 @@
  *
  *   get:
  *     summary: Get all settings
- *     description: USER,ADMIN can retrieve all settings.
+ *     description: USER,ADMIN,TEACHER can retrieve all settings.
  *     tags: [settings]
  *     security:
  *       - Bearer: []
@@ -102,7 +102,7 @@
  * /settings/{id}:
  *   get:
  *     summary: Get a setting
- *     description: USER,ADMIN can use this router.
+ *     description: USER,ADMIN,TEACHER can use this router.
  *     tags: [settings]
  *     security:
  *       - Bearer: []
@@ -135,7 +135,7 @@
  *
  *   patch:
  *     summary: Update a setting
- *     description: ADMIN can use this router.
+ *     description: ADMIN,TEACHER can use this router.
  *     tags: [settings]
  *     security:
  *       - Bearer: []
@@ -174,7 +174,7 @@
  *
  *   delete:
  *     summary: Delete a  setting.
- *     description: ADMIN can use this router.
+ *     description: ADMIN,TEACHER can use this router.
  *     tags: [settings]
  *     security:
  *       - Bearer: []

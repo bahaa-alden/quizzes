@@ -7,7 +7,7 @@ import { authorizationMiddleware } from '../middlewares/authorization';
 import { quizController } from '../controllers/quiz.controller';
 import authSchema from '../schemas/auth.schema';
 import { authMiddleware } from '../middlewares/authJwt';
-const { USER, ADMIN } = RoleCode;
+const { USER, ADMIN, TEACHER } = RoleCode;
 
 export class QuizRoutes {
   public router: Router;
@@ -27,7 +27,7 @@ export class QuizRoutes {
     // GET ALL QUIZZES
     this.router.get(
       '/',
-      restrict(USER, ADMIN),
+      restrict(USER, ADMIN, TEACHER),
       authorizationMiddleware.authorization,
       validator({ query: quizSchema.quizAll }),
       quizController.getQuizzes,
@@ -36,7 +36,7 @@ export class QuizRoutes {
     // GET QUIZ BY ID
     this.router.get(
       '/:id',
-      restrict(USER, ADMIN),
+      restrict(USER, ADMIN, TEACHER),
       authorizationMiddleware.authorization,
       validator({ params: quizSchema.quizId }),
       quizController.getQuiz,
@@ -45,7 +45,7 @@ export class QuizRoutes {
     // CREATE QUIZ
     this.router.post(
       '/',
-      restrict(ADMIN),
+      restrict(ADMIN, TEACHER),
       authorizationMiddleware.authorization,
       validator({ body: quizSchema.quizCreate }),
       quizController.createQuiz,
@@ -54,7 +54,7 @@ export class QuizRoutes {
     // CREATE QUIZ
     this.router.post(
       '/:id/questions',
-      restrict(ADMIN),
+      restrict(ADMIN, TEACHER),
       authorizationMiddleware.authorization,
       validator({ body: quizSchema.addQuestions, params: quizSchema.quizId }),
       quizController.addQuestions,
@@ -63,7 +63,7 @@ export class QuizRoutes {
     // UPDATE QUIZ BY ID
     this.router.patch(
       '/:id',
-      restrict(ADMIN),
+      restrict(ADMIN, TEACHER),
       authorizationMiddleware.authorization,
       validator({ params: quizSchema.quizId, body: quizSchema.quizUpdate }),
       quizController.updateQuiz,
@@ -72,7 +72,7 @@ export class QuizRoutes {
     // DELETE QUIZ BY ID
     this.router.delete(
       '/:id',
-      restrict(ADMIN),
+      restrict(ADMIN, TEACHER),
       authorizationMiddleware.authorization,
       validator({ params: quizSchema.quizId }),
       quizController.deleteQuiz,

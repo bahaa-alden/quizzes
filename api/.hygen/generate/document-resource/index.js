@@ -1,6 +1,7 @@
 const RoleCode = {
   USER: 'USER',
   ADMIN: 'ADMIN',
+  TEACHER: 'TEACHER',
 };
 
 const collectPromisesResults = (callback) => async (prevValues) => {

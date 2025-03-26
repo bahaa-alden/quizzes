@@ -7,7 +7,7 @@ import { authorizationMiddleware } from '../middlewares/authorization';
 import { questionController } from '../controllers/question.controller';
 import authSchema from '../schemas/auth.schema';
 import { authMiddleware } from '../middlewares/authJwt';
-const { USER, ADMIN } = RoleCode;
+const { USER, ADMIN, TEACHER } = RoleCode;
 
 export class QuestionRoutes {
   public router: Router;
@@ -45,7 +45,7 @@ export class QuestionRoutes {
     // CREATE QUESTION
     this.router.post(
       '/',
-      restrict(ADMIN),
+      restrict(ADMIN, TEACHER),
       authorizationMiddleware.authorization,
       validator({ body: questionSchema.questionCreate }),
       questionController.createQuestion,
@@ -54,7 +54,7 @@ export class QuestionRoutes {
     // UPDATE QUESTION BY ID
     this.router.patch(
       '/:id',
-      restrict(ADMIN),
+      restrict(ADMIN, TEACHER),
       authorizationMiddleware.authorization,
       validator({
         params: questionSchema.questionId,
@@ -66,7 +66,7 @@ export class QuestionRoutes {
     // DELETE QUESTION BY ID
     this.router.delete(
       '/:id',
-      restrict(ADMIN),
+      restrict(ADMIN, TEACHER),
       authorizationMiddleware.authorization,
       validator({ params: questionSchema.questionId }),
       questionController.deleteQuestion,

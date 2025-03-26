@@ -49,12 +49,6 @@ export class UserRoutes {
       authMiddleware.authenticateJWT,
     );
 
-    this.router.post(
-      '/',
-      validator({ body: userSchema.createUser }),
-      userController.registerUser,
-    );
-
     this.router.patch(
       '/updateMyPassword',
       validator({ body: authSchema.updateMyPassword }),
@@ -84,6 +78,12 @@ export class UserRoutes {
     // only for admins
     this.router.use(restrict(RoleCode.ADMIN));
     this.router.use(authorizationMiddleware.authorization);
+
+    this.router.post(
+      '/',
+      validator({ body: userSchema.createUser }),
+      userController.registerUser,
+    );
 
     // Get User BY ID
     this.router.get(

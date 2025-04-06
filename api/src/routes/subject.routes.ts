@@ -1,15 +1,16 @@
 import { Router } from 'express';
 import validator from '../middlewares/validator';
-import quizSchema from '../schemas/quiz.schema';
+import subjectSchema from '../schemas/subject.schema';
 import restrict from '../middlewares/restrict';
 import { RoleCode } from '../utils/enum';
 import { authorizationMiddleware } from '../middlewares/authorization';
-import { quizController } from '../controllers/quiz.controller';
+import { subjectController } from '../controllers/subject.controller';
 import authSchema from '../schemas/auth.schema';
 import { authMiddleware } from '../middlewares/authJwt';
+
 const { USER, ADMIN, TEACHER } = RoleCode;
 
-export class QuizRoutes {
+export class SubjectRoutes {
   public router: Router;
 
   constructor() {
@@ -24,60 +25,54 @@ export class QuizRoutes {
       authMiddleware.authenticateJWT,
     );
 
-    // GET ALL QUIZZES
+    // GET ALL SUBJECTS
     this.router.get(
       '/',
       restrict(USER, ADMIN, TEACHER),
       authorizationMiddleware.authorization,
-      validator({ query: quizSchema.quizAll }),
-      quizController.getQuizzes,
+      validator({ query: subjectSchema.subjectAll }),
+      subjectController.getSubjects,
     );
 
-    // GET QUIZ BY ID
+    // GET SUBJECT BY ID
     this.router.get(
       '/:id',
       restrict(USER, ADMIN, TEACHER),
       authorizationMiddleware.authorization,
-      validator({ params: quizSchema.quizId }),
-      quizController.getQuiz,
+      validator({ params: subjectSchema.subjectId }),
+      subjectController.getSubject,
     );
 
-    // CREATE QUIZ
+    // CREATE SUBJECT
     this.router.post(
       '/',
       restrict(ADMIN, TEACHER),
       authorizationMiddleware.authorization,
-      validator({ body: quizSchema.quizCreate }),
-      quizController.createQuiz,
+      validator({ body: subjectSchema.subjectCreate }),
+      subjectController.createSubject,
     );
 
-    // CREATE QUIZ
-    this.router.post(
-      '/:id/questions',
-      restrict(ADMIN, TEACHER),
-      authorizationMiddleware.authorization,
-      validator({ body: quizSchema.addQuestions, params: quizSchema.quizId }),
-      quizController.addQuestions,
-    );
-
-    // UPDATE QUIZ BY ID
+    // UPDATE SUBJECT BY ID
     this.router.patch(
       '/:id',
       restrict(ADMIN, TEACHER),
       authorizationMiddleware.authorization,
-      validator({ params: quizSchema.quizId, body: quizSchema.quizUpdate }),
-      quizController.updateQuiz,
+      validator({
+        params: subjectSchema.subjectId,
+        body: subjectSchema.subjectUpdate,
+      }),
+      subjectController.updateSubject,
     );
 
-    // DELETE QUIZ BY ID
+    // DELETE SUBJECT BY ID
     this.router.delete(
       '/:id',
       restrict(ADMIN, TEACHER),
       authorizationMiddleware.authorization,
-      validator({ params: quizSchema.quizId }),
-      quizController.deleteQuiz,
+      validator({ params: subjectSchema.subjectId }),
+      subjectController.deleteSubject,
     );
   }
 }
 
-export const quizRoutes = new QuizRoutes();
+export const subjectRoutes = new SubjectRoutes();

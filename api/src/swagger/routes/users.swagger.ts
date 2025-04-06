@@ -152,12 +152,7 @@
  *       content:
  *         application/json:
  *           schema:
- *             type: object
- *             properties:
- *               status:
- *                 type: string
- *             example:
- *               status: active
+ *             $ref: '#/components/schemas/updateUser'
  *     responses:
  *       "200":
  *         description: OK
@@ -317,7 +312,7 @@ export const User = {
     // property example
 
     email: 'user@gmail.com',
-    name: 'adel seirafi',
+    name: 'bahaa alden abdo',
     role: 'USER',
     status: 'true',
   },
@@ -335,8 +330,8 @@ export const createUser = {
   example: {
     // create property example
 
-    name: 'Mohammed Seirafi',
-    email: 'adel@gmail.com',
+    name: 'Bahaa abdo',
+    email: 'bad@gmail.com',
     password: '123454321',
     role: 'USER',
   },
@@ -353,7 +348,25 @@ export const updateMe = {
   example: {
     // update property example
 
-    name: 'Mohammed Seirafi',
-    email: 'adel@gmail.com',
+    name: 'Bahaa alden',
+    email: 'bah@gmail.com',
+  },
+};
+
+export const updateUser = {
+  type: 'object',
+  properties: {
+    // update property
+    status: { type: 'string', enum: ['active', 'disactive'] },
+    name: { type: 'string' },
+    email: { type: 'string' },
+    role: { type: 'string', enum: Object.values(RoleCode) },
+  },
+  example: {
+    // update property example
+    status: 'active',
+    name: 'Bahaa alden',
+    email: 'ba@gmail.com',
+    role: 'USER',
   },
 };

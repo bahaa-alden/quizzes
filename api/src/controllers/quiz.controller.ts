@@ -20,6 +20,7 @@ import { quizQuestionRepository } from '../database/repositories/quiz-question.r
 import { IQuestion } from '../database/models/question.model';
 import { createQuestion } from '../services/internal/questions/create';
 import { questionRepository } from '../database/repositories/question.repository';
+import { subjectRepository } from '../database/repositories/subject.repository';
 
 export class QuizController {
   // Get all Quizzes by author
@@ -32,6 +33,10 @@ export class QuizController {
       const options: QuizFindOptions = {
         filter: {
           // filters
+          teacherId: req.valid.query.teacherId,
+
+          subjectId: req.valid.query.subjectId,
+
           status: req.valid.query.status,
 
           dateFrom: req.valid.query.dateFrom,
@@ -77,7 +82,15 @@ export class QuizController {
       next: NextFunction,
     ): Promise<void> => {
       const newQuiz = req.valid.body;
-      const quiz = await quizRepository.insert(newQuiz);
+      const subject = needRecord(
+        await subjectRepository.findById(newQuiz.subjectId),
+        new NotFoundError('Subject not found'),
+      );
+
+      const quiz = await quizRepository.insert({
+        teacherId: subject.teacherId,
+        ...newQuiz,
+      });
       if (quiz === null) {
         throw new InternalError();
       }

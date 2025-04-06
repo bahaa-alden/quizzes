@@ -16,6 +16,7 @@ export enum CarCategory {
 export enum RoleCode {
   USER = 'USER',
   ADMIN = 'ADMIN',
+  TEACHER = 'TEACHER',
 }
 
 export enum Env {

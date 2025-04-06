@@ -42,7 +42,7 @@
  *
  *   get:
  *     summary: Get all sessions
- *     description: USER,ADMIN can retrieve all sessions.
+ *     description: USER,ADMIN,TEACHER can retrieve all sessions.
  *     tags: [sessions]
  *     security:
  *       - Bearer: []
@@ -132,7 +132,7 @@
  * /sessions/records:
  *   get:
  *     summary: Get all sessions records
- *     description: USER,ADMIN can retrieve all sessions.
+ *     description: USER,ADMIN,TEACHER can retrieve all sessions.
  *     tags: [sessions]
  *     security:
  *       - Bearer: []
@@ -179,7 +179,7 @@
  * /sessions/{id}:
  *   get:
  *     summary: Get a session
- *     description: USER,ADMIN can use this router.
+ *     description: USER,ADMIN,TEACHER can use this router.
  *     tags: [sessions]
  *     security:
  *       - Bearer: []
@@ -212,7 +212,7 @@
  *
  *   patch:
  *     summary: Update a session
- *     description: USER,ADMIN can use this router.
+ *     description: USER,ADMIN,TEACHER can use this router.
  *     tags: [sessions]
  *     security:
  *       - Bearer: []
@@ -251,7 +251,7 @@
  *
  *   delete:
  *     summary: Delete a  session.
- *     description: ADMIN can use this router.
+ *     description: ADMIN,TEACHER can use this router.
  *     tags: [sessions]
  *     security:
  *       - Bearer: []

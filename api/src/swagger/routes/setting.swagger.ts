@@ -1,17 +1,17 @@
 /**
  * @swagger
  * tags:
- *   name: quiz-questions
- *   description: QuizQuestion management and retrieval
+ *   name: settings
+ *   description: Setting management and retrieval
  */
 
 /**
  * @swagger
- * /quiz-questions:
+ * /settings:
  *   post:
- *     summary: Create a quizQuestion
- *     description: ADMIN,TEACHER can create quizQuestion.
- *     tags: [quiz-questions]
+ *     summary: Create a setting
+ *     description: ADMIN,TEACHER can create setting.
+ *     tags: [settings]
  *     security:
  *       - Bearer: []
  *     requestBody:
@@ -19,7 +19,7 @@
  *       content:
  *         application/json:
  *           schema:
- *             $ref: '#/components/schemas/createQuizQuestion'
+ *             $ref: '#/components/schemas/createSetting'
  *     responses:
  *       "201":
  *         description: Created
@@ -32,7 +32,7 @@
  *                   type: string
  *                   example: success
  *                 data:
- *                     $ref: '#/components/schemas/QuizQuestion'
+ *                     $ref: '#/components/schemas/Setting'
  *       "400":
  *         $ref: '#/components/responses/DuplicateEmail'
  *       "401":
@@ -41,30 +41,12 @@
  *         $ref: '#/components/responses/Forbidden'
  *
  *   get:
- *     summary: Get all quiz-questions
- *     description: USER,ADMIN,TEACHER can retrieve all quiz-questions.
- *     tags: [quiz-questions]
+ *     summary: Get all settings
+ *     description: USER,ADMIN,TEACHER can retrieve all settings.
+ *     tags: [settings]
  *     security:
  *       - Bearer: []
  *     parameters:
-  # filters
- *       - in: query
- *         name: quizId
- *         schema:
- *           type: string
- *         description: filter for quizId field
-
- *       - in: query
- *         name: fromDate
- *         schema:
- *           type: string
- *         description: from date
- *       - in: query
- *         name: toDate
- *         schema:
- *           type: string
- *         description: to date
-
  *       - in: query
  *         name: fields
  *         schema:
@@ -83,7 +65,7 @@
  *           type: integer
  *           minimum: 1
  *         default: 10
- *         description: Maximum number of quiz-questions
+ *         description: Maximum number of settings
  *       - in: query
  *         name: search
  *         schema:
@@ -108,7 +90,7 @@
  *                 data:
  *                   type: array
  *                   items:
- *                     $ref: '#/components/schemas/QuizQuestion'
+ *                     $ref: '#/components/schemas/Setting'
  *       "401":
  *         $ref: '#/components/responses/Unauthorized'
  *       "403":
@@ -117,11 +99,11 @@
 
 /**
  * @swagger
- * /quiz-questions/{id}:
+ * /settings/{id}:
  *   get:
- *     summary: Get a quizQuestion
+ *     summary: Get a setting
  *     description: USER,ADMIN,TEACHER can use this router.
- *     tags: [quiz-questions]
+ *     tags: [settings]
  *     security:
  *       - Bearer: []
  *     parameters:
@@ -130,7 +112,7 @@
  *         required: true
  *         schema:
  *           type: string
- *         description: QuizQuestion id
+ *         description: Setting id
  *     responses:
  *       "200":
  *         description: OK
@@ -143,7 +125,7 @@
  *                   type: string
  *                   example: success
  *                 data:
- *                     $ref: '#/components/schemas/QuizQuestion'
+ *                     $ref: '#/components/schemas/Setting'
  *       "401":
  *         $ref: '#/components/responses/Unauthorized'
  *       "403":
@@ -152,9 +134,9 @@
  *         $ref: '#/components/responses/NotFound'
  *
  *   patch:
- *     summary: Update a quizQuestion
+ *     summary: Update a setting
  *     description: ADMIN,TEACHER can use this router.
- *     tags: [quiz-questions]
+ *     tags: [settings]
  *     security:
  *       - Bearer: []
  *     parameters:
@@ -163,13 +145,13 @@
  *         required: true
  *         schema:
  *           type: string
- *         description: QuizQuestion id
+ *         description: Setting id
  *     requestBody:
  *         required: true
  *         content:
  *           application/json:
  *             schema:
- *               $ref: '#/components/schemas/updateQuizQuestion'
+ *               $ref: '#/components/schemas/updateSetting'
  *     responses:
  *       "200":
  *         description: OK
@@ -182,7 +164,7 @@
  *                   type: string
  *                   example: success
  *                 data:
- *                     $ref: '#/components/schemas/QuizQuestion'
+ *                     $ref: '#/components/schemas/Setting'
  *       "401":
  *         $ref: '#/components/responses/Unauthorized'
  *       "403":
@@ -191,9 +173,9 @@
  *         $ref: '#/components/responses/NotFound'
  *
  *   delete:
- *     summary: Delete a  quizQuestion.
+ *     summary: Delete a  setting.
  *     description: ADMIN,TEACHER can use this router.
- *     tags: [quiz-questions]
+ *     tags: [settings]
  *     security:
  *       - Bearer: []
  *     parameters:
@@ -202,7 +184,7 @@
  *         required: true
  *         schema:
  *           type: string
- *         description: QuizQuestion id
+ *         description: Setting id
  *     responses:
  *       "200":
  *         description: OK
@@ -225,56 +207,56 @@
  *         $ref: '#/components/responses/NotFound'
  */
 
-export const QuizQuestion = {
+export const Setting = {
   type: 'object',
   properties: {
     id: { type: 'string' },
     // property
-    questionId: { type: 'string' },
-    quizId: { type: 'string' },
+    numberOfAttempts: { type: 'number' },
+    duration: { type: 'number' },
   },
   example: {
     id: '5ebac534954b54139806c112',
     // property example
-    questionId: '673c40cd59e293827f79e398',
+    numberOfAttempts: 3,
 
-    quizId: '673c40cd59e293827f79e398',
+    duration: 60,
 
     createdAt: '2024-11-24T16:35:04.438Z',
     updatedAt: '2024-11-24T16:35:04.438Z',
   },
 };
-export const createQuizQuestion = {
+export const createSetting = {
   type: 'object',
   properties: {
     // create property
-    questionId: { type: 'string' },
-    quizId: { type: 'string' },
+    numberOfAttempts: { type: 'number' },
+    duration: { type: 'number' },
   },
   example: {
     // create property example
-    questionId: '673c40cd59e293827f79e398',
+    numberOfAttempts: 3,
 
-    quizId: '673c40cd59e293827f79e398',
+    duration: 60,
   },
   required: [
     // required property
-    'question',
+    'numberOfAttempts',
 
-    'quiz',
+    'duration',
   ],
 };
-export const updateQuizQuestion = {
+export const updateSetting = {
   type: 'object',
   properties: {
     // update property
-    questionId: { type: 'string' },
-    quizId: { type: 'string' },
+    numberOfAttempts: { type: 'number' },
+    duration: { type: 'number' },
   },
   example: {
     // update property example
-    questionId: '673c40cd59e293827f79e398',
+    numberOfAttempts: 3,
 
-    quizId: '673c40cd59e293827f79e398',
+    duration: 60,
   },
 };

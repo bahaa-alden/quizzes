@@ -7,7 +7,7 @@ import { authorizationMiddleware } from '../middlewares/authorization';
 import { sessionController } from '../controllers/session.controller';
 import authSchema from '../schemas/auth.schema';
 import { authMiddleware } from '../middlewares/authJwt';
-const { USER, ADMIN } = RoleCode;
+const { USER, ADMIN, TEACHER } = RoleCode;
 
 export class SessionRoutes {
   public router: Router;
@@ -27,7 +27,7 @@ export class SessionRoutes {
     // GET ALL SESSIONS
     this.router.get(
       '/',
-      restrict(USER, ADMIN),
+      restrict(USER, ADMIN, TEACHER),
       authorizationMiddleware.authorization,
       validator({ query: sessionSchema.sessionAll }),
       sessionController.getSessions,
@@ -45,7 +45,7 @@ export class SessionRoutes {
     // GET SESSION BY ID
     this.router.get(
       '/:id',
-      restrict(USER, ADMIN),
+      restrict(USER, ADMIN, TEACHER),
       authorizationMiddleware.authorization,
       validator({ params: sessionSchema.sessionId }),
       sessionController.getSession,
@@ -63,7 +63,7 @@ export class SessionRoutes {
     // UPDATE SESSION BY ID
     this.router.patch(
       '/:id',
-      restrict(USER, ADMIN),
+      restrict(USER, TEACHER, ADMIN),
       authorizationMiddleware.authorization,
       validator({
         params: sessionSchema.sessionId,
@@ -75,7 +75,7 @@ export class SessionRoutes {
     // DELETE SESSION BY ID
     this.router.delete(
       '/:id',
-      restrict(ADMIN),
+      restrict(TEACHER, ADMIN),
       authorizationMiddleware.authorization,
       validator({ params: sessionSchema.sessionId }),
       sessionController.deleteSession,

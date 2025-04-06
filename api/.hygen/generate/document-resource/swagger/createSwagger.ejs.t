@@ -50,6 +50,7 @@ to: ./src/swagger/routes/<%=  nameDash %>.swagger.ts
  *     security:
  *       - Bearer: []
  *     parameters:
+  # filters
  *       - in: query
  *         name: fields
  *         schema:

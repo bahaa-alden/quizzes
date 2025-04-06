@@ -7,7 +7,7 @@ import { authorizationMiddleware } from '../middlewares/authorization';
 import { quizQuestionController } from '../controllers/quiz-question.controller';
 import authSchema from '../schemas/auth.schema';
 import { authMiddleware } from '../middlewares/authJwt';
-const { USER, ADMIN } = RoleCode;
+const { USER, ADMIN, TEACHER } = RoleCode;
 
 export class QuizQuestionRoutes {
   public router: Router;
@@ -27,7 +27,7 @@ export class QuizQuestionRoutes {
     // GET ALL QUIZ_QUESTIONS
     this.router.get(
       '/',
-      restrict(USER, ADMIN),
+      restrict(USER, ADMIN, TEACHER),
       authorizationMiddleware.authorization,
       validator({ query: quizQuestionSchema.quizQuestionAll }),
       quizQuestionController.getQuizQuestions,
@@ -36,7 +36,7 @@ export class QuizQuestionRoutes {
     // GET QUIZ_QUESTION BY ID
     this.router.get(
       '/:id',
-      restrict(USER, ADMIN),
+      restrict(USER, ADMIN, TEACHER),
       authorizationMiddleware.authorization,
       validator({ params: quizQuestionSchema.quizQuestionId }),
       quizQuestionController.getQuizQuestion,
@@ -45,7 +45,7 @@ export class QuizQuestionRoutes {
     // CREATE QUIZ_QUESTION
     this.router.post(
       '/',
-      restrict(ADMIN),
+      restrict(ADMIN, TEACHER),
       authorizationMiddleware.authorization,
       validator({ body: quizQuestionSchema.quizQuestionCreate }),
       quizQuestionController.createQuizQuestion,
@@ -54,7 +54,7 @@ export class QuizQuestionRoutes {
     // UPDATE QUIZ_QUESTION BY ID
     this.router.patch(
       '/:id',
-      restrict(ADMIN),
+      restrict(ADMIN, TEACHER),
       authorizationMiddleware.authorization,
       validator({
         params: quizQuestionSchema.quizQuestionId,
@@ -66,7 +66,7 @@ export class QuizQuestionRoutes {
     // DELETE QUIZ_QUESTION BY ID
     this.router.delete(
       '/:id',
-      restrict(ADMIN),
+      restrict(ADMIN, TEACHER),
       authorizationMiddleware.authorization,
       validator({ params: quizQuestionSchema.quizQuestionId }),
       quizQuestionController.deleteQuizQuestion,

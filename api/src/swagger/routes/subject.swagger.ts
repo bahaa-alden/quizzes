@@ -1,17 +1,17 @@
 /**
  * @swagger
  * tags:
- *   name: quiz-questions
- *   description: QuizQuestion management and retrieval
+ *   name: subjects
+ *   description: Subject management and retrieval
  */
 
 /**
  * @swagger
- * /quiz-questions:
+ * /subjects:
  *   post:
- *     summary: Create a quizQuestion
- *     description: ADMIN,TEACHER can create quizQuestion.
- *     tags: [quiz-questions]
+ *     summary: Create a subject
+ *     description: ADMIN,TEACHER can create subject.
+ *     tags: [subjects]
  *     security:
  *       - Bearer: []
  *     requestBody:
@@ -19,7 +19,7 @@
  *       content:
  *         application/json:
  *           schema:
- *             $ref: '#/components/schemas/createQuizQuestion'
+ *             $ref: '#/components/schemas/createSubject'
  *     responses:
  *       "201":
  *         description: Created
@@ -32,7 +32,7 @@
  *                   type: string
  *                   example: success
  *                 data:
- *                     $ref: '#/components/schemas/QuizQuestion'
+ *                     $ref: '#/components/schemas/Subject'
  *       "400":
  *         $ref: '#/components/responses/DuplicateEmail'
  *       "401":
@@ -41,30 +41,18 @@
  *         $ref: '#/components/responses/Forbidden'
  *
  *   get:
- *     summary: Get all quiz-questions
- *     description: USER,ADMIN,TEACHER can retrieve all quiz-questions.
- *     tags: [quiz-questions]
+ *     summary: Get all subjects
+ *     description: USER,ADMIN,TEACHER can retrieve all subjects.
+ *     tags: [subjects]
  *     security:
  *       - Bearer: []
  *     parameters:
   # filters
  *       - in: query
- *         name: quizId
+ *         name: teacherId
  *         schema:
  *           type: string
- *         description: filter for quizId field
-
- *       - in: query
- *         name: fromDate
- *         schema:
- *           type: string
- *         description: from date
- *       - in: query
- *         name: toDate
- *         schema:
- *           type: string
- *         description: to date
-
+ *         description: filter for teacherId field
  *       - in: query
  *         name: fields
  *         schema:
@@ -83,7 +71,7 @@
  *           type: integer
  *           minimum: 1
  *         default: 10
- *         description: Maximum number of quiz-questions
+ *         description: Maximum number of subjects
  *       - in: query
  *         name: search
  *         schema:
@@ -108,7 +96,7 @@
  *                 data:
  *                   type: array
  *                   items:
- *                     $ref: '#/components/schemas/QuizQuestion'
+ *                     $ref: '#/components/schemas/Subject'
  *       "401":
  *         $ref: '#/components/responses/Unauthorized'
  *       "403":
@@ -117,11 +105,11 @@
 
 /**
  * @swagger
- * /quiz-questions/{id}:
+ * /subjects/{id}:
  *   get:
- *     summary: Get a quizQuestion
+ *     summary: Get a subject
  *     description: USER,ADMIN,TEACHER can use this router.
- *     tags: [quiz-questions]
+ *     tags: [subjects]
  *     security:
  *       - Bearer: []
  *     parameters:
@@ -130,7 +118,7 @@
  *         required: true
  *         schema:
  *           type: string
- *         description: QuizQuestion id
+ *         description: Subject id
  *     responses:
  *       "200":
  *         description: OK
@@ -143,7 +131,7 @@
  *                   type: string
  *                   example: success
  *                 data:
- *                     $ref: '#/components/schemas/QuizQuestion'
+ *                     $ref: '#/components/schemas/Subject'
  *       "401":
  *         $ref: '#/components/responses/Unauthorized'
  *       "403":
@@ -152,9 +140,9 @@
  *         $ref: '#/components/responses/NotFound'
  *
  *   patch:
- *     summary: Update a quizQuestion
+ *     summary: Update a subject
  *     description: ADMIN,TEACHER can use this router.
- *     tags: [quiz-questions]
+ *     tags: [subjects]
  *     security:
  *       - Bearer: []
  *     parameters:
@@ -163,13 +151,13 @@
  *         required: true
  *         schema:
  *           type: string
- *         description: QuizQuestion id
+ *         description: Subject id
  *     requestBody:
  *         required: true
  *         content:
  *           application/json:
  *             schema:
- *               $ref: '#/components/schemas/updateQuizQuestion'
+ *               $ref: '#/components/schemas/updateSubject'
  *     responses:
  *       "200":
  *         description: OK
@@ -182,7 +170,7 @@
  *                   type: string
  *                   example: success
  *                 data:
- *                     $ref: '#/components/schemas/QuizQuestion'
+ *                     $ref: '#/components/schemas/Subject'
  *       "401":
  *         $ref: '#/components/responses/Unauthorized'
  *       "403":
@@ -191,9 +179,9 @@
  *         $ref: '#/components/responses/NotFound'
  *
  *   delete:
- *     summary: Delete a  quizQuestion.
+ *     summary: Delete a  subject.
  *     description: ADMIN,TEACHER can use this router.
- *     tags: [quiz-questions]
+ *     tags: [subjects]
  *     security:
  *       - Bearer: []
  *     parameters:
@@ -202,7 +190,7 @@
  *         required: true
  *         schema:
  *           type: string
- *         description: QuizQuestion id
+ *         description: Subject id
  *     responses:
  *       "200":
  *         description: OK
@@ -225,56 +213,65 @@
  *         $ref: '#/components/responses/NotFound'
  */
 
-export const QuizQuestion = {
+export const Subject = {
   type: 'object',
   properties: {
     id: { type: 'string' },
     // property
-    questionId: { type: 'string' },
-    quizId: { type: 'string' },
+    teacherId: { type: 'string' },
+    isActive: { type: 'boolean' },
+    name: { type: 'string' },
   },
   example: {
     id: '5ebac534954b54139806c112',
     // property example
-    questionId: '673c40cd59e293827f79e398',
+    teacherId: '673c40cd59e293827f79e398',
 
-    quizId: '673c40cd59e293827f79e398',
+    isActive: false,
+
+    name: 'math',
 
     createdAt: '2024-11-24T16:35:04.438Z',
     updatedAt: '2024-11-24T16:35:04.438Z',
   },
 };
-export const createQuizQuestion = {
+export const createSubject = {
   type: 'object',
   properties: {
     // create property
-    questionId: { type: 'string' },
-    quizId: { type: 'string' },
+    teacherId: { type: 'string' },
+    isActive: { type: 'boolean' },
+    name: { type: 'string' },
   },
   example: {
     // create property example
-    questionId: '673c40cd59e293827f79e398',
+    teacherId: '673c40cd59e293827f79e398',
 
-    quizId: '673c40cd59e293827f79e398',
+    isActive: false,
+
+    name: 'math',
   },
   required: [
     // required property
-    'question',
+    'teacherId',
 
-    'quiz',
+    'name',
   ],
 };
-export const updateQuizQuestion = {
+export const updateSubject = {
   type: 'object',
   properties: {
     // update property
-    questionId: { type: 'string' },
-    quizId: { type: 'string' },
+    teacherId: { type: 'string' },
+    isActive: { type: 'boolean' },
+    name: { type: 'string' },
   },
   example: {
     // update property example
-    questionId: '673c40cd59e293827f79e398',
+    teacherId: '673c40cd59e293827f79e398',
 
-    quizId: '673c40cd59e293827f79e398',
+    isActive: false,
+
+    name: 'math',
   },
 };

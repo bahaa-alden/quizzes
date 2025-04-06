@@ -1,15 +1,16 @@
 import { Router } from 'express';
 import validator from '../middlewares/validator';
-import quizSchema from '../schemas/quiz.schema';
+import settingSchema from '../schemas/setting.schema';
 import restrict from '../middlewares/restrict';
 import { RoleCode } from '../utils/enum';
-import { authorizationMiddleware } from '../middlewares/authorization';
-import { quizController } from '../controllers/quiz.controller';
+import { settingController } from '../controllers/setting.controller';
 import authSchema from '../schemas/auth.schema';
 import { authMiddleware } from '../middlewares/authJwt';
+import { authorizationMiddleware } from '../middlewares/authorization';
+
 const { USER, ADMIN, TEACHER } = RoleCode;
 
-export class QuizRoutes {
+export class SettingRoutes {
   public router: Router;
 
   constructor() {
@@ -24,60 +25,54 @@ export class QuizRoutes {
       authMiddleware.authenticateJWT,
     );
 
-    // GET ALL QUIZZES
+    // GET ALL SETTINGS
     this.router.get(
       '/',
       restrict(USER, ADMIN, TEACHER),
       authorizationMiddleware.authorization,
-      validator({ query: quizSchema.quizAll }),
-      quizController.getQuizzes,
+      validator({ query: settingSchema.settingAll }),
+      settingController.getSettings,
     );
 
-    // GET QUIZ BY ID
+    // GET SETTING BY ID
     this.router.get(
       '/:id',
       restrict(USER, ADMIN, TEACHER),
       authorizationMiddleware.authorization,
-      validator({ params: quizSchema.quizId }),
-      quizController.getQuiz,
+      validator({ params: settingSchema.settingId }),
+      settingController.getSetting,
     );
 
-    // CREATE QUIZ
+    // CREATE SETTING
     this.router.post(
       '/',
       restrict(ADMIN, TEACHER),
       authorizationMiddleware.authorization,
-      validator({ body: quizSchema.quizCreate }),
-      quizController.createQuiz,
+      validator({ body: settingSchema.settingCreate }),
+      settingController.createSetting,
     );
 
-    // CREATE QUIZ
-    this.router.post(
-      '/:id/questions',
-      restrict(ADMIN, TEACHER),
-      authorizationMiddleware.authorization,
-      validator({ body: quizSchema.addQuestions, params: quizSchema.quizId }),
-      quizController.addQuestions,
-    );
-
-    // UPDATE QUIZ BY ID
+    // UPDATE SETTING BY ID
     this.router.patch(
       '/:id',
       restrict(ADMIN, TEACHER),
       authorizationMiddleware.authorization,
-      validator({ params: quizSchema.quizId, body: quizSchema.quizUpdate }),
-      quizController.updateQuiz,
+      validator({
+        params: settingSchema.settingId,
+        body: settingSchema.settingUpdate,
+      }),
+      settingController.updateSetting,
     );
 
-    // DELETE QUIZ BY ID
+    // DELETE SETTING BY ID
     this.router.delete(
       '/:id',
       restrict(ADMIN, TEACHER),
       authorizationMiddleware.authorization,
-      validator({ params: quizSchema.quizId }),
-      quizController.deleteQuiz,
+      validator({ params: settingSchema.settingId }),
+      settingController.deleteSetting,
     );
   }
 }
 
-export const quizRoutes = new QuizRoutes();
+export const settingRoutes = new SettingRoutes();

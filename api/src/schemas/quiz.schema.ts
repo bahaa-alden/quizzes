@@ -1,15 +1,11 @@
+import { objectId } from './common';
+
 import { stringToDate } from './common';
 
 import { QuizStatus } from './../utils/enum';
 
 import { object, z, string, type TypeOf } from 'zod';
-import {
-  objectId,
-  orderColumn,
-  orderDirection,
-  page,
-  pageSize,
-} from './common';
+import { orderColumn, orderDirection, page, pageSize } from './common';
 import questionSchema from './question.schema';
 
 const quizIdSchema = object({
@@ -24,6 +20,10 @@ const quizAllSchema = object({
   orderColumn,
   orderDirection,
   search: string().optional(),
+  teacherId: objectId.optional(),
+
+  subjectId: objectId.optional(),
+
   status: z.nativeEnum(QuizStatus).optional(),
   fields: string().optional(),
   dateFrom: stringToDate.optional(),
@@ -34,9 +34,8 @@ export type IQuizAllSchema = TypeOf<typeof quizAllSchema>;
 
 const quizCreateSchema = object({
   // <creating-property-create-schema />
-  duration: z.number(),
 
-  numberOfAttempts: z.number(),
+  subjectId: objectId,
 
   status: z.nativeEnum(QuizStatus).optional(),
 
@@ -47,9 +46,8 @@ export type IQuizCreateSchema = TypeOf<typeof quizCreateSchema>;
 
 const quizUpdateSchema = object({
   // <creating-property-update-schema />
-  duration: z.number().optional(),
 
-  numberOfAttempts: z.number().optional(),
+  subjectId: objectId.optional(),
 
   status: z.nativeEnum(QuizStatus).optional(),
 

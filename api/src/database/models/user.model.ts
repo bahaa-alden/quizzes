@@ -69,8 +69,6 @@ const userSchema = new Schema<IUser>(
   },
 );
 
-userSchema.index({ email: 1 });
-
 userSchema.pre('save', async function save(next) {
   // If the password is not modified, skip hashing
   if (!this.isModified('password')) {

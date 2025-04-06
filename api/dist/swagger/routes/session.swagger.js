@@ -44,7 +44,7 @@ exports.updateSession = exports.createSession = exports.Session = exports.Record
  *
  *   get:
  *     summary: Get all sessions
- *     description: USER,ADMIN can retrieve all sessions.
+ *     description: USER,ADMIN,TEACHER can retrieve all sessions.
  *     tags: [sessions]
  *     security:
  *       - Bearer: []
@@ -133,7 +133,7 @@ exports.updateSession = exports.createSession = exports.Session = exports.Record
  * /sessions/records:
  *   get:
  *     summary: Get all sessions records
- *     description: USER,ADMIN can retrieve all sessions.
+ *     description: USER,ADMIN,TEACHER can retrieve all sessions.
  *     tags: [sessions]
  *     security:
  *       - Bearer: []
@@ -179,7 +179,7 @@ exports.updateSession = exports.createSession = exports.Session = exports.Record
  * /sessions/{id}:
  *   get:
  *     summary: Get a session
- *     description: USER,ADMIN can use this router.
+ *     description: USER,ADMIN,TEACHER can use this router.
  *     tags: [sessions]
  *     security:
  *       - Bearer: []
@@ -212,7 +212,7 @@ exports.updateSession = exports.createSession = exports.Session = exports.Record
  *
  *   patch:
  *     summary: Update a session
- *     description: USER,ADMIN can use this router.
+ *     description: USER,ADMIN,TEACHER can use this router.
  *     tags: [sessions]
  *     security:
  *       - Bearer: []
@@ -251,7 +251,7 @@ exports.updateSession = exports.createSession = exports.Session = exports.Record
  *
  *   delete:
  *     summary: Delete a  session.
- *     description: ADMIN can use this router.
+ *     description: ADMIN,TEACHER can use this router.
  *     tags: [sessions]
  *     security:
  *       - Bearer: []

@@ -45,7 +45,6 @@ const userSchema = new mongoose_1.Schema({
         transform: (_, ret) => (0, lodash_1.omit)(ret, ['__v', '_id', 'password', 'deletedAt']),
     },
 });
-userSchema.index({ email: 1 });
 userSchema.pre('save', async function save(next) {
     // If the password is not modified, skip hashing
     if (!this.isModified('password')) {

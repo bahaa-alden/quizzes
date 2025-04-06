@@ -28,10 +28,10 @@ declare const sessionAllSchema: z.ZodObject<{
     status?: SessionStatus | undefined;
     search?: string | undefined;
     fields?: string | undefined;
-    quizId?: string | undefined;
-    studentId?: string | undefined;
     dateFrom?: Date | undefined;
     dateTo?: Date | undefined;
+    quizId?: string | undefined;
+    studentId?: string | undefined;
 }, {
     status?: SessionStatus | undefined;
     search?: string | undefined;
@@ -40,10 +40,10 @@ declare const sessionAllSchema: z.ZodObject<{
     orderColumn?: "id" | "createdAt" | undefined;
     orderDirection?: import("../utils/order").OrderDirection | undefined;
     fields?: string | undefined;
-    quizId?: string | undefined;
-    studentId?: string | undefined;
     dateFrom?: string | undefined;
     dateTo?: string | undefined;
+    quizId?: string | undefined;
+    studentId?: string | undefined;
 }>;
 export type ISessionAllSchema = TypeOf<typeof sessionAllSchema>;
 declare const sessionRecordSchema: z.ZodObject<{
@@ -113,10 +113,10 @@ declare const _default: {
         status?: SessionStatus | undefined;
         search?: string | undefined;
         fields?: string | undefined;
-        quizId?: string | undefined;
-        studentId?: string | undefined;
         dateFrom?: Date | undefined;
         dateTo?: Date | undefined;
+        quizId?: string | undefined;
+        studentId?: string | undefined;
     }, {
         status?: SessionStatus | undefined;
         search?: string | undefined;
@@ -125,10 +125,10 @@ declare const _default: {
         orderColumn?: "id" | "createdAt" | undefined;
         orderDirection?: import("../utils/order").OrderDirection | undefined;
         fields?: string | undefined;
-        quizId?: string | undefined;
-        studentId?: string | undefined;
         dateFrom?: string | undefined;
         dateTo?: string | undefined;
+        quizId?: string | undefined;
+        studentId?: string | undefined;
     }>;
     sessionCreate: z.ZodObject<{
         quizId: z.ZodString;

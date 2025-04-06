@@ -1,15 +1,18 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-const enum_1 = require("./../../utils/enum");
 const mongoose_1 = require("mongoose");
+const enum_1 = require("./../../utils/enum");
+const mongoose_2 = require("mongoose");
 const lodash_1 = require("lodash");
-const quizSchema = new mongoose_1.Schema({
+const quizSchema = new mongoose_2.Schema({
     // <creating-property-schema />
-    duration: {
-        type: Number,
+    teacherId: {
+        type: mongoose_1.default.Schema.Types.ObjectId,
+        ref: 'User',
     },
-    numberOfAttempts: {
-        type: Number,
+    subjectId: {
+        type: mongoose_1.default.Schema.Types.ObjectId,
+        ref: 'Subject',
     },
     status: {
         type: String,
@@ -44,5 +47,19 @@ quizSchema.virtual('questionIds', {
     foreignField: 'quizId',
     match: { deletedAt: null },
 });
-exports.default = (0, mongoose_1.model)('Quiz', quizSchema);
+quizSchema.virtual('subject', {
+    localField: 'subjectId',
+    foreignField: '_id',
+    ref: 'Subject',
+    justOne: true,
+    match: { deletedAt: null },
+});
+quizSchema.virtual('teacher', {
+    localField: 'teacherId',
+    foreignField: '_id',
+    ref: 'User',
+    justOne: true,
+    match: { deletedAt: null },
+});
+exports.default = (0, mongoose_2.model)('Quiz', quizSchema);
 //# sourceMappingURL=quiz.model.js.map

@@ -12,7 +12,7 @@ exports.addQuestions = exports.updateQuiz = exports.createQuiz = exports.Quiz = 
  * /quizzes:
  *   post:
  *     summary: Create a quiz
- *     description: ADMIN can create quiz.
+ *     description: ADMIN,TEACHER can create quiz.
  *     tags: [quizzes]
  *     security:
  *       - Bearer: []
@@ -44,12 +44,24 @@ exports.addQuestions = exports.updateQuiz = exports.createQuiz = exports.Quiz = 
  *
  *   get:
  *     summary: Get all quizzes
- *     description: USER,ADMIN can retrieve all quizzes.
+ *     description: USER,ADMIN,TEACHER can retrieve all quizzes.
  *     tags: [quizzes]
  *     security:
  *       - Bearer: []
  *     parameters:
   # filters
+ *       - in: query
+ *         name: teacherId
+ *         schema:
+ *           type: string
+ *         description: filter for teacherId field
+
+ *       - in: query
+ *         name: subjectId
+ *         schema:
+ *           type: string
+ *         description: filter for subjectId field
+
  *       - in: query
  *         name: status
  *         schema:
@@ -127,7 +139,7 @@ exports.addQuestions = exports.updateQuiz = exports.createQuiz = exports.Quiz = 
  * /quizzes/{id}/questions:
  *   post:
  *     summary: Create a question
- *     description: ADMIN can create question.
+ *     description: ADMIN,TEACHER can create question.
  *     tags: [questions]
  *     security:
  *       - Bearer: []
@@ -169,7 +181,7 @@ exports.addQuestions = exports.updateQuiz = exports.createQuiz = exports.Quiz = 
  * /quizzes/{id}:
  *   get:
  *     summary: Get a quiz
- *     description: USER,ADMIN can use this router.
+ *     description: USER,ADMIN,TEACHER can use this router.
  *     tags: [quizzes]
  *     security:
  *       - Bearer: []
@@ -202,7 +214,7 @@ exports.addQuestions = exports.updateQuiz = exports.createQuiz = exports.Quiz = 
  *
  *   patch:
  *     summary: Update a quiz
- *     description: ADMIN can use this router.
+ *     description: ADMIN,TEACHER can use this router.
  *     tags: [quizzes]
  *     security:
  *       - Bearer: []
@@ -241,7 +253,7 @@ exports.addQuestions = exports.updateQuiz = exports.createQuiz = exports.Quiz = 
  *
  *   delete:
  *     summary: Delete a  quiz.
- *     description: ADMIN can use this router.
+ *     description: ADMIN,TEACHER can use this router.
  *     tags: [quizzes]
  *     security:
  *       - Bearer: []
@@ -278,16 +290,16 @@ exports.Quiz = {
     properties: {
         id: { type: 'string' },
         // property
-        duration: { type: 'number' },
-        numberOfAttempts: { type: 'number' },
+        teacherId: { type: 'string' },
+        subjectId: { type: 'string' },
         status: { type: 'string', enum: ['active', 'disactive'] },
         name: { type: 'string' },
     },
     example: {
         id: '5ebac534954b54139806c112',
         // property example
-        duration: 60,
-        numberOfAttempts: 3,
+        teacherId: '673c40cd59e293827f79e398',
+        subjectId: '673c40cd59e293827f79e398',
         status: 'active',
         name: 'math',
         createdAt: '2024-11-24T16:35:04.438Z',
@@ -298,22 +310,18 @@ exports.createQuiz = {
     type: 'object',
     properties: {
         // create property
-        duration: { type: 'number' },
-        numberOfAttempts: { type: 'number' },
+        subjectId: { type: 'string' },
         status: { type: 'string', enum: ['active', 'disactive'] },
         name: { type: 'string' },
     },
     example: {
         // create property example
-        duration: 60,
-        numberOfAttempts: 3,
+        subjectId: '673c40cd59e293827f79e398',
         status: 'active',
         name: 'math',
     },
     required: [
         // required property
-        'duration',
-        'numberOfAttempts',
         'name',
     ],
 };
@@ -321,15 +329,13 @@ exports.updateQuiz = {
     type: 'object',
     properties: {
         // update property
-        duration: { type: 'number' },
-        numberOfAttempts: { type: 'number' },
+        subjectId: { type: 'string' },
         status: { type: 'string', enum: ['active', 'disactive'] },
         name: { type: 'string' },
     },
     example: {
         // update property example
-        duration: 60,
-        numberOfAttempts: 3,
+        subjectId: '673c40cd59e293827f79e398',
         status: 'active',
         name: 'math',
     },

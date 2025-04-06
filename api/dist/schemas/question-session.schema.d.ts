@@ -25,9 +25,9 @@ declare const questionSessionAllSchema: z.ZodObject<{
     orderDirection: import("../utils/order").OrderDirection;
     status?: QuestionSessionStatus | undefined;
     search?: string | undefined;
+    fields?: string | undefined;
     sessionId?: string | undefined;
     bookmarked?: boolean | undefined;
-    fields?: string | undefined;
 }, {
     status?: QuestionSessionStatus | undefined;
     search?: string | undefined;
@@ -35,9 +35,9 @@ declare const questionSessionAllSchema: z.ZodObject<{
     pageSize?: string | undefined;
     orderColumn?: "id" | "createdAt" | undefined;
     orderDirection?: import("../utils/order").OrderDirection | undefined;
+    fields?: string | undefined;
     sessionId?: string | undefined;
     bookmarked?: import("./../utils/enum").BooleanString | undefined;
-    fields?: string | undefined;
 }>;
 export type IQuestionSessionAllSchema = TypeOf<typeof questionSessionAllSchema>;
 declare const questionSessionCreateSchema: z.ZodObject<{
@@ -111,9 +111,9 @@ declare const _default: {
         orderDirection: import("../utils/order").OrderDirection;
         status?: QuestionSessionStatus | undefined;
         search?: string | undefined;
+        fields?: string | undefined;
         sessionId?: string | undefined;
         bookmarked?: boolean | undefined;
-        fields?: string | undefined;
     }, {
         status?: QuestionSessionStatus | undefined;
         search?: string | undefined;
@@ -121,9 +121,9 @@ declare const _default: {
         pageSize?: string | undefined;
         orderColumn?: "id" | "createdAt" | undefined;
         orderDirection?: import("../utils/order").OrderDirection | undefined;
+        fields?: string | undefined;
         sessionId?: string | undefined;
         bookmarked?: import("./../utils/enum").BooleanString | undefined;
-        fields?: string | undefined;
     }>;
     questionSessionCreate: z.ZodObject<{
         sessionId: z.ZodString;

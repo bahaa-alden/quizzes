@@ -14,6 +14,8 @@ declare const quizAllSchema: z.ZodObject<{
     orderColumn: z.ZodDefault<z.ZodOptional<z.ZodEnum<["id", "createdAt"]>>>;
     orderDirection: z.ZodDefault<z.ZodOptional<z.ZodNativeEnum<typeof import("../utils/order").OrderDirection>>>;
     search: z.ZodOptional<z.ZodString>;
+    teacherId: z.ZodOptional<z.ZodString>;
+    subjectId: z.ZodOptional<z.ZodString>;
     status: z.ZodOptional<z.ZodNativeEnum<typeof QuizStatus>>;
     fields: z.ZodOptional<z.ZodString>;
     dateFrom: z.ZodOptional<z.ZodEffects<z.ZodString, Date, string>>;
@@ -25,9 +27,11 @@ declare const quizAllSchema: z.ZodObject<{
     orderDirection: import("../utils/order").OrderDirection;
     status?: QuizStatus | undefined;
     search?: string | undefined;
+    teacherId?: string | undefined;
     fields?: string | undefined;
     dateFrom?: Date | undefined;
     dateTo?: Date | undefined;
+    subjectId?: string | undefined;
 }, {
     status?: QuizStatus | undefined;
     search?: string | undefined;
@@ -35,43 +39,39 @@ declare const quizAllSchema: z.ZodObject<{
     pageSize?: string | undefined;
     orderColumn?: "id" | "createdAt" | undefined;
     orderDirection?: import("../utils/order").OrderDirection | undefined;
+    teacherId?: string | undefined;
     fields?: string | undefined;
     dateFrom?: string | undefined;
     dateTo?: string | undefined;
+    subjectId?: string | undefined;
 }>;
 export type IQuizAllSchema = TypeOf<typeof quizAllSchema>;
 declare const quizCreateSchema: z.ZodObject<{
-    duration: z.ZodNumber;
-    numberOfAttempts: z.ZodNumber;
+    subjectId: z.ZodString;
     status: z.ZodOptional<z.ZodNativeEnum<typeof QuizStatus>>;
     name: z.ZodString;
 }, "strict", z.ZodTypeAny, {
     name: string;
-    duration: number;
-    numberOfAttempts: number;
+    subjectId: string;
     status?: QuizStatus | undefined;
 }, {
     name: string;
-    duration: number;
-    numberOfAttempts: number;
+    subjectId: string;
     status?: QuizStatus | undefined;
 }>;
 export type IQuizCreateSchema = TypeOf<typeof quizCreateSchema>;
 declare const quizUpdateSchema: z.ZodObject<{
-    duration: z.ZodOptional<z.ZodNumber>;
-    numberOfAttempts: z.ZodOptional<z.ZodNumber>;
+    subjectId: z.ZodOptional<z.ZodString>;
     status: z.ZodOptional<z.ZodNativeEnum<typeof QuizStatus>>;
     name: z.ZodOptional<z.ZodString>;
 }, "strict", z.ZodTypeAny, {
     status?: QuizStatus | undefined;
     name?: string | undefined;
-    duration?: number | undefined;
-    numberOfAttempts?: number | undefined;
+    subjectId?: string | undefined;
 }, {
     status?: QuizStatus | undefined;
     name?: string | undefined;
-    duration?: number | undefined;
-    numberOfAttempts?: number | undefined;
+    subjectId?: string | undefined;
 }>;
 export type IQuizUpdateSchema = TypeOf<typeof quizUpdateSchema>;
 declare const addQuestionsSchema: z.ZodObject<{
@@ -181,6 +181,8 @@ declare const _default: {
         orderColumn: z.ZodDefault<z.ZodOptional<z.ZodEnum<["id", "createdAt"]>>>;
         orderDirection: z.ZodDefault<z.ZodOptional<z.ZodNativeEnum<typeof import("../utils/order").OrderDirection>>>;
         search: z.ZodOptional<z.ZodString>;
+        teacherId: z.ZodOptional<z.ZodString>;
+        subjectId: z.ZodOptional<z.ZodString>;
         status: z.ZodOptional<z.ZodNativeEnum<typeof QuizStatus>>;
         fields: z.ZodOptional<z.ZodString>;
         dateFrom: z.ZodOptional<z.ZodEffects<z.ZodString, Date, string>>;
@@ -192,9 +194,11 @@ declare const _default: {
         orderDirection: import("../utils/order").OrderDirection;
         status?: QuizStatus | undefined;
         search?: string | undefined;
+        teacherId?: string | undefined;
         fields?: string | undefined;
         dateFrom?: Date | undefined;
         dateTo?: Date | undefined;
+        subjectId?: string | undefined;
     }, {
         status?: QuizStatus | undefined;
         search?: string | undefined;
@@ -202,41 +206,37 @@ declare const _default: {
         pageSize?: string | undefined;
         orderColumn?: "id" | "createdAt" | undefined;
         orderDirection?: import("../utils/order").OrderDirection | undefined;
+        teacherId?: string | undefined;
         fields?: string | undefined;
         dateFrom?: string | undefined;
         dateTo?: string | undefined;
+        subjectId?: string | undefined;
     }>;
     quizCreate: z.ZodObject<{
-        duration: z.ZodNumber;
-        numberOfAttempts: z.ZodNumber;
+        subjectId: z.ZodString;
         status: z.ZodOptional<z.ZodNativeEnum<typeof QuizStatus>>;
         name: z.ZodString;
     }, "strict", z.ZodTypeAny, {
         name: string;
-        duration: number;
-        numberOfAttempts: number;
+        subjectId: string;
         status?: QuizStatus | undefined;
     }, {
         name: string;
-        duration: number;
-        numberOfAttempts: number;
+        subjectId: string;
         status?: QuizStatus | undefined;
     }>;
     quizUpdate: z.ZodObject<{
-        duration: z.ZodOptional<z.ZodNumber>;
-        numberOfAttempts: z.ZodOptional<z.ZodNumber>;
+        subjectId: z.ZodOptional<z.ZodString>;
         status: z.ZodOptional<z.ZodNativeEnum<typeof QuizStatus>>;
         name: z.ZodOptional<z.ZodString>;
     }, "strict", z.ZodTypeAny, {
         status?: QuizStatus | undefined;
         name?: string | undefined;
-        duration?: number | undefined;
-        numberOfAttempts?: number | undefined;
+        subjectId?: string | undefined;
     }, {
         status?: QuizStatus | undefined;
         name?: string | undefined;
-        duration?: number | undefined;
-        numberOfAttempts?: number | undefined;
+        subjectId?: string | undefined;
     }>;
 };
 export default _default;

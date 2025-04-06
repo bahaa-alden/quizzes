@@ -1,5 +1,7 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
+const subject_routes_1 = require("./routes/subject.routes");
+const setting_routes_1 = require("./routes/setting.routes");
 const question_session_routes_1 = require("./routes/question-session.routes");
 const session_routes_1 = require("./routes/session.routes");
 const quiz_question_routes_1 = require("./routes/quiz-question.routes");
@@ -30,6 +32,8 @@ class Server {
         this.mongo();
     }
     routes() {
+        this.app.use('/api/v1/subjects', subject_routes_1.subjectRoutes.router);
+        this.app.use('/api/v1/settings', setting_routes_1.settingRoutes.router);
         this.app.use('/api/v1/question-sessions', question_session_routes_1.questionSessionRoutes.router);
         this.app.use('/api/v1/sessions', session_routes_1.sessionRoutes.router);
         this.app.use('/api/v1/quiz-questions', quiz_question_routes_1.quizQuestionRoutes.router);

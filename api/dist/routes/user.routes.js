@@ -26,7 +26,6 @@ class UserRoutes {
         this.router.patch('/resetPassword', (0, validator_1.default)({ body: auth_schema_1.default.resetPassword }), auth_controller_1.authController.resetPassword);
         // protect routes
         this.router.use((0, validator_1.default)({ headers: auth_schema_1.default.auth }), authJwt_1.authMiddleware.authenticateJWT);
-        this.router.post('/', (0, validator_1.default)({ body: user_schema_1.default.createUser }), user_controller_1.userController.registerUser);
         this.router.patch('/updateMyPassword', (0, validator_1.default)({ body: auth_schema_1.default.updateMyPassword }), auth_controller_1.authController.updateMyPassword);
         // ME
         this.router.get('/me', user_controller_1.userController.me);
@@ -39,6 +38,7 @@ class UserRoutes {
         // only for admins
         this.router.use((0, restrict_1.default)(enum_1.RoleCode.ADMIN));
         this.router.use(authorization_1.authorizationMiddleware.authorization);
+        this.router.post('/', (0, validator_1.default)({ body: user_schema_1.default.createUser }), user_controller_1.userController.registerUser);
         // Get User BY ID
         this.router.get('/:id', (0, validator_1.default)({ params: user_schema_1.default.userId, body: user_schema_1.default.updateUser }), user_controller_1.userController.getOne);
         // UPDATE User BY ID

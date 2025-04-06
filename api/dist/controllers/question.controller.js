@@ -7,6 +7,7 @@ const question_repository_1 = require("../database/repositories/question.reposit
 const order_1 = require("../utils/order");
 const pagination_1 = require("../utils/pagination");
 const record_1 = require("../utils/record");
+const create_1 = require("../services/internal/questions/create");
 class QuestionController {
     // Get all Questions by author
     getQuestions = (0, asyncHandler_1.default)(async (req, res, next) => {
@@ -29,17 +30,7 @@ class QuestionController {
     });
     // Create question handler
     createQuestion = (0, asyncHandler_1.default)(async (req, res, next) => {
-        const newQuestion = req.valid.body;
-        if (newQuestion.answers) {
-            newQuestion.answers = newQuestion.answers.map((ans, index) => ({
-                ...ans,
-                sorting: index + 1,
-            }));
-        }
-        const question = await question_repository_1.questionRepository.insert(newQuestion);
-        if (question === null) {
-            throw new ApiError_1.InternalError();
-        }
+        const question = await (0, create_1.createQuestion)(req.valid.body);
         res.created({ message: 'Question has been created', data: question });
     });
     // Update question by Id for authenticated user

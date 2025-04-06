@@ -5,6 +5,8 @@ import { type OrderOptions } from '../../utils/order';
 import { BaseRepository, type FindOptions } from './base.repository';
 import { type IQuiz } from '../models/quiz.model';
 export interface QuizFilterOptions {
+    teacherId?: string;
+    subjectId?: string;
     status?: QuizStatus;
     dateFrom?: Date;
     dateTo?: Date;

@@ -10,12 +10,15 @@ const record_1 = require("../utils/record");
 const quiz_question_repository_1 = require("../database/repositories/quiz-question.repository");
 const create_1 = require("../services/internal/questions/create");
 const question_repository_1 = require("../database/repositories/question.repository");
+const subject_repository_1 = require("../database/repositories/subject.repository");
 class QuizController {
     // Get all Quizzes by author
     getQuizzes = (0, asyncHandler_1.default)(async (req, res, next) => {
         const options = {
             filter: {
                 // filters
+                teacherId: req.valid.query.teacherId,
+                subjectId: req.valid.query.subjectId,
                 status: req.valid.query.status,
                 dateFrom: req.valid.query.dateFrom,
                 dateTo: req.valid.query.dateTo,
@@ -36,7 +39,11 @@ class QuizController {
     // Create quiz handler
     createQuiz = (0, asyncHandler_1.default)(async (req, res, next) => {
         const newQuiz = req.valid.body;
-        const quiz = await quiz_repository_1.quizRepository.insert(newQuiz);
+        const subject = (0, record_1.needRecord)(await subject_repository_1.subjectRepository.findById(newQuiz.subjectId), new ApiError_1.NotFoundError('Subject not found'));
+        const quiz = await quiz_repository_1.quizRepository.insert({
+            teacherId: subject.teacherId,
+            ...newQuiz,
+        });
         if (quiz === null) {
             throw new ApiError_1.InternalError();
         }

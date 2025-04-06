@@ -9,7 +9,8 @@ export declare enum CarCategory {
 }
 export declare enum RoleCode {
     USER = "USER",
-    ADMIN = "ADMIN"
+    ADMIN = "ADMIN",
+    TEACHER = "TEACHER"
 }
 export declare enum Env {
     production = "production",

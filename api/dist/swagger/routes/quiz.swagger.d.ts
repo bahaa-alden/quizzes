@@ -9,7 +9,7 @@
  * /quizzes:
  *   post:
  *     summary: Create a quiz
- *     description: ADMIN can create quiz.
+ *     description: ADMIN,TEACHER can create quiz.
  *     tags: [quizzes]
  *     security:
  *       - Bearer: []
@@ -41,12 +41,24 @@
  *
  *   get:
  *     summary: Get all quizzes
- *     description: USER,ADMIN can retrieve all quizzes.
+ *     description: USER,ADMIN,TEACHER can retrieve all quizzes.
  *     tags: [quizzes]
  *     security:
  *       - Bearer: []
  *     parameters:
   # filters
+ *       - in: query
+ *         name: teacherId
+ *         schema:
+ *           type: string
+ *         description: filter for teacherId field
+
+ *       - in: query
+ *         name: subjectId
+ *         schema:
+ *           type: string
+ *         description: filter for subjectId field
+
  *       - in: query
  *         name: status
  *         schema:
@@ -124,7 +136,7 @@
  * /quizzes/{id}/questions:
  *   post:
  *     summary: Create a question
- *     description: ADMIN can create question.
+ *     description: ADMIN,TEACHER can create question.
  *     tags: [questions]
  *     security:
  *       - Bearer: []
@@ -166,7 +178,7 @@
  * /quizzes/{id}:
  *   get:
  *     summary: Get a quiz
- *     description: USER,ADMIN can use this router.
+ *     description: USER,ADMIN,TEACHER can use this router.
  *     tags: [quizzes]
  *     security:
  *       - Bearer: []
@@ -199,7 +211,7 @@
  *
  *   patch:
  *     summary: Update a quiz
- *     description: ADMIN can use this router.
+ *     description: ADMIN,TEACHER can use this router.
  *     tags: [quizzes]
  *     security:
  *       - Bearer: []
@@ -238,7 +250,7 @@
  *
  *   delete:
  *     summary: Delete a  quiz.
- *     description: ADMIN can use this router.
+ *     description: ADMIN,TEACHER can use this router.
  *     tags: [quizzes]
  *     security:
  *       - Bearer: []
@@ -276,10 +288,10 @@ export declare const Quiz: {
         id: {
             type: string;
         };
-        duration: {
+        teacherId: {
             type: string;
         };
-        numberOfAttempts: {
+        subjectId: {
             type: string;
         };
         status: {
@@ -292,8 +304,8 @@ export declare const Quiz: {
     };
     example: {
         id: string;
-        duration: number;
-        numberOfAttempts: number;
+        teacherId: string;
+        subjectId: string;
         status: string;
         name: string;
         createdAt: string;
@@ -303,10 +315,7 @@ export declare const Quiz: {
 export declare const createQuiz: {
     type: string;
     properties: {
-        duration: {
-            type: string;
-        };
-        numberOfAttempts: {
+        subjectId: {
             type: string;
         };
         status: {
@@ -318,8 +327,7 @@ export declare const createQuiz: {
         };
     };
     example: {
-        duration: number;
-        numberOfAttempts: number;
+        subjectId: string;
         status: string;
         name: string;
     };
@@ -328,10 +336,7 @@ export declare const createQuiz: {
 export declare const updateQuiz: {
     type: string;
     properties: {
-        duration: {
-            type: string;
-        };
-        numberOfAttempts: {
+        subjectId: {
             type: string;
         };
         status: {
@@ -343,8 +348,7 @@ export declare const updateQuiz: {
         };
     };
     example: {
-        duration: number;
-        numberOfAttempts: number;
+        subjectId: string;
         status: string;
         name: string;
     };

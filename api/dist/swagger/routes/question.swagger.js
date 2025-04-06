@@ -12,7 +12,7 @@ exports.updateQuestion = exports.createQuestion = exports.Question = void 0;
  * /questions:
  *   post:
  *     summary: Create a question
- *     description: ADMIN can create question.
+ *     description: ADMIN,TEACHER can create question.
  *     tags: [questions]
  *     security:
  *       - Bearer: []
@@ -44,7 +44,7 @@ exports.updateQuestion = exports.createQuestion = exports.Question = void 0;
  *
  *   get:
  *     summary: Get all questions
- *     description: USER,ADMIN can retrieve all questions.
+ *     description: USER,ADMIN,TEACHER can retrieve all questions.
  *     tags: [questions]
  *     security:
  *       - Bearer: []
@@ -104,7 +104,7 @@ exports.updateQuestion = exports.createQuestion = exports.Question = void 0;
  * /questions/{id}:
  *   get:
  *     summary: Get a question
- *     description: USER,ADMIN can use this router.
+ *     description: USER,ADMIN,TEACHER can use this router.
  *     tags: [questions]
  *     security:
  *       - Bearer: []
@@ -137,7 +137,7 @@ exports.updateQuestion = exports.createQuestion = exports.Question = void 0;
  *
  *   patch:
  *     summary: Update a question
- *     description: ADMIN can use this router.
+ *     description: ADMIN,TEACHER can use this router.
  *     tags: [questions]
  *     security:
  *       - Bearer: []
@@ -176,7 +176,7 @@ exports.updateQuestion = exports.createQuestion = exports.Question = void 0;
  *
  *   delete:
  *     summary: Delete a  question.
- *     description: ADMIN can use this router.
+ *     description: ADMIN,TEACHER can use this router.
  *     tags: [questions]
  *     security:
  *       - Bearer: []

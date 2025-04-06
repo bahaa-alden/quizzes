@@ -10,10 +10,19 @@ declare const userIdSchema: z.ZodObject<{
 export type IUserIdSchema = TypeOf<typeof userIdSchema>;
 declare const userUpdateSchema: z.ZodObject<{
     status: z.ZodOptional<z.ZodNativeEnum<typeof UserStatus>>;
+    name: z.ZodOptional<z.ZodString>;
+    email: z.ZodOptional<z.ZodString>;
+    role: z.ZodOptional<z.ZodNativeEnum<typeof RoleCode>>;
 }, "strict", z.ZodTypeAny, {
     status?: UserStatus | undefined;
+    name?: string | undefined;
+    email?: string | undefined;
+    role?: RoleCode | undefined;
 }, {
     status?: UserStatus | undefined;
+    name?: string | undefined;
+    email?: string | undefined;
+    role?: RoleCode | undefined;
 }>;
 export type IUserUpdateSchema = TypeOf<typeof userUpdateSchema>;
 declare const userUpdateMeSchema: z.ZodObject<{
@@ -80,10 +89,19 @@ declare const _default: {
     }>;
     updateUser: z.ZodObject<{
         status: z.ZodOptional<z.ZodNativeEnum<typeof UserStatus>>;
+        name: z.ZodOptional<z.ZodString>;
+        email: z.ZodOptional<z.ZodString>;
+        role: z.ZodOptional<z.ZodNativeEnum<typeof RoleCode>>;
     }, "strict", z.ZodTypeAny, {
         status?: UserStatus | undefined;
+        name?: string | undefined;
+        email?: string | undefined;
+        role?: RoleCode | undefined;
     }, {
         status?: UserStatus | undefined;
+        name?: string | undefined;
+        email?: string | undefined;
+        role?: RoleCode | undefined;
     }>;
     updateMeSchema: z.ZodObject<{
         name: z.ZodOptional<z.ZodString>;

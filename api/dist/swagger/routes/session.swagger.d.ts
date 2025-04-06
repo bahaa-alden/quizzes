@@ -29,10 +29,10 @@ export declare const Record: {
                 id: {
                     type: string;
                 };
-                duration: {
+                teacherId: {
                     type: string;
                 };
-                numberOfAttempts: {
+                subjectId: {
                     type: string;
                 };
                 status: {
@@ -45,8 +45,8 @@ export declare const Record: {
             };
             example: {
                 id: string;
-                duration: number;
-                numberOfAttempts: number;
+                teacherId: string;
+                subjectId: string;
                 status: string;
                 name: string;
                 createdAt: string;

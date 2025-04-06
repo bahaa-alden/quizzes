@@ -23,6 +23,12 @@ class QuizRepository extends base_repository_1.BaseRepository {
     async findForAdmin(options) {
         const { order, pagination, search, filter, fields } = options;
         const query = { deletedAt: null };
+        if (filter?.teacherId) {
+            query.teacherId = filter.teacherId;
+        }
+        if (filter?.subjectId) {
+            query.subjectId = filter.subjectId;
+        }
         if (filter?.status) {
             query.status = filter.status;
         }

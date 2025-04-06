@@ -24,9 +24,9 @@ declare const quizQuestionAllSchema: import("zod").ZodObject<{
     orderDirection: import("../utils/order").OrderDirection;
     search?: string | undefined;
     fields?: string | undefined;
-    quizId?: string | undefined;
     dateFrom?: Date | undefined;
     dateTo?: Date | undefined;
+    quizId?: string | undefined;
 }, {
     search?: string | undefined;
     page?: string | undefined;
@@ -34,9 +34,9 @@ declare const quizQuestionAllSchema: import("zod").ZodObject<{
     orderColumn?: "id" | "createdAt" | undefined;
     orderDirection?: import("../utils/order").OrderDirection | undefined;
     fields?: string | undefined;
-    quizId?: string | undefined;
     dateFrom?: string | undefined;
     dateTo?: string | undefined;
+    quizId?: string | undefined;
 }>;
 export type IQuizQuestionAllSchema = TypeOf<typeof quizQuestionAllSchema>;
 declare const quizQuestionCreateSchema: import("zod").ZodObject<{
@@ -86,9 +86,9 @@ declare const _default: {
         orderDirection: import("../utils/order").OrderDirection;
         search?: string | undefined;
         fields?: string | undefined;
-        quizId?: string | undefined;
         dateFrom?: Date | undefined;
         dateTo?: Date | undefined;
+        quizId?: string | undefined;
     }, {
         search?: string | undefined;
         page?: string | undefined;
@@ -96,9 +96,9 @@ declare const _default: {
         orderColumn?: "id" | "createdAt" | undefined;
         orderDirection?: import("../utils/order").OrderDirection | undefined;
         fields?: string | undefined;
-        quizId?: string | undefined;
         dateFrom?: string | undefined;
         dateTo?: string | undefined;
+        quizId?: string | undefined;
     }>;
     quizQuestionCreate: import("zod").ZodObject<{
         questionId: import("zod").ZodString;

@@ -11,6 +11,9 @@ const userUpdateSchema = zod_1.z
     .object({
     // <creating-property-update-schema />
     status: zod_1.z.nativeEnum(enum_1.UserStatus).optional(),
+    name: zod_1.z.string().optional(),
+    email: zod_1.z.string().email().optional(),
+    role: zod_1.z.nativeEnum(enum_1.RoleCode).optional(),
 })
     .strict();
 const userUpdateMeSchema = zod_1.z

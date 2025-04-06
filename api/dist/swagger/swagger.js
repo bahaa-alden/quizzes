@@ -1,6 +1,8 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 const swaggerJsdoc = require("swagger-jsdoc");
+const subject_swagger_1 = require("./routes/subject.swagger");
+const setting_swagger_1 = require("./routes/setting.swagger");
 const question_session_swagger_1 = require("./routes/question-session.swagger");
 const session_swagger_1 = require("./routes/session.swagger");
 const quiz_question_swagger_1 = require("./routes/quiz-question.swagger");
@@ -29,6 +31,12 @@ const options = {
         ],
         components: {
             schemas: {
+                Subject: subject_swagger_1.Subject,
+                createSubject: subject_swagger_1.createSubject,
+                updateSubject: subject_swagger_1.updateSubject,
+                Setting: setting_swagger_1.Setting,
+                createSetting: setting_swagger_1.createSetting,
+                updateSetting: setting_swagger_1.updateSetting,
                 Record: session_swagger_1.Record,
                 addQuestions: quiz_swagger_1.addQuestions,
                 QuestionSession: question_session_swagger_1.QuestionSession,
@@ -49,6 +57,7 @@ const options = {
                 signUp: auth_swagger_1.signUp,
                 createUser: users_swagger_1.createUser,
                 updateMe: users_swagger_1.updateMe,
+                updateUser: users_swagger_1.updateUser,
                 User: users_swagger_1.User,
                 Error: components_1.Error,
             },
@@ -86,7 +95,7 @@ const options = {
             },
         },
     },
-    apis: ['./dist/swagger/routes/*.js'],
+    apis: [__dirname + '/routes/*.js'],
 };
 const swaggerSpec = swaggerJsdoc(options);
 exports.default = swaggerSpec;

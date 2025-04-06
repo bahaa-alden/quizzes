@@ -72,3 +72,28 @@ export declare const updateMe: {
         email: string;
     };
 };
+export declare const updateUser: {
+    type: string;
+    properties: {
+        status: {
+            type: string;
+            enum: string[];
+        };
+        name: {
+            type: string;
+        };
+        email: {
+            type: string;
+        };
+        role: {
+            type: string;
+            enum: unknown[];
+        };
+    };
+    example: {
+        status: string;
+        name: string;
+        email: string;
+        role: string;
+    };
+};

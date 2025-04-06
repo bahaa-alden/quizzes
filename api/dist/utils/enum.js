@@ -18,6 +18,7 @@ var RoleCode;
 (function (RoleCode) {
     RoleCode["USER"] = "USER";
     RoleCode["ADMIN"] = "ADMIN";
+    RoleCode["TEACHER"] = "TEACHER";
 })(RoleCode || (exports.RoleCode = RoleCode = {}));
 var Env;
 (function (Env) {

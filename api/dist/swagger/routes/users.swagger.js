@@ -6,7 +6,7 @@
  *   description: User management and retrieval
  */
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.updateMe = exports.createUser = exports.User = void 0;
+exports.updateUser = exports.updateMe = exports.createUser = exports.User = void 0;
 /**
  * @swagger
  * /users:
@@ -153,12 +153,7 @@ exports.updateMe = exports.createUser = exports.User = void 0;
  *       content:
  *         application/json:
  *           schema:
- *             type: object
- *             properties:
- *               status:
- *                 type: string
- *             example:
- *               status: active
+ *             $ref: '#/components/schemas/updateUser'
  *     responses:
  *       "200":
  *         description: OK
@@ -312,7 +307,7 @@ exports.User = {
         id: '5ebac534954b54139806c112',
         // property example
         email: 'user@gmail.com',
-        name: 'adel seirafi',
+        name: 'bahaa alden abdo',
         role: 'USER',
         status: 'true',
     },
@@ -328,8 +323,8 @@ exports.createUser = {
     },
     example: {
         // create property example
-        name: 'Mohammed Seirafi',
-        email: 'adel@gmail.com',
+        name: 'Bahaa abdo',
+        email: 'bad@gmail.com',
         password: '123454321',
         role: 'USER',
     },
@@ -343,8 +338,25 @@ exports.updateMe = {
     },
     example: {
         // update property example
-        name: 'Mohammed Seirafi',
-        email: 'adel@gmail.com',
+        name: 'Bahaa alden',
+        email: 'bah@gmail.com',
+    },
+};
+exports.updateUser = {
+    type: 'object',
+    properties: {
+        // update property
+        status: { type: 'string', enum: ['active', 'disactive'] },
+        name: { type: 'string' },
+        email: { type: 'string' },
+        role: { type: 'string', enum: Object.values(RoleCode) },
+    },
+    example: {
+        // update property example
+        status: 'active',
+        name: 'Bahaa alden',
+        email: 'ba@gmail.com',
+        role: 'USER',
     },
 };
 //# sourceMappingURL=users.swagger.js.map

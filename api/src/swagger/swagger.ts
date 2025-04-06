@@ -1,5 +1,10 @@
 import * as swaggerJsdoc from 'swagger-jsdoc';
 import {
+  Subject,
+  createSubject,
+  updateSubject,
+} from './routes/subject.swagger';
+import {
   Setting,
   createSetting,
   updateSetting,
@@ -63,6 +68,9 @@ const options = {
     ],
     components: {
       schemas: {
+        Subject,
+        createSubject,
+        updateSubject,
         Setting,
         createSetting,
         updateSetting,

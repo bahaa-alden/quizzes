@@ -1,3 +1,4 @@
+import { subjectRoutes } from './routes/subject.routes';
 import { settingRoutes } from './routes/setting.routes';
 import { questionSessionRoutes } from './routes/question-session.routes';
 import { sessionRoutes } from './routes/session.routes';
@@ -32,6 +33,8 @@ class Server {
   }
 
   public routes(): void {
+    this.app.use('/api/v1/subjects', subjectRoutes.router);
+
     this.app.use('/api/v1/settings', settingRoutes.router);
 
     this.app.use('/api/v1/question-sessions', questionSessionRoutes.router);

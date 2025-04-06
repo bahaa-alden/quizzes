@@ -1,20 +1,17 @@
----
-to: ./src/swagger/routes/<%=  nameDash %>.swagger.ts
----
 /**
  * @swagger
  * tags:
- *   name: <%= h.inflection.pluralize(nameDash) %>
- *   description: <%= Name %> management and retrieval
+ *   name: subjects
+ *   description: Subject management and retrieval
  */
 
 /**
  * @swagger
- * /<%= h.inflection.pluralize(nameDash) %>:
+ * /subjects:
  *   post:
- *     summary: Create a <%= name %>
- *     description: <%= rolePost %> can create <%= name %>.
- *     tags: [<%= h.inflection.pluralize(nameDash) %>]
+ *     summary: Create a subject
+ *     description: ADMIN,TEACHER can create subject.
+ *     tags: [subjects]
  *     security:
  *       - Bearer: []
  *     requestBody:
@@ -22,7 +19,7 @@ to: ./src/swagger/routes/<%=  nameDash %>.swagger.ts
  *       content:
  *         application/json:
  *           schema:
- *             $ref: '#/components/schemas/create<%= Name %>'
+ *             $ref: '#/components/schemas/createSubject'
  *     responses:
  *       "201":
  *         description: Created
@@ -35,7 +32,7 @@ to: ./src/swagger/routes/<%=  nameDash %>.swagger.ts
  *                   type: string
  *                   example: success
  *                 data:
- *                     $ref: '#/components/schemas/<%= Name %>'
+ *                     $ref: '#/components/schemas/Subject'
  *       "400":
  *         $ref: '#/components/responses/DuplicateEmail'
  *       "401":
@@ -44,13 +41,18 @@ to: ./src/swagger/routes/<%=  nameDash %>.swagger.ts
  *         $ref: '#/components/responses/Forbidden'
  *
  *   get:
- *     summary: Get all <%= h.inflection.pluralize(nameDash) %>
- *     description: <%= roleGet %> can retrieve all <%= h.inflection.pluralize(nameDash) %>.
- *     tags: [<%= h.inflection.pluralize(nameDash) %>]
+ *     summary: Get all subjects
+ *     description: USER,ADMIN,TEACHER can retrieve all subjects.
+ *     tags: [subjects]
  *     security:
  *       - Bearer: []
  *     parameters:
   # filters
+ *       - in: query
+ *         name: teacherId
+ *         schema:
+ *           type: string
+ *         description: filter for teacherId field
  *       - in: query
  *         name: fields
  *         schema:
@@ -69,7 +71,7 @@ to: ./src/swagger/routes/<%=  nameDash %>.swagger.ts
  *           type: integer
  *           minimum: 1
  *         default: 10
- *         description: Maximum number of <%= h.inflection.pluralize(nameDash) %>
+ *         description: Maximum number of subjects
  *       - in: query
  *         name: search
  *         schema:
@@ -94,7 +96,7 @@ to: ./src/swagger/routes/<%=  nameDash %>.swagger.ts
  *                 data:
  *                   type: array
  *                   items:
- *                     $ref: '#/components/schemas/<%= Name %>'
+ *                     $ref: '#/components/schemas/Subject'
  *       "401":
  *         $ref: '#/components/responses/Unauthorized'
  *       "403":
@@ -103,11 +105,11 @@ to: ./src/swagger/routes/<%=  nameDash %>.swagger.ts
 
 /**
  * @swagger
- * /<%= h.inflection.pluralize(nameDash) %>/{id}:
+ * /subjects/{id}:
  *   get:
- *     summary: Get a <%= name %>
- *     description: <%= roleGet %> can use this router.
- *     tags: [<%= h.inflection.pluralize(nameDash) %>]
+ *     summary: Get a subject
+ *     description: USER,ADMIN,TEACHER can use this router.
+ *     tags: [subjects]
  *     security:
  *       - Bearer: []
  *     parameters:
@@ -116,7 +118,7 @@ to: ./src/swagger/routes/<%=  nameDash %>.swagger.ts
  *         required: true
  *         schema:
  *           type: string
- *         description: <%= Name %> id
+ *         description: Subject id
  *     responses:
  *       "200":
  *         description: OK
@@ -129,7 +131,7 @@ to: ./src/swagger/routes/<%=  nameDash %>.swagger.ts
  *                   type: string
  *                   example: success
  *                 data:
- *                     $ref: '#/components/schemas/<%= Name %>'
+ *                     $ref: '#/components/schemas/Subject'
  *       "401":
  *         $ref: '#/components/responses/Unauthorized'
  *       "403":
@@ -138,9 +140,9 @@ to: ./src/swagger/routes/<%=  nameDash %>.swagger.ts
  *         $ref: '#/components/responses/NotFound'
  *
  *   patch:
- *     summary: Update a <%= name %>
- *     description: <%= roleUpdate %> can use this router.
- *     tags: [<%= h.inflection.pluralize(nameDash) %>]
+ *     summary: Update a subject
+ *     description: ADMIN,TEACHER can use this router.
+ *     tags: [subjects]
  *     security:
  *       - Bearer: []
  *     parameters:
@@ -149,13 +151,13 @@ to: ./src/swagger/routes/<%=  nameDash %>.swagger.ts
  *         required: true
  *         schema:
  *           type: string
- *         description: <%= Name %> id
+ *         description: Subject id
  *     requestBody:
  *         required: true
  *         content:
  *           application/json:
  *             schema:
- *               $ref: '#/components/schemas/update<%= Name %>'
+ *               $ref: '#/components/schemas/updateSubject'
  *     responses:
  *       "200":
  *         description: OK
@@ -168,7 +170,7 @@ to: ./src/swagger/routes/<%=  nameDash %>.swagger.ts
  *                   type: string
  *                   example: success
  *                 data:
- *                     $ref: '#/components/schemas/<%= Name %>'
+ *                     $ref: '#/components/schemas/Subject'
  *       "401":
  *         $ref: '#/components/responses/Unauthorized'
  *       "403":
@@ -177,9 +179,9 @@ to: ./src/swagger/routes/<%=  nameDash %>.swagger.ts
  *         $ref: '#/components/responses/NotFound'
  *
  *   delete:
- *     summary: Delete a  <%= name %>.
- *     description: <%= roleDelete %> can use this router.
- *     tags: [<%= h.inflection.pluralize(nameDash) %>]
+ *     summary: Delete a  subject.
+ *     description: ADMIN,TEACHER can use this router.
+ *     tags: [subjects]
  *     security:
  *       - Bearer: []
  *     parameters:
@@ -188,7 +190,7 @@ to: ./src/swagger/routes/<%=  nameDash %>.swagger.ts
  *         required: true
  *         schema:
  *           type: string
- *         description: <%= Name %> id
+ *         description: Subject id
  *     responses:
  *       "200":
  *         description: OK
@@ -211,40 +213,65 @@ to: ./src/swagger/routes/<%=  nameDash %>.swagger.ts
  *         $ref: '#/components/responses/NotFound'
  */
 
-
-export const <%= Name %> = {
+export const Subject = {
   type: 'object',
   properties: {
     id: { type: 'string' },
-// property
+    // property
+    teacherId: { type: 'string' },
+    isActive: { type: 'boolean' },
+    name: { type: 'string' },
   },
   example: {
     id: '5ebac534954b54139806c112',
-// property example
-   createdAt: "2024-11-24T16:35:04.438Z",
-   updatedAt: "2024-11-24T16:35:04.438Z"
-  },
-};
-export const create<%= Name %> = {
-  type: 'object',
-  properties: {
-// create property
-  },
-  example: {
-// create property example
-  },
-  required:[
-// required property
-  ]
-};
-export const update<%= Name %> = {
-  type: 'object',
-  properties: {
-// update property
-  },
-  example: {
-// update property example
- 
-  },
-};
+    // property example
+    teacherId: '673c40cd59e293827f79e398',
 
+    isActive: false,
+
+    name: 'math',
+
+    createdAt: '2024-11-24T16:35:04.438Z',
+    updatedAt: '2024-11-24T16:35:04.438Z',
+  },
+};
+export const createSubject = {
+  type: 'object',
+  properties: {
+    // create property
+    teacherId: { type: 'string' },
+    isActive: { type: 'boolean' },
+    name: { type: 'string' },
+  },
+  example: {
+    // create property example
+    teacherId: '673c40cd59e293827f79e398',
+
+    isActive: false,
+
+    name: 'math',
+  },
+  required: [
+    // required property
+    'teacherId',
+
+    'name',
+  ],
+};
+export const updateSubject = {
+  type: 'object',
+  properties: {
+    // update property
+    teacherId: { type: 'string' },
+    isActive: { type: 'boolean' },
+    name: { type: 'string' },
+  },
+  example: {
+    // update property example
+    teacherId: '673c40cd59e293827f79e398',
+
+    isActive: false,
+
+    name: 'math',
+  },
+};

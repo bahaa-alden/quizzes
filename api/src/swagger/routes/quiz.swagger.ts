@@ -49,6 +49,18 @@
  *     parameters:
   # filters
  *       - in: query
+ *         name: teacherId
+ *         schema:
+ *           type: string
+ *         description: filter for teacherId field
+
+ *       - in: query
+ *         name: subjectId
+ *         schema:
+ *           type: string
+ *         description: filter for subjectId field
+
+ *       - in: query
  *         name: status
  *         schema:
  *           type: string
@@ -279,12 +291,18 @@ export const Quiz = {
   properties: {
     id: { type: 'string' },
     // property
+    teacherId: { type: 'string' },
+    subjectId: { type: 'string' },
     status: { type: 'string', enum: ['active', 'disactive'] },
     name: { type: 'string' },
   },
   example: {
     id: '5ebac534954b54139806c112',
     // property example
+    teacherId: '673c40cd59e293827f79e398',
+
+    subjectId: '673c40cd59e293827f79e398',
+
     status: 'active',
     name: 'math',
     createdAt: '2024-11-24T16:35:04.438Z',
@@ -295,11 +313,13 @@ export const createQuiz = {
   type: 'object',
   properties: {
     // create property
+    subjectId: { type: 'string' },
     status: { type: 'string', enum: ['active', 'disactive'] },
     name: { type: 'string' },
   },
   example: {
     // create property example
+    subjectId: '673c40cd59e293827f79e398',
 
     status: 'active',
 
@@ -307,7 +327,6 @@ export const createQuiz = {
   },
   required: [
     // required property
-
     'name',
   ],
 };
@@ -315,11 +334,14 @@ export const updateQuiz = {
   type: 'object',
   properties: {
     // update property
+    subjectId: { type: 'string' },
     status: { type: 'string', enum: ['active', 'disactive'] },
     name: { type: 'string' },
   },
   example: {
     // update property example
+
+    subjectId: '673c40cd59e293827f79e398',
 
     status: 'active',
 

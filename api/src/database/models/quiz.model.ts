@@ -1,3 +1,9 @@
+import { IUser } from './user.model';
+
+import { ISubject } from './subject.model';
+
+import mongoose from 'mongoose';
+
 import { QuizStatus } from './../../utils/enum';
 
 import { model, Schema, type Document as MongooseDocument } from 'mongoose';
@@ -7,6 +13,10 @@ import { IQuizQuestion } from './quiz-question.model';
 export interface IQuiz extends MongooseDocument {
   id: string;
   // <creating-property-interface />
+  teacherId?: IUser['_id'];
+  teacher?: IUser;
+  subjectId: ISubject['_id'];
+  subject: ISubject;
   status?: QuizStatus;
   name: string;
   questionIds: IQuizQuestion[];
@@ -18,6 +28,15 @@ export interface IQuiz extends MongooseDocument {
 const quizSchema: Schema = new Schema<IQuiz>(
   {
     // <creating-property-schema />
+    teacherId: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'User',
+    },
+
+    subjectId: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'Subject',
+    },
     status: {
       type: String,
       enum: Object.values(QuizStatus),
@@ -54,6 +73,22 @@ quizSchema.virtual('questionIds', {
   ref: 'QuizQuestion',
   localField: '_id',
   foreignField: 'quizId',
+  match: { deletedAt: null },
+});
+
+quizSchema.virtual('subject', {
+  localField: 'subjectId',
+  foreignField: '_id',
+  ref: 'Subject',
+  justOne: true,
+  match: { deletedAt: null },
+});
+
+quizSchema.virtual('teacher', {
+  localField: 'teacherId',
+  foreignField: '_id',
+  ref: 'User',
+  justOne: true,
   match: { deletedAt: null },
 });
 

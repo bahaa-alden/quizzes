@@ -11,6 +11,10 @@ import { selectedFields } from '../../utils/projection';
 
 export interface QuizFilterOptions {
   //filters
+  teacherId?: string;
+
+  subjectId?: string;
+
   status?: QuizStatus;
   dateFrom?: Date;
   dateTo?: Date;
@@ -41,6 +45,14 @@ export class QuizRepository extends BaseRepository<IQuiz> {
     const { order, pagination, search, filter, fields } = options;
 
     const query: FilterQuery<IQuiz> = { deletedAt: null };
+    if (filter?.teacherId) {
+      query.teacherId = filter.teacherId;
+    }
+
+    if (filter?.subjectId) {
+      query.subjectId = filter.subjectId;
+    }
+
     if (filter?.status) {
       query.status = filter.status;
     }

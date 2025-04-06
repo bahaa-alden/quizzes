@@ -19,6 +19,12 @@ export class SubjectRepository extends BaseRepository<ISubject> {
     super(Subject);
   }
 
+  async findById(id: string): Promise<ISubject | null> {
+    return this.model
+      .findOne({ _id: id, deletedAt: null })
+      .populate(['teacher']);
+  }
+
   async findForAdmin(
     options: SubjectFindOptions,
   ): Promise<PaginatedList<ISubject>> {
@@ -42,7 +48,8 @@ export class SubjectRepository extends BaseRepository<ISubject> {
         [order.column]: order.direction === OrderDirection.asc ? 1 : -1,
       })
       .limit(pagination.pageSize)
-      .skip((pagination.page - 1) * pagination.pageSize);
+      .skip((pagination.page - 1) * pagination.pageSize)
+      .populate(['teacher']);
 
     if (fields) {
       queryResult.select(selectedFields(fields));

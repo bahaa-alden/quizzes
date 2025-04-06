@@ -10,6 +10,7 @@ export interface SubjectFindOptions extends FindOptions<SubjectFilterOptions> {
 }
 export declare class SubjectRepository extends BaseRepository<ISubject> {
     constructor();
+    findById(id: string): Promise<ISubject | null>;
     findForAdmin(options: SubjectFindOptions): Promise<PaginatedList<ISubject>>;
 }
 export declare const subjectRepository: SubjectRepository;

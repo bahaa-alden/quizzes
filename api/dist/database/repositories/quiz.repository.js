@@ -13,12 +13,12 @@ class QuizRepository extends base_repository_1.BaseRepository {
     async patchById(id, data) {
         return await this.model
             .findByIdAndUpdate(id, data, { new: true })
-            .populate(['questionIds']);
+            .populate(['questionIds', 'teacher', 'subject']);
     }
     async findById(id) {
         return await this.model
             .findOne({ _id: id, deletedAt: null })
-            .populate(['questionIds']);
+            .populate(['questionIds', 'teacher', 'subject']);
     }
     async findForAdmin(options) {
         const { order, pagination, search, filter, fields } = options;

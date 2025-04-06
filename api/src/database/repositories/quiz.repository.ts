@@ -32,13 +32,13 @@ export class QuizRepository extends BaseRepository<IQuiz> {
   async patchById(id: string, data: UpdateQuery<IQuiz>): Promise<IQuiz | null> {
     return await this.model
       .findByIdAndUpdate(id, data, { new: true })
-      .populate(['questionIds']);
+      .populate(['questionIds', 'teacher', 'subject']);
   }
 
   async findById(id: string): Promise<IQuiz | null> {
     return await this.model
       .findOne({ _id: id, deletedAt: null })
-      .populate(['questionIds']);
+      .populate(['questionIds', 'teacher', 'subject']);
   }
 
   async findForAdmin(options: QuizFindOptions): Promise<PaginatedList<IQuiz>> {

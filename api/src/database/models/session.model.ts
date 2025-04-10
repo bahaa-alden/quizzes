@@ -80,6 +80,7 @@ sessionSchema.virtual('questionSessions', {
   localField: '_id',
   foreignField: 'sessionId',
   ref: 'QuestionSession',
+  match: { deletedAt: null },
 });
 
 export default model<ISession>('Session', sessionSchema);

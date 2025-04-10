@@ -176,6 +176,43 @@
 
 /**
  * @swagger
+ * /sessions/{id}/reset:
+ *   post:
+ *     summary: Reset a session
+ *     description: USER can use this router.
+ *     tags: [sessions]
+ *     security:
+ *       - Bearer: []
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         required: true
+ *         schema:
+ *           type: string
+ *         description: Session id
+ *     responses:
+ *       "200":
+ *         description: OK
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 message:
+ *                   type: string
+ *                   example: success
+ *                 data:
+ *                     $ref: '#/components/schemas/Session'
+ *       "401":
+ *         $ref: '#/components/responses/Unauthorized'
+ *       "403":
+ *         $ref: '#/components/responses/Forbidden'
+ *       "404":
+ *         $ref: '#/components/responses/NotFound'
+ */
+
+/**
+ * @swagger
  * /sessions/{id}:
  *   get:
  *     summary: Get a session

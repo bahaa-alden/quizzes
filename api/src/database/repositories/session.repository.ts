@@ -2,7 +2,7 @@ import { SessionStatus } from './../../utils/enum';
 
 import { endOfDay, startOfDay } from 'date-fns';
 
-import { type FilterQuery } from 'mongoose';
+import { UpdateQuery, type FilterQuery } from 'mongoose';
 import { type PaginatedList } from '../../utils/pagination';
 import { OrderDirection, type OrderOptions } from '../../utils/order';
 import { BaseRepository, type FindOptions } from './base.repository';
@@ -27,6 +27,42 @@ export class SessionRepository extends BaseRepository<ISession> {
     super(Session);
   }
 
+  async patchById(
+    id: string,
+    data: UpdateQuery<ISession>,
+  ): Promise<ISession | null> {
+    return await this.model
+      .findByIdAndUpdate(id, data, { new: true })
+      .populate([
+        'questionSessions',
+        {
+          path: 'quiz',
+          populate: {
+            path: 'questionIds',
+          },
+        },
+        'student',
+      ]);
+  }
+
+  async findByIdWithStudent(
+    id: string,
+    studentId: string,
+  ): Promise<ISession | null> {
+    return await this.model
+      .findOne({ _id: id, studentId, deletedAt: null })
+      .populate([
+        'questionSessions',
+        {
+          path: 'quiz',
+          populate: {
+            path: 'questionIds',
+          },
+        },
+        'student',
+      ]);
+  }
+
   async findById(id: string): Promise<ISession | null> {
     return await this.model.findOne({ _id: id, deletedAt: null }).populate([
       'questionSessions',
@@ -39,6 +75,7 @@ export class SessionRepository extends BaseRepository<ISession> {
       'student',
     ]);
   }
+
   async findForAdmin(
     options: SessionFindOptions,
   ): Promise<PaginatedList<ISession>> {

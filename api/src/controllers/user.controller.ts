@@ -61,14 +61,19 @@ export class UserController {
     ) => {
       const updateBody = req.valid.body;
 
-      if (updateBody.email) {
+      const user = needRecord(
+        await userRepository.findById(req.user.id),
+        new NotFoundError('user not found'),
+      );
+
+      if (updateBody.email && user.email !== updateBody.email) {
         existRecord(
           await userRepository.exists(updateBody.email),
           new ConflictError('User already exist'),
         );
       }
 
-      const data = await userRepository.patchById(req.user.id, updateBody);
+      const data = await userRepository.patchById(user.id, updateBody);
 
       res.ok({ message: 'User has been updated', data });
     },
@@ -90,9 +95,10 @@ export class UserController {
     ): Promise<void> => {
       const options: FindUserOptions = {
         filter: {
+          //filters
+          role: req.valid.query.role,
           dateFrom: req.valid.query.dateFrom,
           dateTo: req.valid.query.dateTo,
-          role: req.user.role,
         },
 
         order: defaultOrderParams(
@@ -134,17 +140,22 @@ export class UserController {
     ) => {
       const updateBody = req.valid.body;
 
-      const data = needRecord(
-        await userRepository.patchById(req.valid.params.id, updateBody),
+      const user = needRecord(
+        await userRepository.findById(req.valid.params.id),
         new NotFoundError('user not found'),
       );
 
-      if (updateBody.email) {
+      if (updateBody.email && user.email !== updateBody.email) {
         existRecord(
           await userRepository.exists(updateBody.email),
           new ConflictError('User already exist'),
         );
       }
+
+      const data = needRecord(
+        await userRepository.patchById(req.valid.params.id, updateBody),
+        new NotFoundError('user not found'),
+      );
 
       res.ok({ message: 'User has been updated', data });
     },

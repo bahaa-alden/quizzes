@@ -54,6 +54,7 @@ const userAllSchema = z.object({
   orderColumn,
   orderDirection,
   search: z.string().optional(),
+  role: z.nativeEnum(RoleCode).optional(),
   dateFrom: stringToDate.optional(),
   dateTo: stringToDate.optional(),
 });

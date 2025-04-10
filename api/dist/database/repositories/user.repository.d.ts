@@ -1,7 +1,7 @@
+import { RoleCode } from './../../utils/enum';
 import { BaseRepository, FindOptions } from './base.repository';
 import { OrderOptions } from '../../utils/order';
 import { IUser } from '../models/user.model';
-import { RoleCode } from '../../utils/enum';
 export interface UserOrderOptions extends OrderOptions {
     column: string;
 }

@@ -11,7 +11,7 @@ const quiz_swagger_1 = require("./routes/quiz.swagger");
 const auth_swagger_1 = require("./routes/auth.swagger");
 const config_1 = require("../config");
 const components_1 = require("./components");
-const users_swagger_1 = require("./routes/users.swagger");
+const user_swagger_1 = require("./routes/user.swagger");
 const options = {
     url: '',
     definition: {
@@ -55,10 +55,10 @@ const options = {
                 createQuiz: quiz_swagger_1.createQuiz,
                 updateQuiz: quiz_swagger_1.updateQuiz,
                 signUp: auth_swagger_1.signUp,
-                createUser: users_swagger_1.createUser,
-                updateMe: users_swagger_1.updateMe,
-                updateUser: users_swagger_1.updateUser,
-                User: users_swagger_1.User,
+                createUser: user_swagger_1.createUser,
+                updateMe: user_swagger_1.updateMe,
+                updateUser: user_swagger_1.updateUser,
+                User: user_swagger_1.User,
                 Error: components_1.Error,
             },
             securitySchemes: {

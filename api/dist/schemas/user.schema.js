@@ -35,6 +35,7 @@ const userAllSchema = zod_1.z.object({
     orderColumn: common_2.orderColumn,
     orderDirection: common_2.orderDirection,
     search: zod_1.z.string().optional(),
+    role: zod_1.z.nativeEnum(enum_1.RoleCode).optional(),
     dateFrom: common_1.stringToDate.optional(),
     dateTo: common_1.stringToDate.optional(),
 });

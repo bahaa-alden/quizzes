@@ -4,7 +4,6 @@ exports.userRepository = exports.UserRepository = void 0;
 const base_repository_1 = require("./base.repository");
 const order_1 = require("../../utils/order");
 const user_model_1 = require("../models/user.model");
-const enum_1 = require("../../utils/enum");
 const date_fns_1 = require("date-fns");
 class UserRepository extends base_repository_1.BaseRepository {
     constructor() {
@@ -13,6 +12,9 @@ class UserRepository extends base_repository_1.BaseRepository {
     async findForUser(options) {
         const { pagination, order, search, filter } = options;
         const query = { deletedAt: null };
+        if (filter?.role) {
+            query.role = filter.role;
+        }
         if (filter?.dateFrom ?? filter?.dateTo) {
             query.createdAt = {};
             if (filter.dateFrom) {
@@ -21,9 +23,6 @@ class UserRepository extends base_repository_1.BaseRepository {
             if (filter.dateTo) {
                 query.createdAt.$lte = (0, date_fns_1.endOfDay)(filter.dateTo);
             }
-        }
-        if (filter?.role === enum_1.RoleCode.USER) {
-            query.role = enum_1.RoleCode.USER;
         }
         if (search) {
             query.$or = [

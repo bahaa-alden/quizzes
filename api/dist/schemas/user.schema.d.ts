@@ -59,6 +59,7 @@ declare const userAllSchema: z.ZodObject<{
     orderColumn: z.ZodDefault<z.ZodOptional<z.ZodEnum<["id", "createdAt"]>>>;
     orderDirection: z.ZodDefault<z.ZodOptional<z.ZodNativeEnum<typeof import("../utils/order").OrderDirection>>>;
     search: z.ZodOptional<z.ZodString>;
+    role: z.ZodOptional<z.ZodNativeEnum<typeof RoleCode>>;
     dateFrom: z.ZodOptional<z.ZodEffects<z.ZodString, Date, string>>;
     dateTo: z.ZodOptional<z.ZodEffects<z.ZodString, Date, string>>;
 }, "strip", z.ZodTypeAny, {
@@ -67,6 +68,7 @@ declare const userAllSchema: z.ZodObject<{
     orderColumn: "id" | "createdAt";
     orderDirection: import("../utils/order").OrderDirection;
     search?: string | undefined;
+    role?: RoleCode | undefined;
     dateFrom?: Date | undefined;
     dateTo?: Date | undefined;
 }, {
@@ -75,6 +77,7 @@ declare const userAllSchema: z.ZodObject<{
     pageSize?: string | undefined;
     orderColumn?: "id" | "createdAt" | undefined;
     orderDirection?: import("../utils/order").OrderDirection | undefined;
+    role?: RoleCode | undefined;
     dateFrom?: string | undefined;
     dateTo?: string | undefined;
 }>;
@@ -119,6 +122,7 @@ declare const _default: {
         orderColumn: z.ZodDefault<z.ZodOptional<z.ZodEnum<["id", "createdAt"]>>>;
         orderDirection: z.ZodDefault<z.ZodOptional<z.ZodNativeEnum<typeof import("../utils/order").OrderDirection>>>;
         search: z.ZodOptional<z.ZodString>;
+        role: z.ZodOptional<z.ZodNativeEnum<typeof RoleCode>>;
         dateFrom: z.ZodOptional<z.ZodEffects<z.ZodString, Date, string>>;
         dateTo: z.ZodOptional<z.ZodEffects<z.ZodString, Date, string>>;
     }, "strip", z.ZodTypeAny, {
@@ -127,6 +131,7 @@ declare const _default: {
         orderColumn: "id" | "createdAt";
         orderDirection: import("../utils/order").OrderDirection;
         search?: string | undefined;
+        role?: RoleCode | undefined;
         dateFrom?: Date | undefined;
         dateTo?: Date | undefined;
     }, {
@@ -135,6 +140,7 @@ declare const _default: {
         pageSize?: string | undefined;
         orderColumn?: "id" | "createdAt" | undefined;
         orderDirection?: import("../utils/order").OrderDirection | undefined;
+        role?: RoleCode | undefined;
         dateFrom?: string | undefined;
         dateTo?: string | undefined;
     }>;

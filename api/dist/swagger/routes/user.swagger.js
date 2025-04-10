@@ -51,15 +51,15 @@ exports.updateUser = exports.updateMe = exports.createUser = exports.User = void
  *     parameters:
   # filters
  *       - in: query
+ *         name: role
+ *         schema:
+ *           type: string
+ *         description: filter for  role field
+ *       - in: query
  *         name: name
  *         schema:
  *           type: string
  *         description: User name
- *       - in: query
- *         name: role
- *         schema:
- *           type: string
- *         description: User role
  *       - in: query
  *         name: sort
  *         schema:
@@ -359,4 +359,4 @@ exports.updateUser = {
         role: 'USER',
     },
 };
-//# sourceMappingURL=users.swagger.js.map
+//# sourceMappingURL=user.swagger.js.map

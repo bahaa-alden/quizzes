@@ -10,6 +10,34 @@ class SessionRepository extends base_repository_1.BaseRepository {
     constructor() {
         super(session_model_1.default);
     }
+    async patchById(id, data) {
+        return await this.model
+            .findByIdAndUpdate(id, data, { new: true })
+            .populate([
+            'questionSessions',
+            {
+                path: 'quiz',
+                populate: {
+                    path: 'questionIds',
+                },
+            },
+            'student',
+        ]);
+    }
+    async findByIdWithStudent(id, studentId) {
+        return await this.model
+            .findOne({ _id: id, studentId, deletedAt: null })
+            .populate([
+            'questionSessions',
+            {
+                path: 'quiz',
+                populate: {
+                    path: 'questionIds',
+                },
+            },
+            'student',
+        ]);
+    }
     async findById(id) {
         return await this.model.findOne({ _id: id, deletedAt: null }).populate([
             'questionSessions',

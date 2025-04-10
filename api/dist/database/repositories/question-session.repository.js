@@ -9,6 +9,9 @@ class QuestionSessionRepository extends base_repository_1.BaseRepository {
     constructor() {
         super(question_session_model_1.default);
     }
+    async deleteSessionQuestions(sessionId) {
+        return await this.model.updateMany({ sessionId, deletedAt: null }, { $set: { deletedAt: new Date() } });
+    }
     async getQuestionIds(sessionId) {
         // eslint-disable-next-line @typescript-eslint/no-unsafe-return
         return await this.model

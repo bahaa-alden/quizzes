@@ -13,6 +13,7 @@ export interface QuestionSessionFindOptions extends FindOptions<QuestionSessionF
 }
 export declare class QuestionSessionRepository extends BaseRepository<IQuestionSession> {
     constructor();
+    deleteSessionQuestions(sessionId: string): Promise<import("mongoose").UpdateWriteOpResult>;
     getQuestionIds(sessionId: string): Promise<any[]>;
     findForAdmin(options: QuestionSessionFindOptions): Promise<PaginatedList<IQuestionSession>>;
 }

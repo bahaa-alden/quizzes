@@ -6,5 +6,6 @@ export declare class SessionController {
     createSession: (req: import("express").Request, res: Response, next: import("express").NextFunction) => void;
     updateSession: (req: import("express").Request, res: Response, next: import("express").NextFunction) => void;
     deleteSession: (req: import("express").Request, res: Response, next: import("express").NextFunction) => void;
+    resetSession: (req: import("express").Request, res: Response, next: import("express").NextFunction) => void;
 }
 export declare const sessionController: SessionController;

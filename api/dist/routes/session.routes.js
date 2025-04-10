@@ -28,6 +28,10 @@ class SessionRoutes {
         this.router.get('/:id', (0, restrict_1.default)(USER, ADMIN, TEACHER), authorization_1.authorizationMiddleware.authorization, (0, validator_1.default)({ params: session_schema_1.default.sessionId }), session_controller_1.sessionController.getSession);
         // CREATE SESSION
         this.router.post('/', (0, restrict_1.default)(USER), authorization_1.authorizationMiddleware.authorization, (0, validator_1.default)({ body: session_schema_1.default.sessionCreate }), session_controller_1.sessionController.createSession);
+        // RESET SESSION BY ID
+        this.router.post('/:id/reset', (0, restrict_1.default)(USER), authorization_1.authorizationMiddleware.authorization, (0, validator_1.default)({
+            params: session_schema_1.default.sessionId,
+        }), session_controller_1.sessionController.resetSession);
         // UPDATE SESSION BY ID
         this.router.patch('/:id', (0, restrict_1.default)(USER, TEACHER, ADMIN), authorization_1.authorizationMiddleware.authorization, (0, validator_1.default)({
             params: session_schema_1.default.sessionId,

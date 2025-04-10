@@ -8,6 +8,8 @@ const order_1 = require("../utils/order");
 const pagination_1 = require("../utils/pagination");
 const record_1 = require("../utils/record");
 const records_1 = require("../services/internal/sessions/records");
+const question_session_repository_1 = require("../database/repositories/question-session.repository");
+const enum_1 = require("../utils/enum");
 class SessionController {
     // Get all Sessions by author
     getSessions = (0, asyncHandler_1.default)(async (req, res, next) => {
@@ -40,14 +42,20 @@ class SessionController {
     // Create session handler
     createSession = (0, asyncHandler_1.default)(async (req, res, next) => {
         const newSession = req.valid.body;
-        if (!req.valid.body.studentId) {
-            req.valid.body.studentId = req.user.id;
+        if (!newSession.studentId) {
+            newSession.studentId = req.user.id;
         }
-        const session = await session_repository_1.sessionRepository.insert(newSession);
-        if (session === null) {
+        let existSession = await session_repository_1.sessionRepository.findOneBy({
+            quizId: newSession.quizId,
+            studentId: req.valid.body.studentId,
+        });
+        if (!existSession) {
+            existSession = await session_repository_1.sessionRepository.insert(newSession);
+        }
+        if (existSession === null) {
             throw new ApiError_1.InternalError();
         }
-        res.created({ message: 'Session has been created', data: session });
+        res.created({ message: 'Session has been created', data: existSession });
     });
     // Update session by Id for authenticated user
     updateSession = (0, asyncHandler_1.default)(async (req, res, next) => {
@@ -61,6 +69,14 @@ class SessionController {
         const session = (0, record_1.needRecord)(await session_repository_1.sessionRepository.findById(req.valid.params.id), new ApiError_1.NotFoundError('Session not found'));
         await session_repository_1.sessionRepository.deleteById(session.id);
         res.noContent({ message: 'Session deleted successfully' });
+    });
+    resetSession = (0, asyncHandler_1.default)(async (req, res, next) => {
+        const session = (0, record_1.needRecord)(await session_repository_1.sessionRepository.findByIdWithStudent(req.valid.params.id, req.user.id), new ApiError_1.NotFoundError('Session not found'));
+        await question_session_repository_1.questionSessionRepository.deleteSessionQuestions(session.id);
+        const data = (0, record_1.needRecord)(await session_repository_1.sessionRepository.patchById(session.id, {
+            status: enum_1.SessionStatus.pending,
+        }));
+        res.ok({ message: 'Session has been updated', data });
     });
 }
 exports.SessionController = SessionController;

@@ -49,6 +49,7 @@ sessionSchema.virtual('questionSessions', {
     localField: '_id',
     foreignField: 'sessionId',
     ref: 'QuestionSession',
+    match: { deletedAt: null },
 });
 exports.default = (0, mongoose_2.model)('Session', sessionSchema);
 //# sourceMappingURL=session.model.js.map

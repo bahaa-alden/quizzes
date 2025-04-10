@@ -26,6 +26,13 @@ export class QuestionSessionRepository extends BaseRepository<IQuestionSession> 
     super(QuestionSession);
   }
 
+  async deleteSessionQuestions(sessionId: string) {
+    return await this.model.updateMany(
+      { sessionId, deletedAt: null },
+      { $set: { deletedAt: new Date() } },
+    );
+  }
+
   async getQuestionIds(sessionId: string) {
     // eslint-disable-next-line @typescript-eslint/no-unsafe-return
     return await this.model

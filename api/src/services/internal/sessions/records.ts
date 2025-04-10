@@ -1,8 +1,8 @@
 import { IQuiz } from '../../../database/models/quiz.model';
 import { questionSessionRepository } from '../../../database/repositories/question-session.repository';
-import { quizQuestionRepository } from '../../../database/repositories/quiz-question.repository';
 import { quizRepository } from '../../../database/repositories/quiz.repository';
 import { sessionRepository } from '../../../database/repositories/session.repository';
+import { SessionStatus } from '../../../utils/enum';
 import { needRecord } from '../../../utils/record';
 
 export interface Input {
@@ -34,9 +34,7 @@ export const getSessionRecords = async (
 
       const quiz = needRecord(await quizRepository.findById(session.quizId));
 
-      const quizQuestions = (await quizQuestionRepository.getQuestionIds(
-        quiz.id,
-      )) as string[];
+      const quizQuestions = quiz.questionIds as unknown as string[];
 
       const { status } = getStatusAndCount(sessionQuestions, quizQuestions);
 
@@ -58,12 +56,11 @@ export function getStatusAndCount(
   sessionQuestions: string[],
   questionIds: string[],
 ): { status: string } {
-  let status = 'completed';
+  let status = SessionStatus.completed;
   if (sessionQuestions.length === 0) {
-    status = 'not started';
-  }
-  if (sessionQuestions.length < questionIds.length) {
-    status = 'processing';
+    status = SessionStatus.pending;
+  } else if (sessionQuestions.length < questionIds.length) {
+    status = SessionStatus.started;
   }
   return { status };
 }

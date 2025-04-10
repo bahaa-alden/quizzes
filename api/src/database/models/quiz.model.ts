@@ -56,9 +56,9 @@ const quizSchema: Schema = new Schema<IQuiz>(
     timestamps: true,
     toJSON: {
       virtuals: true,
-      transform: (_, ret) => {
+      transform: (_, ret: IQuiz) => {
         if (ret.questionIds && Array.isArray(ret.questionIds)) {
-          const questionIds = ret.questionIds.map((qq: IQuizQuestion) =>
+          const questionIds = ret.questionIds.map((qq) =>
             qq.questionId.toString(),
           );
           ret.questionIds = questionIds;

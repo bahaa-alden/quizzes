@@ -60,6 +60,17 @@ export class SessionRoutes {
       sessionController.createSession,
     );
 
+    // RESET SESSION BY ID
+    this.router.post(
+      '/:id/reset',
+      restrict(USER),
+      authorizationMiddleware.authorization,
+      validator({
+        params: sessionSchema.sessionId,
+      }),
+      sessionController.resetSession,
+    );
+
     // UPDATE SESSION BY ID
     this.router.patch(
       '/:id',

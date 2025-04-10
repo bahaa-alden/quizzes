@@ -17,6 +17,8 @@ import { defaultOrderParams } from '../utils/order';
 import { defaultPaginationParams } from '../utils/pagination';
 import { needRecord } from '../utils/record';
 import { getSessionRecords } from '../services/internal/sessions/records';
+import { questionSessionRepository } from '../database/repositories/question-session.repository';
+import { SessionStatus } from '../utils/enum';
 
 export class SessionController {
   // Get all Sessions by author
@@ -88,14 +90,24 @@ export class SessionController {
       next: NextFunction,
     ): Promise<void> => {
       const newSession = req.valid.body;
-      if (!req.valid.body.studentId) {
-        req.valid.body.studentId = req.user.id;
+      if (!newSession.studentId) {
+        newSession.studentId = req.user.id;
       }
-      const session = await sessionRepository.insert(newSession);
-      if (session === null) {
+
+      let existSession = await sessionRepository.findOneBy({
+        quizId: newSession.quizId,
+        studentId: req.valid.body.studentId,
+      });
+
+      if (!existSession) {
+        existSession = await sessionRepository.insert(newSession);
+      }
+
+      if (existSession === null) {
         throw new InternalError();
       }
-      res.created({ message: 'Session has been created', data: session });
+
+      res.created({ message: 'Session has been created', data: existSession });
     },
   );
 
@@ -132,6 +144,30 @@ export class SessionController {
 
       await sessionRepository.deleteById(session.id);
       res.noContent({ message: 'Session deleted successfully' });
+    },
+  );
+
+  public resetSession = asyncHandler(
+    async (
+      req: ParsedRequest<void, void, ISessionIdSchema>,
+      res: Response,
+      next: NextFunction,
+    ): Promise<void> => {
+      const session = needRecord(
+        await sessionRepository.findByIdWithStudent(
+          req.valid.params.id,
+          req.user.id,
+        ),
+        new NotFoundError('Session not found'),
+      );
+
+      await questionSessionRepository.deleteSessionQuestions(session.id);
+      const data = needRecord(
+        await sessionRepository.patchById(session.id, {
+          status: SessionStatus.pending,
+        }),
+      );
+      res.ok({ message: 'Session has been updated', data });
     },
   );
 }

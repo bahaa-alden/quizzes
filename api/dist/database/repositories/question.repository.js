@@ -9,9 +9,22 @@ class QuestionRepository extends base_repository_1.BaseRepository {
     constructor() {
         super(question_model_1.default);
     }
+    async patchById(id, data) {
+        return await this.model
+            .findByIdAndUpdate(id, data, { new: true })
+            .populate(['subject']);
+    }
+    async findById(id) {
+        return await this.model
+            .findOne({ _id: id, deletedAt: null })
+            .populate(['subject']);
+    }
     async findForAdmin(options) {
-        const { order, pagination, search, fields } = options;
+        const { order, pagination, search, fields, filter } = options;
         const query = { deletedAt: null };
+        if (filter?.subjectId) {
+            query.subjectId = filter.subjectId;
+        }
         if (search) {
             query.$or = [];
         }

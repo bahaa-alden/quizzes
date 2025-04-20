@@ -51,6 +51,12 @@ exports.updateQuestion = exports.createQuestion = exports.Question = void 0;
  *     parameters:
   # filters
  *       - in: query
+ *         name: subjectId
+ *         schema:
+ *           type: string
+ *         description: filter for subjectId field
+
+ *       - in: query
  *         name: fields
  *         schema:
  *           type: string
@@ -213,6 +219,7 @@ exports.Question = {
     properties: {
         id: { type: 'string' },
         // property
+        subjectId: { type: 'string' },
         answers: {
             type: 'array',
             items: {
@@ -230,6 +237,7 @@ exports.Question = {
     example: {
         id: '5ebac534954b54139806c112',
         // property example
+        subjectId: '673c40cd59e293827f79e398',
         answers: [
             {
                 // property example answers
@@ -247,6 +255,7 @@ exports.createQuestion = {
     type: 'object',
     properties: {
         // create property
+        subjectId: { type: 'string' },
         answers: {
             type: 'array',
             items: {
@@ -263,6 +272,7 @@ exports.createQuestion = {
     },
     example: {
         // create property example
+        subjectId: '673c40cd59e293827f79e398',
         answers: [
             {
                 // create property example answers
@@ -283,6 +293,7 @@ exports.updateQuestion = {
     type: 'object',
     properties: {
         // update property
+        subjectId: { type: 'string' },
         answers: {
             type: 'array',
             items: {
@@ -299,6 +310,7 @@ exports.updateQuestion = {
     },
     example: {
         // update property example
+        subjectId: '673c40cd59e293827f79e398',
         answers: [
             {
                 // update property example answers

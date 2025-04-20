@@ -76,6 +76,7 @@ declare const quizUpdateSchema: z.ZodObject<{
 export type IQuizUpdateSchema = TypeOf<typeof quizUpdateSchema>;
 declare const addQuestionsSchema: z.ZodObject<{
     questions: z.ZodOptional<z.ZodArray<z.ZodObject<{
+        subjectId: z.ZodString;
         answers: z.ZodOptional<z.ZodArray<z.ZodObject<{
             isCorrect: z.ZodOptional<z.ZodBoolean>;
             text: z.ZodString;
@@ -89,12 +90,14 @@ declare const addQuestionsSchema: z.ZodObject<{
         text: z.ZodString;
     }, "strip", z.ZodTypeAny, {
         text: string;
+        subjectId: string;
         answers?: {
             text: string;
             isCorrect?: boolean | undefined;
         }[] | undefined;
     }, {
         text: string;
+        subjectId: string;
         answers?: {
             text: string;
             isCorrect?: boolean | undefined;
@@ -105,6 +108,7 @@ declare const addQuestionsSchema: z.ZodObject<{
     questionIds?: string[] | undefined;
     questions?: {
         text: string;
+        subjectId: string;
         answers?: {
             text: string;
             isCorrect?: boolean | undefined;
@@ -114,6 +118,7 @@ declare const addQuestionsSchema: z.ZodObject<{
     questionIds?: string[] | undefined;
     questions?: {
         text: string;
+        subjectId: string;
         answers?: {
             text: string;
             isCorrect?: boolean | undefined;
@@ -124,6 +129,7 @@ export type IAddQuestionsSchema = TypeOf<typeof addQuestionsSchema>;
 declare const _default: {
     addQuestions: z.ZodObject<{
         questions: z.ZodOptional<z.ZodArray<z.ZodObject<{
+            subjectId: z.ZodString;
             answers: z.ZodOptional<z.ZodArray<z.ZodObject<{
                 isCorrect: z.ZodOptional<z.ZodBoolean>;
                 text: z.ZodString;
@@ -137,12 +143,14 @@ declare const _default: {
             text: z.ZodString;
         }, "strip", z.ZodTypeAny, {
             text: string;
+            subjectId: string;
             answers?: {
                 text: string;
                 isCorrect?: boolean | undefined;
             }[] | undefined;
         }, {
             text: string;
+            subjectId: string;
             answers?: {
                 text: string;
                 isCorrect?: boolean | undefined;
@@ -153,6 +161,7 @@ declare const _default: {
         questionIds?: string[] | undefined;
         questions?: {
             text: string;
+            subjectId: string;
             answers?: {
                 text: string;
                 isCorrect?: boolean | undefined;
@@ -162,6 +171,7 @@ declare const _default: {
         questionIds?: string[] | undefined;
         questions?: {
             text: string;
+            subjectId: string;
             answers?: {
                 text: string;
                 isCorrect?: boolean | undefined;

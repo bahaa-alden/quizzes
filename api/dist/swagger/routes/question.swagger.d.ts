@@ -48,6 +48,12 @@
  *     parameters:
   # filters
  *       - in: query
+ *         name: subjectId
+ *         schema:
+ *           type: string
+ *         description: filter for subjectId field
+
+ *       - in: query
  *         name: fields
  *         schema:
  *           type: string
@@ -211,6 +217,9 @@ export declare const Question: {
         id: {
             type: string;
         };
+        subjectId: {
+            type: string;
+        };
         answers: {
             type: string;
             items: {
@@ -234,6 +243,7 @@ export declare const Question: {
     };
     example: {
         id: string;
+        subjectId: string;
         answers: {
             isCorrect: boolean;
             text: string;
@@ -247,6 +257,9 @@ export declare const Question: {
 export declare const createQuestion: {
     type: string;
     properties: {
+        subjectId: {
+            type: string;
+        };
         answers: {
             type: string;
             items: {
@@ -269,6 +282,7 @@ export declare const createQuestion: {
         };
     };
     example: {
+        subjectId: string;
         answers: {
             isCorrect: boolean;
             text: string;
@@ -281,6 +295,9 @@ export declare const createQuestion: {
 export declare const updateQuestion: {
     type: string;
     properties: {
+        subjectId: {
+            type: string;
+        };
         answers: {
             type: string;
             items: {
@@ -303,6 +320,7 @@ export declare const updateQuestion: {
         };
     };
     example: {
+        subjectId: string;
         answers: {
             isCorrect: boolean;
             text: string;

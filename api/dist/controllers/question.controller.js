@@ -13,7 +13,8 @@ class QuestionController {
     getQuestions = (0, asyncHandler_1.default)(async (req, res, next) => {
         const options = {
             filter: {
-            // filters
+                // filters
+                subjectId: req.valid.query.subjectId,
             },
             fields: req.valid.query.fields,
             search: req.valid.query.search,

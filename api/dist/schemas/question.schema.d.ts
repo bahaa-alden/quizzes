@@ -35,6 +35,7 @@ declare const questionAllSchema: z.ZodObject<{
     orderColumn: z.ZodDefault<z.ZodOptional<z.ZodEnum<["id", "createdAt"]>>>;
     orderDirection: z.ZodDefault<z.ZodOptional<z.ZodNativeEnum<typeof import("../utils/order").OrderDirection>>>;
     search: z.ZodOptional<z.ZodString>;
+    subjectId: z.ZodOptional<z.ZodString>;
     fields: z.ZodOptional<z.ZodString>;
 }, "strip", z.ZodTypeAny, {
     page: number;
@@ -43,6 +44,7 @@ declare const questionAllSchema: z.ZodObject<{
     orderDirection: import("../utils/order").OrderDirection;
     search?: string | undefined;
     fields?: string | undefined;
+    subjectId?: string | undefined;
 }, {
     search?: string | undefined;
     page?: string | undefined;
@@ -50,9 +52,11 @@ declare const questionAllSchema: z.ZodObject<{
     orderColumn?: "id" | "createdAt" | undefined;
     orderDirection?: import("../utils/order").OrderDirection | undefined;
     fields?: string | undefined;
+    subjectId?: string | undefined;
 }>;
 export type IQuestionAllSchema = TypeOf<typeof questionAllSchema>;
 declare const questionCreateSchema: z.ZodObject<{
+    subjectId: z.ZodString;
     answers: z.ZodOptional<z.ZodArray<z.ZodObject<{
         isCorrect: z.ZodOptional<z.ZodBoolean>;
         text: z.ZodString;
@@ -66,12 +70,14 @@ declare const questionCreateSchema: z.ZodObject<{
     text: z.ZodString;
 }, "strip", z.ZodTypeAny, {
     text: string;
+    subjectId: string;
     answers?: {
         text: string;
         isCorrect?: boolean | undefined;
     }[] | undefined;
 }, {
     text: string;
+    subjectId: string;
     answers?: {
         text: string;
         isCorrect?: boolean | undefined;
@@ -79,6 +85,7 @@ declare const questionCreateSchema: z.ZodObject<{
 }>;
 export type IQuestionCreateSchema = TypeOf<typeof questionCreateSchema>;
 declare const questionUpdateSchema: z.ZodObject<{
+    subjectId: z.ZodOptional<z.ZodString>;
     answers: z.ZodOptional<z.ZodArray<z.ZodObject<{
         isCorrect: z.ZodOptional<z.ZodBoolean>;
         text: z.ZodString;
@@ -92,12 +99,14 @@ declare const questionUpdateSchema: z.ZodObject<{
     text: z.ZodOptional<z.ZodString>;
 }, "strict", z.ZodTypeAny, {
     text?: string | undefined;
+    subjectId?: string | undefined;
     answers?: {
         text: string;
         isCorrect?: boolean | undefined;
     }[] | undefined;
 }, {
     text?: string | undefined;
+    subjectId?: string | undefined;
     answers?: {
         text: string;
         isCorrect?: boolean | undefined;
@@ -118,6 +127,7 @@ declare const _default: {
         orderColumn: z.ZodDefault<z.ZodOptional<z.ZodEnum<["id", "createdAt"]>>>;
         orderDirection: z.ZodDefault<z.ZodOptional<z.ZodNativeEnum<typeof import("../utils/order").OrderDirection>>>;
         search: z.ZodOptional<z.ZodString>;
+        subjectId: z.ZodOptional<z.ZodString>;
         fields: z.ZodOptional<z.ZodString>;
     }, "strip", z.ZodTypeAny, {
         page: number;
@@ -126,6 +136,7 @@ declare const _default: {
         orderDirection: import("../utils/order").OrderDirection;
         search?: string | undefined;
         fields?: string | undefined;
+        subjectId?: string | undefined;
     }, {
         search?: string | undefined;
         page?: string | undefined;
@@ -133,8 +144,10 @@ declare const _default: {
         orderColumn?: "id" | "createdAt" | undefined;
         orderDirection?: import("../utils/order").OrderDirection | undefined;
         fields?: string | undefined;
+        subjectId?: string | undefined;
     }>;
     questionCreate: z.ZodObject<{
+        subjectId: z.ZodString;
         answers: z.ZodOptional<z.ZodArray<z.ZodObject<{
             isCorrect: z.ZodOptional<z.ZodBoolean>;
             text: z.ZodString;
@@ -148,18 +161,21 @@ declare const _default: {
         text: z.ZodString;
     }, "strip", z.ZodTypeAny, {
         text: string;
+        subjectId: string;
         answers?: {
             text: string;
             isCorrect?: boolean | undefined;
         }[] | undefined;
     }, {
         text: string;
+        subjectId: string;
         answers?: {
             text: string;
             isCorrect?: boolean | undefined;
         }[] | undefined;
     }>;
     questionUpdate: z.ZodObject<{
+        subjectId: z.ZodOptional<z.ZodString>;
         answers: z.ZodOptional<z.ZodArray<z.ZodObject<{
             isCorrect: z.ZodOptional<z.ZodBoolean>;
             text: z.ZodString;
@@ -173,12 +189,14 @@ declare const _default: {
         text: z.ZodOptional<z.ZodString>;
     }, "strict", z.ZodTypeAny, {
         text?: string | undefined;
+        subjectId?: string | undefined;
         answers?: {
             text: string;
             isCorrect?: boolean | undefined;
         }[] | undefined;
     }, {
         text?: string | undefined;
+        subjectId?: string | undefined;
         answers?: {
             text: string;
             isCorrect?: boolean | undefined;

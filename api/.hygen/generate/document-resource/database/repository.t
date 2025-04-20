@@ -1,7 +1,7 @@
 ---
 to: src/database/repositories/<%= nameDash %>.repository.ts
 ---
-import { type FilterQuery } from 'mongoose'
+import { type UpdateQuery, type FilterQuery } from 'mongoose';
 import { type PaginatedList } from '../../utils/pagination'
 import { OrderDirection, type OrderOptions } from '../../utils/order'
 import { BaseRepository, type FindOptions } from './base.repository'
@@ -21,6 +21,21 @@ export class <%= Name %>Repository extends BaseRepository<I<%= Name %>> {
     super(<%= Name %>)
   }
 
+  async patchById(
+    id: string,
+    data: UpdateQuery<I<%= Name %>>,
+  ): Promise<I<%= Name %> | null> {
+    return await this.model
+      .findByIdAndUpdate(id, data, { new: true })
+      .populate([]);
+  }
+
+  async findById(id: string): Promise<I<%= Name %> | null> {
+    return await this.model
+      .findOne({ _id: id, deletedAt: null })
+      .populate(['']);
+  }
+  
   async findForAdmin(options: <%= Name %>FindOptions): Promise<PaginatedList<I<%= Name %>>> {
     const { order, pagination, search, fields } = options
 

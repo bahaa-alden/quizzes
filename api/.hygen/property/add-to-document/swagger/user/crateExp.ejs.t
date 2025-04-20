@@ -1,6 +1,6 @@
 ---
 inject: true
-to: "./src/swagger/routes/users.swagger.ts"
+to: "./src/swagger/routes/user.swagger.ts"
 after: // create property example
 ---
 <% if (name === 'user') { -%>

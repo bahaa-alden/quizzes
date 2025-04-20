@@ -1,3 +1,5 @@
+import { ISubject } from './subject.model';
+import mongoose from 'mongoose';
 import { model, Schema, type Document as MongooseDocument } from 'mongoose';
 import { omit } from 'lodash';
 
@@ -12,6 +14,8 @@ export interface IAnswer extends MongooseDocument {
 export interface IQuestion extends MongooseDocument {
   id: string;
   // <creating-property-interface />
+  subjectId: ISubject['_id'];
+  subject: ISubject;
   answers?: IAnswer[];
   text: string;
   createdAt: Date;
@@ -44,6 +48,11 @@ const questionAnswerSchema: Schema = new Schema<IAnswer>(
 const questionSchema: Schema = new Schema<IQuestion>(
   {
     // <creating-property-schema />
+    subjectId: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'Subject',
+    },
+
     answers: {
       type: [questionAnswerSchema],
       default: [],
@@ -66,5 +75,13 @@ const questionSchema: Schema = new Schema<IQuestion>(
     },
   },
 );
+
+questionSchema.virtual('subject', {
+  localField: 'subjectId',
+  foreignField: '_id',
+  ref: 'Subject',
+  justOne: true,
+  match: { deletedAt: null },
+});
 
 export default model<IQuestion>('Question', questionSchema);

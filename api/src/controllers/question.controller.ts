@@ -28,6 +28,7 @@ export class QuestionController {
       const options: QuestionFindOptions = {
         filter: {
           // filters
+          subjectId: req.valid.query.subjectId,
         },
         fields: req.valid.query.fields,
         search: req.valid.query.search,

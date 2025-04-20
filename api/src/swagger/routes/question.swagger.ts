@@ -49,6 +49,12 @@
  *     parameters:
   # filters
  *       - in: query
+ *         name: subjectId
+ *         schema:
+ *           type: string
+ *         description: filter for subjectId field
+
+ *       - in: query
  *         name: fields
  *         schema:
  *           type: string
@@ -213,6 +219,7 @@ export const Question = {
   properties: {
     id: { type: 'string' },
     // property
+    subjectId: { type: 'string' },
     answers: {
       type: 'array',
       items: {
@@ -232,6 +239,8 @@ export const Question = {
   example: {
     id: '5ebac534954b54139806c112',
     // property example
+    subjectId: '673c40cd59e293827f79e398',
+
     answers: [
       {
         // property example answers
@@ -253,6 +262,7 @@ export const createQuestion = {
   type: 'object',
   properties: {
     // create property
+    subjectId: { type: 'string' },
     answers: {
       type: 'array',
       items: {
@@ -271,6 +281,8 @@ export const createQuestion = {
   },
   example: {
     // create property example
+    subjectId: '673c40cd59e293827f79e398',
+
     answers: [
       {
         // create property example answers
@@ -296,6 +308,7 @@ export const updateQuestion = {
   type: 'object',
   properties: {
     // update property
+    subjectId: { type: 'string' },
     answers: {
       type: 'array',
       items: {
@@ -314,6 +327,8 @@ export const updateQuestion = {
   },
   example: {
     // update property example
+    subjectId: '673c40cd59e293827f79e398',
+
     answers: [
       {
         // update property example answers

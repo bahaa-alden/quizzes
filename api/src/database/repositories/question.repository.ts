@@ -1,4 +1,4 @@
-import { type FilterQuery } from 'mongoose';
+import { type UpdateQuery, type FilterQuery } from 'mongoose';
 import { type PaginatedList } from '../../utils/pagination';
 import { OrderDirection, type OrderOptions } from '../../utils/order';
 import { BaseRepository, type FindOptions } from './base.repository';
@@ -7,6 +7,7 @@ import { selectedFields } from '../../utils/projection';
 
 export interface QuestionFilterOptions {
   //filters
+  subjectId?: string;
 }
 
 export interface QuestionFindOptions
@@ -19,12 +20,32 @@ export class QuestionRepository extends BaseRepository<IQuestion> {
     super(Question);
   }
 
+  async patchById(
+    id: string,
+    data: UpdateQuery<IQuestion>,
+  ): Promise<IQuestion | null> {
+    return await this.model
+      .findByIdAndUpdate(id, data, { new: true })
+      .populate(['subject']);
+  }
+
+  async findById(id: string): Promise<IQuestion | null> {
+    return await this.model
+      .findOne({ _id: id, deletedAt: null })
+      .populate(['subject']);
+  }
+
   async findForAdmin(
     options: QuestionFindOptions,
   ): Promise<PaginatedList<IQuestion>> {
-    const { order, pagination, search, fields } = options;
+    const { order, pagination, search, fields, filter } = options;
 
     const query: FilterQuery<IQuestion> = { deletedAt: null };
+
+    if (filter?.subjectId) {
+      query.subjectId = filter.subjectId;
+    }
+
     if (search) {
       query.$or = [];
     }

@@ -21,9 +21,9 @@ class QuestionRoutes {
         // PROTECTED ROUTES
         this.router.use((0, validator_1.default)({ headers: auth_schema_1.default.auth }), authJwt_1.authMiddleware.authenticateJWT);
         // GET ALL QUESTIONS
-        this.router.get('/', (0, restrict_1.default)(USER, ADMIN), authorization_1.authorizationMiddleware.authorization, (0, validator_1.default)({ query: question_schema_1.default.questionAll }), question_controller_1.questionController.getQuestions);
+        this.router.get('/', (0, restrict_1.default)(USER, ADMIN, TEACHER), authorization_1.authorizationMiddleware.authorization, (0, validator_1.default)({ query: question_schema_1.default.questionAll }), question_controller_1.questionController.getQuestions);
         // GET QUESTION BY ID
-        this.router.get('/:id', (0, restrict_1.default)(USER, ADMIN), authorization_1.authorizationMiddleware.authorization, (0, validator_1.default)({ params: question_schema_1.default.questionId }), question_controller_1.questionController.getQuestion);
+        this.router.get('/:id', (0, restrict_1.default)(USER, ADMIN, TEACHER), authorization_1.authorizationMiddleware.authorization, (0, validator_1.default)({ params: question_schema_1.default.questionId }), question_controller_1.questionController.getQuestion);
         // CREATE QUESTION
         this.router.post('/', (0, restrict_1.default)(ADMIN, TEACHER), authorization_1.authorizationMiddleware.authorization, (0, validator_1.default)({ body: question_schema_1.default.questionCreate }), question_controller_1.questionController.createQuestion);
         // UPDATE QUESTION BY ID

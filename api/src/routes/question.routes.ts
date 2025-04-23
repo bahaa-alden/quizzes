@@ -27,7 +27,7 @@ export class QuestionRoutes {
     // GET ALL QUESTIONS
     this.router.get(
       '/',
-      restrict(USER, ADMIN),
+      restrict(USER, ADMIN, TEACHER),
       authorizationMiddleware.authorization,
       validator({ query: questionSchema.questionAll }),
       questionController.getQuestions,
@@ -36,7 +36,7 @@ export class QuestionRoutes {
     // GET QUESTION BY ID
     this.router.get(
       '/:id',
-      restrict(USER, ADMIN),
+      restrict(USER, ADMIN, TEACHER),
       authorizationMiddleware.authorization,
       validator({ params: questionSchema.questionId }),
       questionController.getQuestion,

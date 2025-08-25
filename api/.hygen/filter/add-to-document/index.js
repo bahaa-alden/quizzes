@@ -53,7 +53,11 @@ module.exports = {
           return formatCamals(input, 0);
         },
       })
-
+      .then(
+        collectPromisesResults((values) => {
+          return eqValueFormat(values, 'name');
+        }),
+      )
       .then(
         collectPromisesResults((rootValues) => {
           return prompter

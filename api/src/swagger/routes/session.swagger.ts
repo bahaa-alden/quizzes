@@ -336,6 +336,7 @@ export const Record = {
   properties: {
     id: { type: 'string' },
     // property
+    score: { type: 'number' },
     sessionId: { type: 'string' },
     quizId: { type: 'string' },
     quiz: Quiz,
@@ -374,6 +375,8 @@ export const Session = {
   example: {
     id: '5ebac534954b54139806c112',
     // property example
+    score: 5,
+
     quizId: '673c40cd59e293827f79e398',
 
     studentId: '673c40cd59e293827f79e398',
@@ -389,12 +392,15 @@ export const createSession = {
   type: 'object',
   properties: {
     // create property
+    score: { type: 'number' },
     quizId: { type: 'string' },
     studentId: { type: 'string' },
     status: { type: 'string', enum: ['pending', 'started', 'completed'] },
   },
   example: {
     // create property example
+    score: 5,
+
     quizId: '673c40cd59e293827f79e398',
 
     studentId: '673c40cd59e293827f79e398',
@@ -403,6 +409,7 @@ export const createSession = {
   },
   required: [
     // required property
+
     'quiz',
 
     'student',
@@ -412,12 +419,15 @@ export const updateSession = {
   type: 'object',
   properties: {
     // update property
+    score: { type: 'number' },
     quizId: { type: 'string' },
     studentId: { type: 'string' },
     status: { type: 'string', enum: ['pending', 'started', 'completed'] },
   },
   example: {
     // update property example
+    score: 5,
+
     quizId: '673c40cd59e293827f79e398',
 
     studentId: '673c40cd59e293827f79e398',

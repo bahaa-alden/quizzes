@@ -45,6 +45,7 @@ export const getSessionRecords = async (
         sessionQuestions: sessionQuestions.length,
         questions: quizQuestions.length,
         status,
+        score: session.score,
       };
     }),
   );

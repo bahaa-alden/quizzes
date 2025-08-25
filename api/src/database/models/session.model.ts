@@ -13,6 +13,8 @@ import { IQuestionSession } from './question-session.model';
 export interface ISession extends MongooseDocument {
   id: string;
   // <creating-property-interface />
+  score?: number;
+
   quizId: IQuiz['_id'];
   quiz: IQuiz;
 
@@ -30,6 +32,9 @@ export interface ISession extends MongooseDocument {
 const sessionSchema: Schema = new Schema<ISession>(
   {
     // <creating-property-schema />
+    score: {
+      type: Number,
+    },
     quizId: {
       type: mongoose.Schema.Types.ObjectId,
       ref: 'Quiz',
@@ -43,7 +48,7 @@ const sessionSchema: Schema = new Schema<ISession>(
     status: {
       type: String,
       enum: Object.values(SessionStatus),
-      default: SessionStatus.pending,
+      default: SessionStatus.started,
     },
     deletedAt: {
       type: Date,

@@ -39,6 +39,8 @@ export type ISessionRecordSchema = TypeOf<typeof sessionRecordSchema>;
 const sessionCreateSchema = z
   .object({
     // <creating-property-create-schema />
+    score: z.number().optional(),
+
     quizId: objectId,
     studentId: objectId.optional(),
     status: z.nativeEnum(SessionStatus).optional(),
@@ -50,6 +52,8 @@ export type ISessionCreateSchema = TypeOf<typeof sessionCreateSchema>;
 const sessionUpdateSchema = z
   .object({
     // <creating-property-update-schema />
+    score: z.number().optional().optional(),
+
     quizId: objectId.optional(),
     studentId: objectId.optional(),
     status: z.nativeEnum(SessionStatus).optional(),

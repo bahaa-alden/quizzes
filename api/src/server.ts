@@ -91,28 +91,32 @@ class Server {
     this.app.use(express.json());
     this.app.use(express.urlencoded({ extended: false }));
     this.app.use(compression());
-    this.app.use(cors());
+    this.app.use(
+      cors({
+        origin: [
+          'http://localhost:3000',
+          'https://my-app-red-kappa.vercel.app',
+        ],
+        methods: ['GET', 'POST', 'PUT', 'PATCH', 'DELETE', 'OPTIONS'],
+        credentials: true,
+      }),
+    );
     this.app.use(helmet());
     this.app.use(passport.initialize());
   }
 
   private mongo() {
     const connection = mongoose.connection;
-    connection.on('connected', () => {
-    });
-    connection.on('reconnected', () => {
-    });
+    connection.on('connected', () => {});
+    connection.on('reconnected', () => {});
     connection.on('disconnected', () => {
-      
       setTimeout(() => {
         mongoose.connect(env_vars.mongoose.url);
       }, 3000);
     });
 
-    connection.on('close', () => {
-    });
-    connection.on('error', (error: Error) => {
-    });
+    connection.on('close', () => {});
+    connection.on('error', (error: Error) => {});
 
     const run = async () => {
       await mongoose.connect(env_vars.mongoose.url);
@@ -122,7 +126,9 @@ class Server {
 
   public start(): void {
     this.app.listen(this.app.get('port'), () => {
-      console.info(`API is running at http://localhost:${this.app.get('port')}`);
+      console.info(
+        `API is running at http://localhost:${this.app.get('port')}`,
+      );
       console.info(
         `swagger is running at http://localhost:${this.app.get('port')}/docs`,
       );

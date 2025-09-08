@@ -62,25 +62,28 @@ class Server {
         this.app.use(express.json());
         this.app.use(express.urlencoded({ extended: false }));
         this.app.use(compression());
-        this.app.use(cors());
+        this.app.use(cors({
+            origin: [
+                'http://localhost:3000',
+                'https://my-app-red-kappa.vercel.app',
+            ],
+            methods: ['GET', 'POST', 'PUT', 'PATCH', 'DELETE', 'OPTIONS'],
+            credentials: true,
+        }));
         this.app.use((0, helmet_1.default)());
         this.app.use(passport.initialize());
     }
     mongo() {
         const connection = mongoose.connection;
-        connection.on('connected', () => {
-        });
-        connection.on('reconnected', () => {
-        });
+        connection.on('connected', () => { });
+        connection.on('reconnected', () => { });
         connection.on('disconnected', () => {
             setTimeout(() => {
                 mongoose.connect(config_1.env_vars.mongoose.url);
             }, 3000);
         });
-        connection.on('close', () => {
-        });
-        connection.on('error', (error) => {
-        });
+        connection.on('close', () => { });
+        connection.on('error', (error) => { });
         const run = async () => {
             await mongoose.connect(config_1.env_vars.mongoose.url);
         };

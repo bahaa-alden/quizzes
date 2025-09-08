@@ -85,26 +85,38 @@ class Server {
     this.app.use(errHandler);
   }
 
-  public config(): void {
-    this.app.use(
-      cors({
-        origin: [
-          'http://localhost:3000',
-          'https://my-app-red-kappa.vercel.app',
-        ],
-        methods: ['GET', 'POST', 'PUT', 'PATCH', 'DELETE', 'OPTIONS'],
-        credentials: true,
-      }),
-    );
+public config(): void {
+  // CORS first
+  this.app.use(
+    cors({
+      origin: [
+        'http://localhost:3000',
+        'https://my-app-red-kappa.vercel.app',
+      ],
+      methods: ['GET', 'POST', 'PUT', 'PATCH', 'DELETE', 'OPTIONS'],
+      credentials: true,
+    }),
+  );
 
-    this.app.use(customResponses);
-    this.app.set('port', env_vars.port || 3000);
-    this.app.use(express.json());
-    this.app.use(express.urlencoded({ extended: false }));
-    this.app.use(compression());
-    this.app.use(helmet());
-    this.app.use(passport.initialize());
-  }
+  // handle preflight requests
+  this.app.options('*', cors());
+
+  // Helmet (with CORS-friendly config)
+  this.app.use(
+    helmet({
+      crossOriginResourcePolicy: false,
+    }),
+  );
+
+  this.app.use(compression());
+  this.app.use(express.json());
+  this.app.use(express.urlencoded({ extended: false }));
+  this.app.use(passport.initialize());
+  this.app.use(customResponses);
+
+  this.app.set('port', env_vars.port || 3000);
+}
+
 
   private mongo() {
     const connection = mongoose.connection;

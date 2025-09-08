@@ -57,6 +57,7 @@ class Server {
         this.app.use(errHandler_1.default);
     }
     config() {
+        // CORS first
         this.app.use(cors({
             origin: [
                 'http://localhost:3000',
@@ -65,13 +66,18 @@ class Server {
             methods: ['GET', 'POST', 'PUT', 'PATCH', 'DELETE', 'OPTIONS'],
             credentials: true,
         }));
-        this.app.use(custom_middleware_1.default);
-        this.app.set('port', config_1.env_vars.port || 3000);
+        // handle preflight requests
+        this.app.options('*', cors());
+        // Helmet (with CORS-friendly config)
+        this.app.use((0, helmet_1.default)({
+            crossOriginResourcePolicy: false,
+        }));
+        this.app.use(compression());
         this.app.use(express.json());
         this.app.use(express.urlencoded({ extended: false }));
-        this.app.use(compression());
-        this.app.use((0, helmet_1.default)());
         this.app.use(passport.initialize());
+        this.app.use(custom_middleware_1.default);
+        this.app.set('port', config_1.env_vars.port || 3000);
     }
     mongo() {
         const connection = mongoose.connection;

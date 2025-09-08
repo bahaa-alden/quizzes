@@ -86,11 +86,6 @@ class Server {
   }
 
   public config(): void {
-    this.app.use(customResponses);
-    this.app.set('port', env_vars.port || 3000);
-    this.app.use(express.json());
-    this.app.use(express.urlencoded({ extended: false }));
-    this.app.use(compression());
     this.app.use(
       cors({
         origin: [
@@ -101,6 +96,12 @@ class Server {
         credentials: true,
       }),
     );
+
+    this.app.use(customResponses);
+    this.app.set('port', env_vars.port || 3000);
+    this.app.use(express.json());
+    this.app.use(express.urlencoded({ extended: false }));
+    this.app.use(compression());
     this.app.use(helmet());
     this.app.use(passport.initialize());
   }

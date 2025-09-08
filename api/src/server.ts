@@ -18,7 +18,6 @@ import helmet from 'helmet';
 import * as passport from 'passport';
 import errHandler from './middlewares/errHandler';
 import customResponses from './middlewares/custom.middleware';
-import Logger from './core/Logger';
 import swaggerSpec from './swagger/swagger';
 import { NotFoundError } from './core/ApiError';
 import { join } from 'path';
@@ -100,36 +99,31 @@ class Server {
   private mongo() {
     const connection = mongoose.connection;
     connection.on('connected', () => {
-      Logger.info('Mongo Connection Established');
     });
     connection.on('reconnected', () => {
-      Logger.info('Mongo Connection Reestablished');
     });
     connection.on('disconnected', () => {
-      Logger.info('Mongo Connection Disconnected');
-      Logger.info('Trying to reconnect to Mongo ...');
+      
       setTimeout(() => {
         mongoose.connect(env_vars.mongoose.url);
       }, 3000);
     });
 
     connection.on('close', () => {
-      Logger.info('Mongo Connection Closed');
     });
     connection.on('error', (error: Error) => {
-      Logger.info('Mongo Connection ERROR: ' + error);
     });
 
     const run = async () => {
       await mongoose.connect(env_vars.mongoose.url);
     };
-    run().catch((error) => Logger.error(error));
+    run().catch((error) => console.error(error));
   }
 
   public start(): void {
     this.app.listen(this.app.get('port'), () => {
-      Logger.info(`API is running at http://localhost:${this.app.get('port')}`);
-      Logger.info(
+      console.info(`API is running at http://localhost:${this.app.get('port')}`);
+      console.info(
         `swagger is running at http://localhost:${this.app.get('port')}/docs`,
       );
     });

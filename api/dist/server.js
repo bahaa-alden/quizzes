@@ -20,7 +20,6 @@ const helmet_1 = require("helmet");
 const passport = require("passport");
 const errHandler_1 = require("./middlewares/errHandler");
 const custom_middleware_1 = require("./middlewares/custom.middleware");
-const Logger_1 = require("./core/Logger");
 const swagger_1 = require("./swagger/swagger");
 const ApiError_1 = require("./core/ApiError");
 const path_1 = require("path");
@@ -70,33 +69,27 @@ class Server {
     mongo() {
         const connection = mongoose.connection;
         connection.on('connected', () => {
-            Logger_1.default.info('Mongo Connection Established');
         });
         connection.on('reconnected', () => {
-            Logger_1.default.info('Mongo Connection Reestablished');
         });
         connection.on('disconnected', () => {
-            Logger_1.default.info('Mongo Connection Disconnected');
-            Logger_1.default.info('Trying to reconnect to Mongo ...');
             setTimeout(() => {
                 mongoose.connect(config_1.env_vars.mongoose.url);
             }, 3000);
         });
         connection.on('close', () => {
-            Logger_1.default.info('Mongo Connection Closed');
         });
         connection.on('error', (error) => {
-            Logger_1.default.info('Mongo Connection ERROR: ' + error);
         });
         const run = async () => {
             await mongoose.connect(config_1.env_vars.mongoose.url);
         };
-        run().catch((error) => Logger_1.default.error(error));
+        run().catch((error) => console.error(error));
     }
     start() {
         this.app.listen(this.app.get('port'), () => {
-            Logger_1.default.info(`API is running at http://localhost:${this.app.get('port')}`);
-            Logger_1.default.info(`swagger is running at http://localhost:${this.app.get('port')}/docs`);
+            console.info(`API is running at http://localhost:${this.app.get('port')}`);
+            console.info(`swagger is running at http://localhost:${this.app.get('port')}/docs`);
         });
     }
 }

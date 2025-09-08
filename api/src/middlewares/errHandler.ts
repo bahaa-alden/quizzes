@@ -6,7 +6,6 @@ import {
   ErrorType,
   InternalError,
 } from '../core/ApiError';
-import Logger from '../core/Logger';
 
 export default (
   err: any,
@@ -19,14 +18,14 @@ export default (
   if (err instanceof ApiError) {
     ApiError.handle(err, res);
     if (err.type === ErrorType.INTERNAL)
-      Logger.error(
+      console.error(
         `500 - ${err.message} - ${req.originalUrl} - ${req.method} - ${req.ip}`,
       );
   } else {
-    Logger.error(
+    console.error(
       `500 - ${err.message} - ${req.originalUrl} - ${req.method} - ${req.ip}`,
     );
-    Logger.error(err);
+    console.error(err);
     if (env_vars.env === 'development') {
       return res.status(500).send(err);
     }

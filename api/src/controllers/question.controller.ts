@@ -1,5 +1,5 @@
 import { Response, ParsedRequest } from 'express';
-import { NotFoundError } from '../core/ApiError';
+import { BadRequestError, NotFoundError } from '../core/ApiError';
 import asyncHandler from '../middlewares/asyncHandler';
 import { NextFunction } from 'express-serve-static-core';
 import {
@@ -16,6 +16,7 @@ import { defaultOrderParams } from '../utils/order';
 import { defaultPaginationParams } from '../utils/pagination';
 import { needRecord } from '../utils/record';
 import { createQuestion as createQuestionService } from '../services/internal/questions/create';
+import { quizQuestionRepository } from '../database/repositories/quiz-question.repository';
 
 export class QuestionController {
   // Get all Questions by author
@@ -111,6 +112,15 @@ export class QuestionController {
         new NotFoundError('Question not found'),
       );
 
+      const isExist = await quizQuestionRepository.findBy({
+        questionId: req.valid.params.id,
+      });
+
+      if (isExist.length > 0) {
+        throw new BadRequestError(
+          'لا يمكن حذف السؤال لتواجده بعدة امتحانات يرجي ازالته من الامتحان المراد',
+        );
+      }
       await questionRepository.deleteById(question.id);
       res.noContent({ message: 'Question deleted successfully' });
     },

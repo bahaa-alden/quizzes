@@ -8,6 +8,7 @@ const order_1 = require("../utils/order");
 const pagination_1 = require("../utils/pagination");
 const record_1 = require("../utils/record");
 const create_1 = require("../services/internal/questions/create");
+const quiz_question_repository_1 = require("../database/repositories/quiz-question.repository");
 class QuestionController {
     // Get all Questions by author
     getQuestions = (0, asyncHandler_1.default)(async (req, res, next) => {
@@ -50,6 +51,12 @@ class QuestionController {
     // Delete question by Id for authenticated user
     deleteQuestion = (0, asyncHandler_1.default)(async (req, res) => {
         const question = (0, record_1.needRecord)(await question_repository_1.questionRepository.findById(req.valid.params.id), new ApiError_1.NotFoundError('Question not found'));
+        const isExist = await quiz_question_repository_1.quizQuestionRepository.findBy({
+            questionId: req.valid.params.id,
+        });
+        if (isExist.length > 0) {
+            throw new ApiError_1.BadRequestError('لا يمكن حذف السؤال لتواجده بعدة امتحانات يرجي ازالته من الامتحان المراد');
+        }
         await question_repository_1.questionRepository.deleteById(question.id);
         res.noContent({ message: 'Question deleted successfully' });
     });

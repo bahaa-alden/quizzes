@@ -85,51 +85,39 @@ class Server {
     this.app.use(errHandler);
   }
 
-public config(): void {
-  // CORS first
-  this.app.use(
-    cors({
-      origin: [
-        'http://localhost:3000',
-        'https://my-app-red-kappa.vercel.app',
-      ],
-      methods: ['GET', 'POST', 'PUT', 'PATCH', 'DELETE', 'OPTIONS'],
-      credentials: true,
-    }),
-  );
-
-  // handle preflight requests
-  this.app.options('*', cors());
-
-  // Helmet (with CORS-friendly config)
-  this.app.use(
-    helmet({
-      crossOriginResourcePolicy: false,
-    }),
-  );
-
-  this.app.use(compression());
-  this.app.use(express.json());
-  this.app.use(express.urlencoded({ extended: false }));
-  this.app.use(passport.initialize());
-  this.app.use(customResponses);
-
-  this.app.set('port', env_vars.port || 3000);
-}
-
+  public config(): void {
+    this.app.use(customResponses);
+    this.app.set('port', env_vars.port || 3000);
+    this.app.use(express.json());
+    this.app.use(express.urlencoded({ extended: false }));
+    this.app.use(compression());
+    this.app.use(cors());
+    this.app.use(helmet());
+    this.app.use(passport.initialize());
+  }
 
   private mongo() {
     const connection = mongoose.connection;
-    connection.on('connected', () => {});
-    connection.on('reconnected', () => {});
+    connection.on('connected', () => {
+      console.info('Mongo Connection Established');
+    });
+    connection.on('reconnected', () => {
+      console.info('Mongo Connection Reestablished');
+    });
     connection.on('disconnected', () => {
+      console.info('Mongo Connection Disconnected');
+      console.info('Trying to reconnect to Mongo ...');
       setTimeout(() => {
         mongoose.connect(env_vars.mongoose.url);
       }, 3000);
     });
 
-    connection.on('close', () => {});
-    connection.on('error', (error: Error) => {});
+    connection.on('close', () => {
+      console.info('Mongo Connection Closed');
+    });
+    connection.on('error', (error: Error) => {
+      console.info('Mongo Connection ERROR: ' + error);
+    });
 
     const run = async () => {
       await mongoose.connect(env_vars.mongoose.url);
